@@ -325,14 +325,7 @@ public class FileHelper
 	{
 		Preconditions.checkNotNull(fileName);
 		int lastPointIndex = fileName.lastIndexOf(".");
-		if(-1 == lastPointIndex)
-		{
-			return fileName;
-		}
-		else
-		{
-			return fileName.substring(lastPointIndex + 1);
-		}
+		return -1 == lastPointIndex ? fileName : fileName.substring(lastPointIndex + 1);
 	}
 
 	/**

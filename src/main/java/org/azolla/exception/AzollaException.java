@@ -220,14 +220,7 @@ public class AzollaException extends RuntimeException
 	 */
 	public void setCode(ErrorCoder code)
 	{
-		if(null == code)
-		{
-			this.code = AzollaCode.AZOLLA;
-		}
-		else
-		{
-			this.code = code;
-		}
+		this.code = null == code ? AzollaCode.AZOLLA : code;
 	}
 
 	/**
