@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-  <name>azolla-common</name>
+	<name>org.azolla.open.common</name>
 	<comment></comment>
 	<projects>
 	</projects>
