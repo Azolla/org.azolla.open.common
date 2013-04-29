@@ -18,7 +18,6 @@ import org.azolla.exception.code.ErrorCoder;
  * The exception for Azolla
  * 
  * @author 	sk@azolla.org
- * @version 1.0.0
  * @since 	ADK1.0
  */
 public class AzollaException extends RuntimeException

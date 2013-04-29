@@ -23,7 +23,6 @@ import com.google.common.cache.LoadingCache;
  * Help for model
  *
  * @author 	sk@azolla.org
- * @version 1.0.0
  * @since 	ADK1.0
  */
 public class XmlConfigures

@@ -18,7 +18,6 @@ package org.azolla.exception.code;
  * <p>[10000001,99999999]	:For Azolla Application
  * 
  * @author 	sk@azolla.org
- * @version 1.0.0
  * @since 	ADK1.0
  */
 public interface ErrorCoder
