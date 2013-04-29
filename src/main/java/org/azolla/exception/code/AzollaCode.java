@@ -24,7 +24,6 @@ public enum AzollaCode implements ErrorCoder
 
 	/** This code(11) is for exception AzollaException Error, It like your feet */
 	AZOLLA(11),
-	NULL(12),
 
 	/** [11000,11999] : For azolla-common*/
 	MODELHELPER_MARSHAL(11001);

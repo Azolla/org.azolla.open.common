@@ -14,8 +14,6 @@ import java.util.TreeMap;
 import org.azolla.exception.code.AzollaCode;
 import org.azolla.exception.code.ErrorCoder;
 
-import com.google.common.base.Strings;
-
 /**
  * The exception for Azolla
  * 
@@ -27,7 +25,7 @@ public class AzollaException extends RuntimeException
 {
 	private static final long			serialVersionUID	= 6975777768178330101L;
 
-	private ErrorCoder				code;
+	private ErrorCoder					code;
 	private final Map<String, Object>	properties			= new TreeMap<String, Object>();
 
 	/**
@@ -87,17 +85,18 @@ public class AzollaException extends RuntimeException
 	 */
 	public static AzollaException wrap(Throwable cause, ErrorCoder code)
 	{
+		ErrorCoder ec = null == code ? AzollaCode.UNAZOLLA : code;
 		if(null == cause)
 		{
-			if(null == code)
-			{
-				return new AzollaException(AzollaCode.NULL);
-			}
-			else
-			{
-				return new AzollaException(code);
-			}
-
+			//			if(null == code)
+			//			{
+			//				return new AzollaException(AzollaCode.UNAZOLLA);
+			//			}
+			//			else
+			//			{
+			//				return new AzollaException(code);
+			//			}
+			return new AzollaException(ec);
 		}
 		else if(cause instanceof AzollaException)
 		{
@@ -105,12 +104,13 @@ public class AzollaException extends RuntimeException
 
 			if(code != null && code != se.getCode())
 			{
-				return new AzollaException(code, cause.getMessage(), cause);
+				//				return new AzollaException(code, cause.getMessage(), cause);
+				se.setCode(code);
 			}
 
 			return se;
 		}
-		return new AzollaException(code, cause.getMessage(), cause);
+		return new AzollaException(ec, cause.getMessage(), cause);
 	}
 
 	/**
@@ -187,15 +187,14 @@ public class AzollaException extends RuntimeException
 		}
 	}
 
-	@SuppressWarnings("unchecked")
-	public <T> T get(String key)
+	public Object get(String key)
 	{
-		return (T) properties.get(key);
+		return properties.get(key);
 	}
 
 	public AzollaException set(String key, Object value)
 	{
-		properties.put(Strings.nullToEmpty(key), value);
+		properties.put(key, value);
 		return this;
 	}
 
@@ -220,7 +219,7 @@ public class AzollaException extends RuntimeException
 	 */
 	public void setCode(ErrorCoder code)
 	{
-		this.code = null == code ? AzollaCode.AZOLLA : code;
+		this.code = null == code ? AzollaCode.UNAZOLLA : code;
 	}
 
 	/**

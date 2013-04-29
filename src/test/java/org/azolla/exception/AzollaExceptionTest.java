@@ -88,8 +88,6 @@ public class AzollaExceptionTest
 	@Test(expected = AzollaException.class)
 	public void testAzollaExceptionExceptionCoder()
 	{
-		Throwable t = null;
-		new AzollaException(null, t);
 		throw new AzollaException(AzollaCode.UNAZOLLA);
 	}
 
@@ -105,11 +103,11 @@ public class AzollaExceptionTest
 	/**
 	 * Test method for {@link org.azolla.exception.AzollaException#AzollaException(org.azolla.exception.code.ExceptionCoder, java.lang.Throwable)}.
 	 */
-	@Ignore("Not yet implemented")
-	@Test
+	@Test(expected = AzollaException.class)
 	public void testAzollaExceptionExceptionCoderThrowable()
 	{
-		//ignored
+		Throwable t = null;
+		throw new AzollaException(null, t);
 	}
 
 	/**
@@ -196,8 +194,8 @@ public class AzollaExceptionTest
 	@Test
 	public void testGetCode()
 	{
-		Assert.assertEquals(AzollaCode.AZOLLA, ae.getCode());
-		Assert.assertSame(AzollaCode.AZOLLA, ae.getCode());
+		Assert.assertEquals(AzollaCode.UNAZOLLA, ae.getCode());
+		Assert.assertSame(AzollaCode.UNAZOLLA, ae.getCode());
 	}
 
 	/**

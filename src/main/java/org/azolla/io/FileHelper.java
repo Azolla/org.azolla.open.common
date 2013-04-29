@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.List;
 
 import com.google.common.base.Function;
+import com.google.common.base.Joiner;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
@@ -25,7 +26,6 @@ import com.google.common.collect.Lists;
  * 
  *
  * @author 	sk@azolla.org
- * @version 1.0.0
  * @since 	ADK1.0
  */
 public class FileHelper
@@ -77,8 +77,15 @@ public class FileHelper
 	 */
 	public static List<File> allFiles(File file)
 	{
-		Preconditions.checkNotNull(file);
+		//		Preconditions.checkNotNull(file);
 		List<File> allFiles = Lists.newArrayList();
+
+		//BE Best-effort
+		if(null == file)
+		{
+			return allFiles;
+		}
+
 		if(file.exists())
 		{
 			if(file.isDirectory() && file.list() != null)
@@ -115,8 +122,15 @@ public class FileHelper
 	 */
 	public static boolean delAllEmptyFiles(File file)
 	{
-		Preconditions.checkNotNull(file);
+		//		Preconditions.checkNotNull(file);
 		boolean ret = true;
+
+		//BE Best-effort
+		if(null == file)
+		{
+			return ret;
+		}
+
 		if(file.exists())
 		{
 			if(file.isDirectory() && file.list() != null)
@@ -154,8 +168,15 @@ public class FileHelper
 	 */
 	public static boolean delDirectory(File file)
 	{
-		Preconditions.checkNotNull(file);
+		//		Preconditions.checkNotNull(file);
 		boolean ret = true;
+
+		//BE Best-effort
+		if(null == file)
+		{
+			return ret;
+		}
+
 		if(file.exists())
 		{
 			if(file.isDirectory() && file.list() != null)
@@ -193,8 +214,15 @@ public class FileHelper
 	 */
 	public static boolean delEmptyFiles(File file)
 	{
-		Preconditions.checkNotNull(file);
+		//		Preconditions.checkNotNull(file);
 		boolean ret = true;
+
+		//BE Best-effort
+		if(null == file)
+		{
+			return ret;
+		}
+
 		if(file.exists())
 		{
 			if(file.isDirectory() && file.list() != null)
@@ -238,8 +266,15 @@ public class FileHelper
 	 */
 	public static boolean delFiles(File file)
 	{
-		Preconditions.checkNotNull(file);
+		//		Preconditions.checkNotNull(file);
 		boolean ret = true;
+
+		//BE Best-effort
+		if(null == file)
+		{
+			return ret;
+		}
+
 		if(file.exists())
 		{
 			if(file.isDirectory() && file.list() != null)
@@ -269,25 +304,46 @@ public class FileHelper
 	}
 
 	/**
-	 * filter files by file type.
-	 * 
-	 * @param fileType file type
-	 * @param files	file list
-	 * @return  file list of the file end with file type
+	 * @see org.azolla.io.FileHelper#getFilesByTypes(List, List)
 	 */
 	public static List<File> getFilesByType(String fileType, List<File> files)
 	{
-		Preconditions.checkNotNull(files);
+		//		Preconditions.checkNotNull(fileType);
+		List<String> fileTypeList = Lists.newArrayList();
+
+		// BE Best-effort
+		if(!Strings.isNullOrEmpty(fileType))
+		{
+			fileTypeList.add(fileType);
+		}
+
+		return getFilesByTypes(fileTypeList, files);
+	}
+
+	/**
+	 * filter files by file type list.
+	 * 
+	 * @param fileTypes file type list
+	 * @param files	file list
+	 * @return  file list of the file type in file type list
+	 */
+	public static List<File> getFilesByTypes(List<String> fileTypes, List<File> files)
+	{
+		//		Preconditions.checkNotNull(files);
+		//		Preconditions.checkNotNull(fileTypes);
 		List<File> fileList = Lists.newArrayList();
-		if(Strings.isNullOrEmpty(fileType))
+
+		// BE Best-effort
+		if(null == fileTypes || fileTypes.isEmpty() || null == files)
 		{
 			return fileList;
 		}
+
 		for(File f : files)
 		{
 			if(!f.isDirectory())
 			{
-				if(fileType.equalsIgnoreCase(getFileType(f)))
+				if(fileTypes.contains(getFileType(f)))
 				{
 					fileList.add(f);
 				}
@@ -297,12 +353,20 @@ public class FileHelper
 	}
 
 	/**
-	 * @see org.azolla.io.FileHelper#getFilesByType(String, List<File>)
+	 * @see org.azolla.io.FileHelper#getFilesByType(String, List)
 	 * @see org.azolla.io.FileHelper#allFiles(String)
 	 */
 	public static List<File> getFilesByType(String fileType, String path)
 	{
 		return getFilesByType(fileType, allFiles(path));
+	}
+
+	/**
+	 * @see org.azolla.io.FileHelper#getFilesByTypes(List, List)
+	 */
+	public static List<File> getFilesByTypes(List<String> fileTypes, String path)
+	{
+		return getFilesByTypes(fileTypes, allFiles(path));
 	}
 
 	/**
@@ -347,5 +411,27 @@ public class FileHelper
 	{
 		Preconditions.checkNotNull(fileName);
 		return fileName.replaceAll(ILLEGAL_FILENAME_REGEX, Strings.isNullOrEmpty(legalString) ? "_" : legalString);
+	}
+
+	public static String getUserDir()
+	{
+		return System.getProperty("user.dir");
+	}
+
+	public static File createFile(String... strings)
+	{
+		Preconditions.checkNotNull(strings);
+		return new File(Joiner.on(File.separator).join(strings));
+	}
+
+	@SuppressWarnings("null")
+	public static void main(String[] args)
+	{
+		// NullPointerException
+		List<String> stringList = null;
+		for(String s : stringList)
+		{
+			System.out.println(s);
+		}
 	}
 }

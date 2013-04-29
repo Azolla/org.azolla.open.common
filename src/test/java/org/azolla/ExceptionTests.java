@@ -8,6 +8,7 @@ package org.azolla;
 
 import org.azolla.exception.AzollaExceptionTest;
 import org.azolla.exception.CodeTests;
+import org.azolla.io.FileHelperTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -19,7 +20,7 @@ import org.junit.runners.Suite;
  * @since 	ADK1.0
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({AzollaExceptionTest.class, CodeTests.class})
+@Suite.SuiteClasses({AzollaExceptionTest.class, CodeTests.class, FileHelperTest.class})
 public class ExceptionTests
 {
 
