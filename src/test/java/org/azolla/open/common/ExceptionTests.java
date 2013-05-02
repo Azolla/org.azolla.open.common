@@ -4,11 +4,11 @@
  * Copyright (c) 2011-2013 azolla.org All rights reserved.
  * Azolla PROPRIETARY/CONFIDENTIAL. Use is subject to license terms. 
  */
-package org.azolla;
+package org.azolla.open.common;
 
-import org.azolla.exception.AzollaExceptionTest;
-import org.azolla.exception.CodeTests;
-import org.azolla.io.FileHelperTest;
+import org.azolla.open.common.exception.AzollaExceptionTest;
+import org.azolla.open.common.exception.CodeTests;
+import org.azolla.open.common.io.FileHelperTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 

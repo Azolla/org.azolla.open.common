@@ -4,7 +4,7 @@
  * Copyright (c) 2011-2013 azolla.org All rights reserved.
  * Azolla PROPRIETARY/CONFIDENTIAL. Use is subject to license terms. 
  */
-package org.azolla.exception;
+package org.azolla.open.common.exception;
 
 import org.azolla.open.common.exception.AzollaException;
 import org.azolla.open.common.exception.code.AzollaCode;

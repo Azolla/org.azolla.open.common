@@ -13,6 +13,8 @@ import javax.xml.bind.JAXBContext;
 
 import org.azolla.open.common.exception.AzollaException;
 import org.azolla.open.common.exception.code.AzollaCode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Strings;
 import com.google.common.cache.CacheBuilder;
@@ -27,10 +29,12 @@ import com.google.common.cache.LoadingCache;
  */
 public class XmlConfigures
 {
-	private static final LoadingCache<Class<?>, JAXBContext>	CACHE	= CacheBuilder.newBuilder().softValues()
-																				.build(new ModelLoader());
+	private static final Logger									LOG		= LoggerFactory.getLogger(XmlConfigures.class);
 
-	private static class ModelLoader extends CacheLoader<Class<?>, JAXBContext>
+	private static final LoadingCache<Class<?>, JAXBContext>	CACHE	= CacheBuilder.newBuilder().softValues()
+																				.build(new ConfigLoader());
+
+	private static class ConfigLoader extends CacheLoader<Class<?>, JAXBContext>
 	{
 
 		/**
@@ -60,6 +64,7 @@ public class XmlConfigures
 		}
 		catch(Exception e)
 		{
+			LOG.error("clazz = [{}], filePath = [{}]", clazz, filePath, e.toString(), e);
 			return null;
 		}
 	}
