@@ -4,7 +4,7 @@
  * Copyright (c) 2011-2013 azolla.org All rights reserved.
  * Azolla PROPRIETARY/CONFIDENTIAL. Use is subject to license terms. 
  */
-package org.azolla.exception.code;
+package org.azolla.open.common.exception.code;
 
 /**
  * Azolla Exception Code
@@ -39,7 +39,7 @@ public enum AzollaCode implements ErrorCoder
 	}
 
 	/**
-	 * @see org.azolla.exception.code.ErrorCoder#getCode()
+	 * @see org.azolla.open.common.exception.code.ErrorCoder#getCode()
 	 * @return
 	 */
 	@Override

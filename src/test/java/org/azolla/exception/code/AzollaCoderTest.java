@@ -6,6 +6,7 @@
  */
 package org.azolla.exception.code;
 
+import org.azolla.open.common.exception.code.AzollaCode;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -64,7 +65,7 @@ public class AzollaCoderTest
 	}
 
 	/**
-	 * Test method for {@link org.azolla.exception.code.AzollaCode#getCode()}.
+	 * Test method for {@link org.azolla.open.common.exception.code.AzollaCode#getCode()}.
 	 */
 	@Test
 	public void testGetCode()

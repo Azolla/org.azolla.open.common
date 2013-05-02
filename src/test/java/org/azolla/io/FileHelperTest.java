@@ -9,6 +9,7 @@ package org.azolla.io;
 import java.io.File;
 import java.util.List;
 
+import org.azolla.open.common.io.FileHelper;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -133,7 +134,7 @@ public class FileHelperTest
 	}
 
 	/**
-	 * Test method for {@link org.azolla.io.FileHelper#getFileType(java.io.File)}.
+	 * Test method for {@link org.azolla.open.common.io.FileHelper#getFileType(java.io.File)}.
 	 */
 	@Test
 	public void testGetFileTypeFile()
@@ -146,7 +147,7 @@ public class FileHelperTest
 	}
 
 	/**
-	 * Test method for {@link org.azolla.io.FileHelper#getFileType(java.lang.String)}.
+	 * Test method for {@link org.azolla.open.common.io.FileHelper#getFileType(java.lang.String)}.
 	 */
 	@Test
 	public void testGetFileTypeString()

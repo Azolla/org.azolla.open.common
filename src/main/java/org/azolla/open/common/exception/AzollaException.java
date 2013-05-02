@@ -4,15 +4,15 @@
  * Copyright (c) 2011-2013 azolla.org All rights reserved.
  * Azolla PROPRIETARY/CONFIDENTIAL. Use is subject to license terms. 
  */
-package org.azolla.exception;
+package org.azolla.open.common.exception;
 
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.azolla.exception.code.AzollaCode;
-import org.azolla.exception.code.ErrorCoder;
+import org.azolla.open.common.exception.code.AzollaCode;
+import org.azolla.open.common.exception.code.ErrorCoder;
 
 /**
  * The exception for Azolla

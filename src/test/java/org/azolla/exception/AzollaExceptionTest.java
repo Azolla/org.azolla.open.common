@@ -6,7 +6,8 @@
  */
 package org.azolla.exception;
 
-import org.azolla.exception.code.AzollaCode;
+import org.azolla.open.common.exception.AzollaException;
+import org.azolla.open.common.exception.code.AzollaCode;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -83,7 +84,7 @@ public class AzollaExceptionTest
 	}
 
 	/**
-	 * Test method for {@link org.azolla.exception.AzollaException#AzollaException(org.azolla.exception.code.ExceptionCoder)}.
+	 * Test method for {@link org.azolla.open.common.exception.AzollaException#AzollaException(org.azolla.exception.code.ExceptionCoder)}.
 	 */
 	@Test(expected = AzollaException.class)
 	public void testAzollaExceptionExceptionCoder()
@@ -92,7 +93,7 @@ public class AzollaExceptionTest
 	}
 
 	/**
-	 * Test method for {@link org.azolla.exception.AzollaException#AzollaException(org.azolla.exception.code.ExceptionCoder, java.lang.String)}.
+	 * Test method for {@link org.azolla.open.common.exception.AzollaException#AzollaException(org.azolla.exception.code.ExceptionCoder, java.lang.String)}.
 	 */
 	@Test(timeout = 100)
 	public void testAzollaExceptionExceptionCoderString()
@@ -101,7 +102,7 @@ public class AzollaExceptionTest
 	}
 
 	/**
-	 * Test method for {@link org.azolla.exception.AzollaException#AzollaException(org.azolla.exception.code.ExceptionCoder, java.lang.Throwable)}.
+	 * Test method for {@link org.azolla.open.common.exception.AzollaException#AzollaException(org.azolla.exception.code.ExceptionCoder, java.lang.Throwable)}.
 	 */
 	@Test(expected = AzollaException.class)
 	public void testAzollaExceptionExceptionCoderThrowable()
@@ -111,7 +112,7 @@ public class AzollaExceptionTest
 	}
 
 	/**
-	 * Test method for {@link org.azolla.exception.AzollaException#AzollaException(org.azolla.exception.code.ExceptionCoder, java.lang.String, java.lang.Throwable)}.
+	 * Test method for {@link org.azolla.open.common.exception.AzollaException#AzollaException(org.azolla.exception.code.ExceptionCoder, java.lang.String, java.lang.Throwable)}.
 	 */
 	@Ignore("Not yet implemented")
 	@Test
@@ -121,7 +122,7 @@ public class AzollaExceptionTest
 	}
 
 	/**
-	 * Test method for {@link org.azolla.exception.AzollaException#wrap(java.lang.Throwable)}.
+	 * Test method for {@link org.azolla.open.common.exception.AzollaException#wrap(java.lang.Throwable)}.
 	 */
 	@Test
 	public void testWrapThrowable()
@@ -130,7 +131,7 @@ public class AzollaExceptionTest
 	}
 
 	/**
-	 * Test method for {@link org.azolla.exception.AzollaException#wrap(java.lang.Throwable, org.azolla.exception.code.ExceptionCoder)}.
+	 * Test method for {@link org.azolla.open.common.exception.AzollaException#wrap(java.lang.Throwable, org.azolla.exception.code.ExceptionCoder)}.
 	 */
 	@Test
 	public void testWrapThrowableExceptionCoder()
@@ -144,7 +145,7 @@ public class AzollaExceptionTest
 	}
 
 	/**
-	 * Test method for {@link org.azolla.exception.AzollaException#printStackTrace(java.io.PrintStream)}.
+	 * Test method for {@link org.azolla.open.common.exception.AzollaException#printStackTrace(java.io.PrintStream)}.
 	 */
 	@Test
 	public void testPrintStackTracePrintStream()
@@ -154,7 +155,7 @@ public class AzollaExceptionTest
 	}
 
 	/**
-	 * Test method for {@link org.azolla.exception.AzollaException#printStackTrace(java.io.PrintWriter)}.
+	 * Test method for {@link org.azolla.open.common.exception.AzollaException#printStackTrace(java.io.PrintWriter)}.
 	 */
 	@Test
 	public void testPrintStackTracePrintWriter()
@@ -163,7 +164,7 @@ public class AzollaExceptionTest
 	}
 
 	/**
-	 * Test method for {@link org.azolla.exception.AzollaException#get(java.lang.String)}.
+	 * Test method for {@link org.azolla.open.common.exception.AzollaException#get(java.lang.String)}.
 	 */
 	@Test
 	public void testGet()
@@ -173,7 +174,7 @@ public class AzollaExceptionTest
 	}
 
 	/**
-	 * Test method for {@link org.azolla.exception.AzollaException#set(java.lang.String, java.lang.Object)}.
+	 * Test method for {@link org.azolla.open.common.exception.AzollaException#set(java.lang.String, java.lang.Object)}.
 	 */
 	@Test
 	public void testSet()
@@ -189,7 +190,7 @@ public class AzollaExceptionTest
 	}
 
 	/**
-	 * Test method for {@link org.azolla.exception.AzollaException#getCode()}.
+	 * Test method for {@link org.azolla.open.common.exception.AzollaException#getCode()}.
 	 */
 	@Test
 	public void testGetCode()
@@ -199,7 +200,7 @@ public class AzollaExceptionTest
 	}
 
 	/**
-	 * Test method for {@link org.azolla.exception.AzollaException#setCode(org.azolla.exception.code.ExceptionCoder)}.
+	 * Test method for {@link org.azolla.open.common.exception.AzollaException#setCode(org.azolla.exception.code.ExceptionCoder)}.
 	 */
 	@Test
 	public void testSetCode()
@@ -208,7 +209,7 @@ public class AzollaExceptionTest
 	}
 
 	/**
-	 * Test method for {@link org.azolla.exception.AzollaException#getProperties()}.
+	 * Test method for {@link org.azolla.open.common.exception.AzollaException#getProperties()}.
 	 */
 	@Test
 	public void testGetProperties()

@@ -4,15 +4,15 @@
  * Copyright (c) 2011-2013 azolla.org All rights reserved.
  * Azolla PROPRIETARY/CONFIDENTIAL. Use is subject to license terms. 
  */
-package org.azolla.model;
+package org.azolla.open.common.cfg;
 
 import java.io.File;
 import java.util.concurrent.ExecutionException;
 
 import javax.xml.bind.JAXBContext;
 
-import org.azolla.exception.AzollaException;
-import org.azolla.exception.code.AzollaCode;
+import org.azolla.open.common.exception.AzollaException;
+import org.azolla.open.common.exception.code.AzollaCode;
 
 import com.google.common.base.Strings;
 import com.google.common.cache.CacheBuilder;
