@@ -6,8 +6,7 @@
  */
 package org.azolla.open.common.collect;
 
-import static org.junit.Assert.*;
-
+import org.azolla.open.common.collect.Tuple.Quadruple;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -66,7 +65,14 @@ public class TupleTest
 	@Test
 	public void test()
 	{
-		fail("Not yet implemented");
-	}
+		//		fail("Not yet implemented");
+		Quadruple<Integer, Integer, Integer, Integer> ip = Tuple.of(127, 0, 0, 1);
+		System.out.println(Tuple.joinWith("", ".", "").join(ip));
+		System.out.println(Tuple.joinWith(".").join(ip));
 
+		//		MessageFormat.format(pattern, arguments)
+
+		//		Vector<String> v = Lists.newArrayList();
+		//		List<String> list = Lists.<String> newArrayList();
+	}
 }

@@ -9,7 +9,6 @@ package org.azolla.open.common.io;
 import java.io.File;
 import java.util.List;
 
-import org.azolla.open.common.io.FileHelper;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -34,7 +33,7 @@ public class FileHelperTest
 	private List<String>		stringList			= Lists.newArrayList();
 
 	private static final File	testDir				= FileHelper.createFile(FileHelper.getUserDir(), "src", "test",
-															"resources", "org", "azolla", "io");
+															"resources", "org", "azolla", "open", "common", "io");
 
 	/**
 	 * The coder is very lazy, nothing to write for this setUpBeforeClass method

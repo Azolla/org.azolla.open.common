@@ -1,10 +1,13 @@
 /*
- * @(#)XmlConfiguresTest.java		Created at 2013-5-2
+ * @(#)FmtsTest.java		Created at 2013-5-4
  * 
  * Copyright (c) 2011-2013 azolla.org All rights reserved.
  * Azolla PROPRIETARY/CONFIDENTIAL. Use is subject to license terms. 
  */
-package org.azolla.open.common.cfg;
+package org.azolla.open.common.text;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -13,12 +16,12 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
- * The coder is very lazy, nothing to write for this XmlConfiguresTest class
+ * The coder is very lazy, nothing to write for this FmtsTest class
  *
  * @author 	sk@azolla.org
  * @since 	ADK1.0
  */
-public class XmlConfiguresTest
+public class FmtsTest
 {
 
 	/**
@@ -61,24 +64,10 @@ public class XmlConfiguresTest
 	{
 	}
 
-	/**
-	 * Test method for {@link org.azolla.open.common.cfg.XmlConfigures#unmarshal(java.lang.Class, java.lang.String)}.
-	 */
 	@Test
-	public void testUnmarshal()
+	public void test()
 	{
-		//Just test log
-		System.out.println(XmlConfigures.unmarshal(Object.class, System.getProperty("user.dir")));
-	}
-
-	/**
-	 * Test method for {@link org.azolla.open.common.cfg.XmlConfigures#marshal(java.lang.Object, java.lang.String)}.
-	 */
-	@Test
-	public void testMarshal()
-	{
-		//Just test log
-		XmlConfigures.marshal(Object.class, System.getProperty("user.dir"));
+		System.out.println(new SimpleDateFormat(Fmts.TIME).format(new Date(System.currentTimeMillis() + 36000000)));
 	}
 
 }

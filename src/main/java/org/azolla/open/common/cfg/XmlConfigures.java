@@ -11,8 +11,6 @@ import java.util.concurrent.ExecutionException;
 
 import javax.xml.bind.JAXBContext;
 
-import org.azolla.open.common.exception.AzollaException;
-import org.azolla.open.common.exception.code.AzollaCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -77,7 +75,13 @@ public class XmlConfigures
 		}
 		catch(Exception e)
 		{
-			throw new AzollaException(AzollaCode.MODELHELPER_MARSHAL, e).set("t", t).set("filePath", filePath);
+			LOG.error("t = [{}], filePath = [{}]", t, filePath, e.toString(), e);	//既然已记录日志不应再抛出
+			//			throw new AzollaException(AzollaCode.MODELHELPER_MARSHAL, e).set("t", t).set("filePath", filePath);
 		}
+	}
+
+	public static void reset()
+	{
+		CACHE.cleanUp();
 	}
 }
