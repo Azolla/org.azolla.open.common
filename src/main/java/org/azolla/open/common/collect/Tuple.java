@@ -77,7 +77,7 @@ public class Tuple<First, Rest> implements Iterable<Object>
 	@Override
 	public Iterator<Object> iterator()
 	{
-		return Lists.newArrayList(new Object[] {first, rest}).iterator();
+		return Lists.newArrayList(first, rest).iterator();
 	}
 
 	public <T> Tuple<T, Tuple<First, Rest>> prepend(T t)
@@ -219,7 +219,7 @@ public class Tuple<First, Rest> implements Iterable<Object>
 
 	public static class DecuplePlus<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>
 			extends
-			Tuple<T1, Tuple<T2, Tuple<T3, Tuple<T4, Tuple<T5, Tuple<T6, Tuple<T7, Tuple<T8, Tuple<T9, Tuple<T10, Tuple<Object[], Tuple.End>>>>>>>>>>>
+			Tuple<T1, Tuple<T2, Tuple<T3, Tuple<T4, Tuple<T5, Tuple<T6, Tuple<T7, Tuple<T8, Tuple<T9, Tuple<T10, Tuple<Object[], End>>>>>>>>>>>
 	{
 		public DecuplePlus(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, Object[] rest)
 		{
@@ -247,7 +247,7 @@ public class Tuple<First, Rest> implements Iterable<Object>
 
 	public static class Decuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>
 			extends
-			Tuple<T1, Tuple<T2, Tuple<T3, Tuple<T4, Tuple<T5, Tuple<T6, Tuple<T7, Tuple<T8, Tuple<T9, Tuple<T10, Tuple.End>>>>>>>>>>
+			Tuple<T1, Tuple<T2, Tuple<T3, Tuple<T4, Tuple<T5, Tuple<T6, Tuple<T7, Tuple<T8, Tuple<T9, Tuple<T10, End>>>>>>>>>>
 	{
 		public Decuple(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10)
 		{
@@ -274,7 +274,7 @@ public class Tuple<First, Rest> implements Iterable<Object>
 
 	public static class Nonuple<T1, T2, T3, T4, T5, T6, T7, T8, T9>
 			extends
-			Tuple<T1, Tuple<T2, Tuple<T3, Tuple<T4, Tuple<T5, Tuple<T6, Tuple<T7, Tuple<T8, Tuple<T9, Tuple.End>>>>>>>>>
+			Tuple<T1, Tuple<T2, Tuple<T3, Tuple<T4, Tuple<T5, Tuple<T6, Tuple<T7, Tuple<T8, Tuple<T9, End>>>>>>>>>
 	{
 		public Nonuple(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9)
 		{
@@ -299,7 +299,7 @@ public class Tuple<First, Rest> implements Iterable<Object>
 	}
 
 	public static class Octuple<T1, T2, T3, T4, T5, T6, T7, T8> extends
-			Tuple<T1, Tuple<T2, Tuple<T3, Tuple<T4, Tuple<T5, Tuple<T6, Tuple<T7, Tuple<T8, Tuple.End>>>>>>>>
+			Tuple<T1, Tuple<T2, Tuple<T3, Tuple<T4, Tuple<T5, Tuple<T6, Tuple<T7, Tuple<T8, End>>>>>>>>
 	{
 		public Octuple(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8)
 		{
@@ -323,7 +323,7 @@ public class Tuple<First, Rest> implements Iterable<Object>
 	}
 
 	public static class Septuple<T1, T2, T3, T4, T5, T6, T7> extends
-			Tuple<T1, Tuple<T2, Tuple<T3, Tuple<T4, Tuple<T5, Tuple<T6, Tuple<T7, Tuple.End>>>>>>>
+			Tuple<T1, Tuple<T2, Tuple<T3, Tuple<T4, Tuple<T5, Tuple<T6, Tuple<T7, End>>>>>>>
 	{
 		public Septuple(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7)
 		{
@@ -346,7 +346,7 @@ public class Tuple<First, Rest> implements Iterable<Object>
 	}
 
 	public static class Sextuple<T1, T2, T3, T4, T5, T6> extends
-			Tuple<T1, Tuple<T2, Tuple<T3, Tuple<T4, Tuple<T5, Tuple<T6, Tuple.End>>>>>>
+			Tuple<T1, Tuple<T2, Tuple<T3, Tuple<T4, Tuple<T5, Tuple<T6, End>>>>>>
 	{
 		public Sextuple(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6)
 		{
@@ -368,7 +368,7 @@ public class Tuple<First, Rest> implements Iterable<Object>
 	}
 
 	public static class Quintuple<T1, T2, T3, T4, T5> extends
-			Tuple<T1, Tuple<T2, Tuple<T3, Tuple<T4, Tuple<T5, Tuple.End>>>>>
+			Tuple<T1, Tuple<T2, Tuple<T3, Tuple<T4, Tuple<T5, End>>>>>
 	{
 		public Quintuple(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5)
 		{
@@ -388,7 +388,7 @@ public class Tuple<First, Rest> implements Iterable<Object>
 		}
 	}
 
-	public static class Quadruple<T1, T2, T3, T4> extends Tuple<T1, Tuple<T2, Tuple<T3, Tuple<T4, Tuple.End>>>>
+	public static class Quadruple<T1, T2, T3, T4> extends Tuple<T1, Tuple<T2, Tuple<T3, Tuple<T4, End>>>>
 	{
 		public Quadruple(T1 t1, T2 t2, T3 t3, T4 t4)
 		{
@@ -406,7 +406,7 @@ public class Tuple<First, Rest> implements Iterable<Object>
 		}
 	}
 
-	public static class Triple<T1, T2, T3> extends Tuple<T1, Tuple<T2, Tuple<T3, Tuple.End>>>
+	public static class Triple<T1, T2, T3> extends Tuple<T1, Tuple<T2, Tuple<T3, End>>>
 	{
 		public Triple(T1 t1, T2 t2, T3 t3)
 		{
@@ -423,7 +423,7 @@ public class Tuple<First, Rest> implements Iterable<Object>
 		}
 	}
 
-	public static class Pair<T1, T2> extends Tuple<T1, Tuple<T2, Tuple.End>>
+	public static class Pair<T1, T2> extends Tuple<T1, Tuple<T2, End>>
 	{
 		public Pair(T1 t1, T2 t2)
 		{
@@ -439,25 +439,25 @@ public class Tuple<First, Rest> implements Iterable<Object>
 		}
 	}
 
-	public static class Single<T1> extends Tuple<T1, Tuple.End>
+	public static class Single<T1> extends Tuple<T1, End>
 	{
 		public Single(T1 t1)
 		{
-			super(t1, Tuple.End.SINGLETON);
+			super(t1, End.SINGLETON);
 		}
 
 		@Override
 		public Iterator<Object> iterator()
 		{
-			return Lists.newArrayList(new Object[] {first}).iterator();
+			return Lists.newArrayList((Object) first).iterator();
 		}
 	}
 
-	public static class Null extends Tuple<Tuple.End, Tuple.End>
+	public static class Null extends Tuple<End, End>
 	{
 		private Null()
 		{
-			super(Tuple.End.SINGLETON, Tuple.End.SINGLETON);
+			super(End.SINGLETON, End.SINGLETON);
 		}
 
 		@Override
@@ -498,12 +498,11 @@ public class Tuple<First, Rest> implements Iterable<Object>
 			return appender;
 		}
 
-		public StringBuilder appendTo(Tuple<?, ?> tuple)
+		public StringBuilder appendTo(StringBuilder builder, Tuple<?, ?> tuple)
 		{
-			StringBuilder builder = new StringBuilder();
 			try
 			{
-				appendTo(builder, tuple);
+				appendTo((Appendable) builder, tuple);
 			}
 			catch(IOException impossible)
 			{
@@ -511,6 +510,11 @@ public class Tuple<First, Rest> implements Iterable<Object>
 			}
 
 			return builder;
+		}
+
+		public StringBuilder appendTo(Tuple<?, ?> tuple)
+		{
+			return appendTo(new StringBuilder(), tuple);
 		}
 
 		public String join(Tuple<?, ?> tuple)
