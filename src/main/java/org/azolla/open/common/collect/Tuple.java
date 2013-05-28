@@ -145,7 +145,7 @@ public class Tuple<First, Rest> implements Iterable<Object>
 	}
 
 	public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> DecuplePlus<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> of(
-			T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, Object[] rest)
+			T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, Object... rest)
 	{
 		return new DecuplePlus<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, rest);
 	}
@@ -483,7 +483,7 @@ public class Tuple<First, Rest> implements Iterable<Object>
 		public <A extends Appendable> A appendTo(A appender, Tuple<?, ?> tuple) throws IOException
 		{
 			appender.append(open);
-			Iterator<?> iterTerm = tuple.iterator();
+			Iterator<Object> iterTerm = tuple.iterator();
 			if(iterTerm.hasNext())
 			{
 				appender.append(toString(iterTerm.next()));
