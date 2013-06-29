@@ -14,7 +14,7 @@ import javax.xml.bind.JAXBContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.base.Strings;
+import com.google.common.base.Preconditions;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
@@ -56,9 +56,11 @@ public class XmlConfigures
 	@SuppressWarnings("unchecked")
 	public static <T> T unmarshal(Class<T> clazz, String filePath)
 	{
+		Preconditions.checkNotNull(clazz);
+		Preconditions.checkNotNull(filePath);
 		try
 		{
-			return (T) getJAXBContext(clazz).createUnmarshaller().unmarshal(new File(Strings.nullToEmpty(filePath)));
+			return (T) getJAXBContext(clazz).createUnmarshaller().unmarshal(new File(filePath));
 		}
 		catch(Exception e)
 		{
@@ -69,9 +71,11 @@ public class XmlConfigures
 
 	public static <T> void marshal(T t, String filePath)
 	{
+		Preconditions.checkNotNull(t);
+		Preconditions.checkNotNull(filePath);
 		try
 		{
-			getJAXBContext(t.getClass()).createMarshaller().marshal(t, new File(Strings.nullToEmpty(filePath)));
+			getJAXBContext(t.getClass()).createMarshaller().marshal(t, new File(filePath));
 		}
 		catch(Exception e)
 		{

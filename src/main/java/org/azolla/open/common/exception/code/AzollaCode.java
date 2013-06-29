@@ -22,10 +22,7 @@ public enum AzollaCode implements ErrorCoder
 	UNAZOLLA(0),
 
 	/** This code(11) is for exception AzollaException Error, It like your feet */
-	AZOLLA(11),
-
-	/** [11000,11999] : For azolla-common*/
-	MODELHELPER_MARSHAL(11001);
+	AZOLLA(11);
 
 	private final int	code;
 

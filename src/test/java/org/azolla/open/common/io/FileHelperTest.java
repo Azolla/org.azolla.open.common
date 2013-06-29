@@ -32,7 +32,7 @@ public class FileHelperTest
 
 	private List<String>		stringList			= Lists.newArrayList();
 
-	private static final File	testDir				= FileHelper.createFile(FileHelper.getUserDir(), "src", "test",
+	private static final File	testDir				= FileHelper.newFile(FileHelper.getUserDir(), "src", "test",
 															"resources", "org", "azolla", "open", "common", "io");
 
 	/**
@@ -141,7 +141,7 @@ public class FileHelperTest
 		currentMethodName = "testGetFileTypeFile";
 		//		Assert.assertSame("txt", FileHelper.getFileType(FileHelper.getFile(FileHelper.getUserDir(), "src", "test",
 		//				"resources", "readme.txt")));
-		Assert.assertEquals("txt", FileHelper.getFileType(FileHelper.createFile(FileHelper.getUserDir(), "src", "test",
+		Assert.assertEquals("txt", FileHelper.getFileType(FileHelper.newFile(FileHelper.getUserDir(), "src", "test",
 				"resources", "readme.txt")));
 	}
 
@@ -158,14 +158,14 @@ public class FileHelperTest
 		//						"readme.txt").getAbsolutePath()));
 		Assert.assertEquals(
 				"txt",
-				FileHelper.getFileType(FileHelper.createFile(FileHelper.getUserDir(), "src", "test", "resources",
+ FileHelper.getFileType(FileHelper.newFile(FileHelper.getUserDir(), "src", "test", "resources",
 						"readme.txt").getAbsolutePath()));
 	}
 
 	@Test
 	public void testCreateFileStrings()
 	{
-		System.out.println(FileHelper.createFile());
+		System.out.println(FileHelper.newFile());
 		//		System.out.println(FileHelper.createFile(null));
 	}
 

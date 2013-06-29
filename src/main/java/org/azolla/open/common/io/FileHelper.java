@@ -59,7 +59,16 @@ public class FileHelper
 	 */
 	public static List<String> allFilePaths(String path)
 	{
-		return allFilePaths(new File(path));
+		List<String> rtnList = Lists.newArrayList();
+		if(!Strings.isNullOrEmpty(path))
+		{
+			File f = new File(path);
+			if(f.exists())
+			{
+				rtnList = allFilePaths(f);
+			}
+		}
+		return rtnList;
 	}
 
 	/**
@@ -77,30 +86,23 @@ public class FileHelper
 	 */
 	public static List<File> allFiles(File file)
 	{
-		//		Preconditions.checkNotNull(file);
-		List<File> allFiles = Lists.newArrayList();
+		List<File> rtnList = Lists.newArrayList();
 
-		//BE Best-effort
-		if(null == file)
-		{
-			return allFiles;
-		}
-
-		if(file.exists())
+		if(null != file && file.exists())
 		{
 			if(file.isDirectory() && file.list() != null)
 			{
 				for(File f : file.listFiles())
 				{
-					allFiles.addAll(allFiles(f));
+					rtnList.addAll(allFiles(f));
 				}
 			}
 			else
 			{
-				allFiles.add(file);
+				rtnList.add(file);
 			}
 		}
-		return allFiles;
+		return rtnList;
 	}
 
 	/**
@@ -108,7 +110,16 @@ public class FileHelper
 	 */
 	public static List<File> allFiles(String path)
 	{
-		return allFiles(new File(path));
+		List<File> rtnList = Lists.newArrayList();
+		if(!Strings.isNullOrEmpty(path))
+		{
+			File f = new File(path);
+			if(f.exists())
+			{
+				rtnList = allFiles(f);
+			}
+		}
+		return rtnList;
 	}
 
 	/**
@@ -122,33 +133,26 @@ public class FileHelper
 	 */
 	public static boolean delAllEmptyFiles(File file)
 	{
-		//		Preconditions.checkNotNull(file);
-		boolean ret = true;
+		boolean rtn = true;
 
-		//BE Best-effort
-		if(null == file)
-		{
-			return ret;
-		}
-
-		if(file.exists())
+		if(null != file && file.exists())
 		{
 			if(file.isDirectory() && file.list() != null)
 			{
 				for(File f : file.listFiles())
 				{
-					ret = ret && delAllEmptyFiles(f);
+					rtn = rtn && delAllEmptyFiles(f);
 				}
 			}
 			else
 			{
 				if(file.length() == 0)
 				{
-					ret = ret && file.delete();
+					rtn = rtn && file.delete();
 				}
 			}
 		}
-		return ret;
+		return rtn;
 	}
 
 	/**
@@ -156,7 +160,16 @@ public class FileHelper
 	 */
 	public static boolean delAllEmptyFiles(String path)
 	{
-		return delAllEmptyFiles(new File(path));
+		boolean rtn = true;
+		if(!Strings.isNullOrEmpty(path))
+		{
+			File f = new File(path);
+			if(f.exists())
+			{
+				rtn = delAllEmptyFiles(f);
+			}
+		}
+		return rtn;
 	}
 
 	/**
@@ -168,31 +181,24 @@ public class FileHelper
 	 */
 	public static boolean delDirectory(File file)
 	{
-		//		Preconditions.checkNotNull(file);
-		boolean ret = true;
+		boolean rtn = true;
 
-		//BE Best-effort
-		if(null == file)
-		{
-			return ret;
-		}
-
-		if(file.exists())
+		if(null != file && file.exists())
 		{
 			if(file.isDirectory() && file.list() != null)
 			{
 				for(File f : file.listFiles())
 				{
-					ret = ret && delDirectory(f);
+					rtn = rtn && delDirectory(f);
 				}
-				ret = ret && file.delete();
+				rtn = rtn && file.delete();
 			}
 			else
 			{
-				ret = ret && file.delete();
+				rtn = rtn && file.delete();
 			}
 		}
-		return ret;
+		return rtn;
 	}
 
 	/**
@@ -200,7 +206,16 @@ public class FileHelper
 	 */
 	public static boolean delDirectory(String path)
 	{
-		return delDirectory(new File(path));
+		boolean rtn = true;
+		if(!Strings.isNullOrEmpty(path))
+		{
+			File f = new File(path);
+			if(f.exists())
+			{
+				rtn = delDirectory(f);
+			}
+		}
+		return rtn;
 	}
 
 	/**
@@ -214,16 +229,9 @@ public class FileHelper
 	 */
 	public static boolean delEmptyFiles(File file)
 	{
-		//		Preconditions.checkNotNull(file);
-		boolean ret = true;
+		boolean rtn = true;
 
-		//BE Best-effort
-		if(null == file)
-		{
-			return ret;
-		}
-
-		if(file.exists())
+		if(null != file && file.exists())
 		{
 			if(file.isDirectory() && file.list() != null)
 			{
@@ -233,7 +241,7 @@ public class FileHelper
 					{
 						if(f.length() == 0)
 						{
-							ret = ret && f.delete();
+							rtn = rtn && f.delete();
 						}
 					}
 				}
@@ -242,11 +250,11 @@ public class FileHelper
 			{
 				if(file.length() == 0)
 				{
-					ret = ret && file.delete();
+					rtn = rtn && file.delete();
 				}
 			}
 		}
-		return ret;
+		return rtn;
 	}
 
 	/**
@@ -254,7 +262,16 @@ public class FileHelper
 	 */
 	public static boolean delEmptyFiles(String path)
 	{
-		return delEmptyFiles(new File(path));
+		boolean rtn = true;
+		if(!Strings.isNullOrEmpty(path))
+		{
+			File f = new File(path);
+			if(f.exists())
+			{
+				rtn = delEmptyFiles(f);
+			}
+		}
+		return rtn;
 	}
 
 	/**
@@ -266,16 +283,9 @@ public class FileHelper
 	 */
 	public static boolean delFiles(File file)
 	{
-		//		Preconditions.checkNotNull(file);
-		boolean ret = true;
+		boolean rtn = true;
 
-		//BE Best-effort
-		if(null == file)
-		{
-			return ret;
-		}
-
-		if(file.exists())
+		if(null != file && file.exists())
 		{
 			if(file.isDirectory() && file.list() != null)
 			{
@@ -283,16 +293,16 @@ public class FileHelper
 				{
 					if(!f.isDirectory())
 					{
-						ret = ret && f.delete();
+						rtn = rtn && f.delete();
 					}
 				}
 			}
 			else
 			{
-				ret = ret && file.delete();
+				rtn = rtn && file.delete();
 			}
 		}
-		return ret;
+		return rtn;
 	}
 
 	/**
@@ -300,7 +310,16 @@ public class FileHelper
 	 */
 	public static boolean delFiles(String path)
 	{
-		return delFiles(new File(path));
+		boolean rtn = true;
+		if(!Strings.isNullOrEmpty(path))
+		{
+			File f = new File(path);
+			if(f.exists())
+			{
+				rtn = delFiles(f);
+			}
+		}
+		return rtn;
 	}
 
 	/**
@@ -309,15 +328,15 @@ public class FileHelper
 	public static List<File> getFilesByType(String fileType, List<File> files)
 	{
 		//		Preconditions.checkNotNull(fileType);
-		List<String> fileTypeList = Lists.newArrayList();
+		List<String> rtnList = Lists.newArrayList();
 
 		// BE Best-effort
 		if(!Strings.isNullOrEmpty(fileType))
 		{
-			fileTypeList.add(fileType);
+			rtnList.add(fileType);
 		}
 
-		return getFilesByTypes(fileTypeList, files);
+		return getFilesByTypes(rtnList, files);
 	}
 
 	/**
@@ -418,15 +437,24 @@ public class FileHelper
 		return System.getProperty("user.dir");
 	}
 
-	public static File createFile(String... strings)
+	public static File newFile(String... strings)
 	{
 		Preconditions.checkNotNull(strings);
 		return new File(Joiner.on(File.separator).join(strings));
 	}
 
+	public static File newFile(File parent, String... strings)
+	{
+		Preconditions.checkNotNull(parent);
+		Preconditions.checkNotNull(strings);
+		return new File(parent, Joiner.on(File.separator).join(strings));
+	}
+
 	@SuppressWarnings("null")
 	public static void main(String[] args)
 	{
+		String s1 = "";
+		System.out.println(new File(s1).getAbsolutePath());
 		// NullPointerException
 		List<String> stringList = null;
 		for(String s : stringList)
