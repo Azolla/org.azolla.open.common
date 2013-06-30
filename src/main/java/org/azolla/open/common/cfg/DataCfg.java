@@ -29,8 +29,7 @@ public final class DataCfg
 {
 	private static final Logger									LOG		= LoggerFactory.getLogger(DataCfg.class);
 
-	private static final LoadingCache<Class<?>, JAXBContext>	CACHE	= CacheBuilder.newBuilder().softValues()
-																				.build(new ConfigLoader());
+	private static final LoadingCache<Class<?>, JAXBContext>	CACHE	= CacheBuilder.newBuilder().softValues().build(new ConfigLoader());
 
 	private static class ConfigLoader extends CacheLoader<Class<?>, JAXBContext>
 	{
@@ -58,15 +57,20 @@ public final class DataCfg
 	{
 		Preconditions.checkNotNull(clazz);
 		Preconditions.checkNotNull(filePath);
+
+		T rtnT = null;
+
 		try
 		{
-			return (T) getJAXBContext(clazz).createUnmarshaller().unmarshal(new File(filePath));
+			rtnT = (T) getJAXBContext(clazz).createUnmarshaller().unmarshal(new File(filePath));
 		}
 		catch(Exception e)
 		{
 			LOG.error("clazz = [{}], filePath = [{}]", clazz, filePath, e.toString(), e);
-			return null;
+			rtnT = null;
 		}
+
+		return rtnT;
 	}
 
 	public static <T> void marshal(T t, String filePath)
