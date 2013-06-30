@@ -1,5 +1,5 @@
 /*
- * @(#)FileHelper.java		Created at 2013-2-24
+ * @(#)File0.java		Created at 2013-2-24
  * 
  * Copyright (c) 2011-2013 azolla.org All rights reserved.
  * Azolla PROPRIETARY/CONFIDENTIAL. Use is subject to license terms. 
@@ -17,7 +17,7 @@ import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 
 /**
- * Help for file
+ * FileHelper
  * 
  * The concept about some object:
  * 1.file/path		:<code>File</code>/<code>String</code> object, maybe document,maybe directory and maybe null.
@@ -28,12 +28,12 @@ import com.google.common.collect.Lists;
  * @author 	sk@azolla.org
  * @since 	ADK1.0
  */
-public class FileHelper
+public final class File0
 {
 	public static final String	ILLEGAL_FILENAME_REGEX	= "[{/\\\\:*?\"<>|}]";
 
 	/**
-	 * @see org.azolla.open.common.io.FileHelper#allFiles(File)
+	 * @see org.azolla.open.common.io.File0#allFiles(File)
 	 */
 	public static List<String> allFilePaths(File file)
 	{
@@ -55,7 +55,7 @@ public class FileHelper
 	}
 
 	/**
-	 * @see org.azolla.open.common.io.FileHelper#allFilePaths(File)
+	 * @see org.azolla.open.common.io.File0#allFilePaths(File)
 	 */
 	public static List<String> allFilePaths(String path)
 	{
@@ -106,7 +106,7 @@ public class FileHelper
 	}
 
 	/**
-	 * @see org.azolla.open.common.io.FileHelper#allFiles(File)
+	 * @see org.azolla.open.common.io.File0#allFiles(File)
 	 */
 	public static List<File> allFiles(String path)
 	{
@@ -156,7 +156,7 @@ public class FileHelper
 	}
 
 	/**
-	 * @see org.azolla.open.common.io.FileHelper#delAllEmptyFiles(File)
+	 * @see org.azolla.open.common.io.File0#delAllEmptyFiles(File)
 	 */
 	public static boolean delAllEmptyFiles(String path)
 	{
@@ -202,7 +202,7 @@ public class FileHelper
 	}
 
 	/**
-	 * @see org.azolla.open.common.io.FileHelper#delDirectory(File)
+	 * @see org.azolla.open.common.io.File0#delDirectory(File)
 	 */
 	public static boolean delDirectory(String path)
 	{
@@ -258,7 +258,7 @@ public class FileHelper
 	}
 
 	/**
-	 * @see org.azolla.open.common.io.FileHelper#delEmptyFiles(File)
+	 * @see org.azolla.open.common.io.File0#delEmptyFiles(File)
 	 */
 	public static boolean delEmptyFiles(String path)
 	{
@@ -306,7 +306,7 @@ public class FileHelper
 	}
 
 	/**
-	 * @see org.azolla.open.common.io.FileHelper#delFiles(File)
+	 * @see org.azolla.open.common.io.File0#delFiles(File)
 	 */
 	public static boolean delFiles(String path)
 	{
@@ -323,7 +323,7 @@ public class FileHelper
 	}
 
 	/**
-	 * @see org.azolla.open.common.io.FileHelper#getFilesByTypes(List, List)
+	 * @see org.azolla.open.common.io.File0#getFilesByTypes(List, List)
 	 */
 	public static List<File> getFilesByType(String fileType, List<File> files)
 	{
@@ -372,8 +372,8 @@ public class FileHelper
 	}
 
 	/**
-	 * @see org.azolla.open.common.io.FileHelper#getFilesByType(String, List)
-	 * @see org.azolla.open.common.io.FileHelper#allFiles(String)
+	 * @see org.azolla.open.common.io.File0#getFilesByType(String, List)
+	 * @see org.azolla.open.common.io.File0#allFiles(String)
 	 */
 	public static List<File> getFilesByType(String fileType, String path)
 	{
@@ -381,7 +381,7 @@ public class FileHelper
 	}
 
 	/**
-	 * @see org.azolla.open.common.io.FileHelper#getFilesByTypes(List, List)
+	 * @see org.azolla.open.common.io.File0#getFilesByTypes(List, List)
 	 */
 	public static List<File> getFilesByTypes(List<String> fileTypes, String path)
 	{
@@ -389,7 +389,7 @@ public class FileHelper
 	}
 
 	/**
-	 * @see org.azolla.open.common.io.FileHelper#getFileType(String)
+	 * @see org.azolla.open.common.io.File0#getFileType(String)
 	 */
 	public static String getFileType(File file)
 	{
@@ -412,7 +412,7 @@ public class FileHelper
 	}
 
 	/**
-	 * @see org.azolla.open.common.io.FileHelper#toLegalFileName(String, String)
+	 * @see org.azolla.open.common.io.File0#toLegalFileName(String, String)
 	 */
 	public static String toLegalFileName(String fileName)
 	{

@@ -1,5 +1,5 @@
 /*
- * @(#)ModelHelper.java		Created at 2013-2-24
+ * @(#)DataCfg.java		Created at 2013-2-24
  * 
  * Copyright (c) 2011-2013 azolla.org All rights reserved.
  * Azolla PROPRIETARY/CONFIDENTIAL. Use is subject to license terms. 
@@ -20,14 +20,14 @@ import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 
 /**
- * Help for model
+ * XSD (XML Schemas Definition) Model
  *
  * @author 	sk@azolla.org
  * @since 	ADK1.0
  */
-public class XmlConfigures
+public final class DataCfg
 {
-	private static final Logger									LOG		= LoggerFactory.getLogger(XmlConfigures.class);
+	private static final Logger									LOG		= LoggerFactory.getLogger(DataCfg.class);
 
 	private static final LoadingCache<Class<?>, JAXBContext>	CACHE	= CacheBuilder.newBuilder().softValues()
 																				.build(new ConfigLoader());

@@ -32,7 +32,7 @@ public class FileHelperTest
 
 	private List<String>		stringList			= Lists.newArrayList();
 
-	private static final File	testDir				= FileHelper.newFile(FileHelper.getUserDir(), "src", "test",
+	private static final File	testDir				= File0.newFile(File0.getUserDir(), "src", "test",
 															"resources", "org", "azolla", "open", "common", "io");
 
 	/**
@@ -55,7 +55,7 @@ public class FileHelperTest
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception
 	{
-		FileHelper.delFiles(testDir);
+		File0.delFiles(testDir);
 	}
 
 	/**
@@ -96,44 +96,44 @@ public class FileHelperTest
 	public void testAllFilePathsFile()
 	{
 		currentMethodName = "testAllFilePathsFile";
-		stringList = FileHelper.allFilePaths(testDir);
+		stringList = File0.allFilePaths(testDir);
 	}
 
 	@Test
 	public void testAllFilePathsString()
 	{
 		currentMethodName = "testAllFilePathsString";
-		stringList = FileHelper.allFilePaths(testDir.getAbsolutePath());
+		stringList = File0.allFilePaths(testDir.getAbsolutePath());
 	}
 
 	@Test
 	public void testAllFileFile()
 	{
 		currentMethodName = "testAllFileFile";
-		fileList = FileHelper.allFiles(testDir);
+		fileList = File0.allFiles(testDir);
 	}
 
 	@Test
 	public void testAllFileString()
 	{
 		currentMethodName = "testAllFileString";
-		fileList = FileHelper.allFiles(testDir.getAbsolutePath());
+		fileList = File0.allFiles(testDir.getAbsolutePath());
 	}
 
 	@Test
 	public void testToLegalFileNameString()
 	{
-		Assert.assertEquals("[____________]", FileHelper.toLegalFileName(FileHelper.ILLEGAL_FILENAME_REGEX));
+		Assert.assertEquals("[____________]", File0.toLegalFileName(File0.ILLEGAL_FILENAME_REGEX));
 	}
 
 	@Test
 	public void testToLegalFileNameStringString()
 	{
-		Assert.assertEquals("[++++++++++++]", FileHelper.toLegalFileName(FileHelper.ILLEGAL_FILENAME_REGEX, "+"));
+		Assert.assertEquals("[++++++++++++]", File0.toLegalFileName(File0.ILLEGAL_FILENAME_REGEX, "+"));
 	}
 
 	/**
-	 * Test method for {@link org.azolla.open.common.io.FileHelper#getFileType(java.io.File)}.
+	 * Test method for {@link org.azolla.open.common.io.File0#getFileType(java.io.File)}.
 	 */
 	@Test
 	public void testGetFileTypeFile()
@@ -141,12 +141,12 @@ public class FileHelperTest
 		currentMethodName = "testGetFileTypeFile";
 		//		Assert.assertSame("txt", FileHelper.getFileType(FileHelper.getFile(FileHelper.getUserDir(), "src", "test",
 		//				"resources", "readme.txt")));
-		Assert.assertEquals("txt", FileHelper.getFileType(FileHelper.newFile(FileHelper.getUserDir(), "src", "test",
+		Assert.assertEquals("txt", File0.getFileType(File0.newFile(File0.getUserDir(), "src", "test",
 				"resources", "readme.txt")));
 	}
 
 	/**
-	 * Test method for {@link org.azolla.open.common.io.FileHelper#getFileType(java.lang.String)}.
+	 * Test method for {@link org.azolla.open.common.io.File0#getFileType(java.lang.String)}.
 	 */
 	@Test
 	public void testGetFileTypeString()
@@ -158,21 +158,21 @@ public class FileHelperTest
 		//						"readme.txt").getAbsolutePath()));
 		Assert.assertEquals(
 				"txt",
- FileHelper.getFileType(FileHelper.newFile(FileHelper.getUserDir(), "src", "test", "resources",
+ File0.getFileType(File0.newFile(File0.getUserDir(), "src", "test", "resources",
 						"readme.txt").getAbsolutePath()));
 	}
 
 	@Test
 	public void testCreateFileStrings()
 	{
-		System.out.println(FileHelper.newFile());
+		System.out.println(File0.newFile());
 		//		System.out.println(FileHelper.createFile(null));
 	}
 
 	public static void main(String[] args)
 	{
 		System.out.println(System.getProperty("user.dir"));
-		System.out.println(FileHelper.toLegalFileName(FileHelper.ILLEGAL_FILENAME_REGEX));
+		System.out.println(File0.toLegalFileName(File0.ILLEGAL_FILENAME_REGEX));
 
 		String s = null;
 		List<String> stringList = Lists.newArrayList(s);

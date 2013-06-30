@@ -1,21 +1,21 @@
 /*
- * @(#)Vectors.java		Created at 2013-5-4
+ * @(#)Vector0.java		Created at 2013-5-4
  * 
  * Copyright (c) 2011-2013 azolla.org All rights reserved.
  * Azolla PROPRIETARY/CONFIDENTIAL. Use is subject to license terms. 
  */
-package org.azolla.open.common.collect;
+package org.azolla.open.common.util;
 
 import java.util.List;
 import java.util.Vector;
 
 /**
- * The coder is very lazy, nothing to write for this Vectors class
+ * VectorHelper
  *
  * @author 	sk@azolla.org
  * @since 	ADK1.0
  */
-public final class Vectors
+public final class Vector0
 {
 	public static <T> Vector<T> emptyVector()
 	{

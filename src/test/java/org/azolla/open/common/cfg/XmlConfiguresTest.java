@@ -62,23 +62,23 @@ public class XmlConfiguresTest
 	}
 
 	/**
-	 * Test method for {@link org.azolla.open.common.cfg.XmlConfigures#unmarshal(java.lang.Class, java.lang.String)}.
+	 * Test method for {@link org.azolla.open.common.cfg.DataCfg#unmarshal(java.lang.Class, java.lang.String)}.
 	 */
 	@Test
 	public void testUnmarshal()
 	{
 		//Just test log
-		System.out.println(XmlConfigures.unmarshal(Object.class, System.getProperty("user.dir")));
+		System.out.println(DataCfg.unmarshal(Object.class, System.getProperty("user.dir")));
 	}
 
 	/**
-	 * Test method for {@link org.azolla.open.common.cfg.XmlConfigures#marshal(java.lang.Object, java.lang.String)}.
+	 * Test method for {@link org.azolla.open.common.cfg.DataCfg#marshal(java.lang.Object, java.lang.String)}.
 	 */
 	@Test
 	public void testMarshal()
 	{
 		//Just test log
-		XmlConfigures.marshal(Object.class, System.getProperty("user.dir"));
+		DataCfg.marshal(Object.class, System.getProperty("user.dir"));
 	}
 
 }
