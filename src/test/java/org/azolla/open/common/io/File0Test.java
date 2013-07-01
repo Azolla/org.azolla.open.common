@@ -24,7 +24,7 @@ import com.google.common.collect.Lists;
  * @author 	sk@azolla.org
  * @since 	ADK1.0
  */
-public class FileHelperTest
+public class File0Test
 {
 	private String				currentMethodName	= "";
 

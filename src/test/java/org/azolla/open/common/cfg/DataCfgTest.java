@@ -18,7 +18,7 @@ import org.junit.Test;
  * @author 	sk@azolla.org
  * @since 	ADK1.0
  */
-public class XmlConfiguresTest
+public class DataCfgTest
 {
 
 	/**

@@ -123,6 +123,7 @@ public class AzollaException extends RuntimeException
 		{
 			s.println(this);
 
+			s.println();
 			s.println("\t--------Azolla Exception Properties--------");
 			if(code != null)
 			{
@@ -160,6 +161,7 @@ public class AzollaException extends RuntimeException
 		{
 			s.println(this);
 
+			s.println();
 			s.println("\t--------Azolla Exception Properties--------");
 			if(code != null)
 			{
