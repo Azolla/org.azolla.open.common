@@ -134,6 +134,7 @@ public class AzollaException extends RuntimeException
 				s.println("\t" + key + "=[" + properties.get(key) + "]");
 			}
 			s.println("\t-------------------------------------------");
+			s.println();
 
 			StackTraceElement[] trace = getStackTrace();
 			for(int i = 0; i < trace.length; i++)
@@ -172,6 +173,7 @@ public class AzollaException extends RuntimeException
 				s.println("\t" + key + "=[" + properties.get(key) + "]");
 			}
 			s.println("\t-------------------------------------------");
+			s.println();
 
 			StackTraceElement[] trace = getStackTrace();
 			for(int i = 0; i < trace.length; i++)

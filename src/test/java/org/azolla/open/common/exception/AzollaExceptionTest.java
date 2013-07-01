@@ -6,7 +6,6 @@
  */
 package org.azolla.open.common.exception;
 
-import org.azolla.open.common.exception.AzollaException;
 import org.azolla.open.common.exception.code.AzollaCode;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -15,6 +14,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Strings;
 
@@ -215,5 +215,12 @@ public class AzollaExceptionTest
 	public void testGetProperties()
 	{
 		ae.getProperties();
+	}
+
+	@Test
+	public void testLog()
+	{
+		testSet();
+		LoggerFactory.getLogger(AzollaExceptionTest.class).error(ae.toString(), ae);
 	}
 }
