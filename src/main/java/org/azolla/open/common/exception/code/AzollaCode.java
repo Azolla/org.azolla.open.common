@@ -9,10 +9,6 @@ package org.azolla.open.common.exception.code;
 /**
  * Azolla Exception Code
  * 
- * <p>[11,99]				:For Azoll Core
- * <p>[10001,99999]			:For Azolla Component
- * <p>[10000001,99999999]	:For Azolla Application
- *
  * @author 	sk@azolla.org
  * @since 	ADK1.0
  */

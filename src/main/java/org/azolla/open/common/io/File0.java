@@ -79,7 +79,7 @@ public final class File0
 	 * 1.file not exist
 	 * 2.file is an empty directory
 	 * 
-	 * Throw exception with the file is null.
+	 * inner -> outer
 	 * 
 	 * @param file document or directory
 	 * @return the container with document
@@ -126,7 +126,9 @@ public final class File0
 	 * Delete all empty document under this directory and sub directory.
 	 * if the file is empty document delete it.
 	 * 
-	 * return false when some empty document delete failure,but delete is go on
+	 * return false when some empty document delete failure,delete stop
+	 * 
+	 * inner -> outer
 	 * 
 	 * @param file document or directory
 	 * @return will return true with out false when some empty document delete failure
@@ -176,6 +178,8 @@ public final class File0
 	 * Delete file sub files and  under this directory and sub directory.
 	 * if this file is document or empty directory delete it.
 	 * 
+	 * inner -> outer
+	 * 
 	 * @param file document or directory
 	 * @return will return true with out false when some file delete failure
 	 */
@@ -222,7 +226,7 @@ public final class File0
 	 * Delete all empty document under this directory.
 	 * if the file is empty document delete it.
 	 * 
-	 * return false when some empty document delete failure,but delete is go on
+	 * return false when some empty document delete failure,delete stop
 	 * 
 	 * @param file document or directory
 	 * @return will return true with out false when some empty document delete failure
@@ -278,6 +282,8 @@ public final class File0
 	 * Delete all document under this directory.
 	 * if the file is document delete it.
 	 * 
+	 * return false when some document delete failure,delete stop
+	 * 
 	 * @param file document or directory
 	 * @return will return true with out false when some empty document delete failure
 	 */
@@ -328,15 +334,15 @@ public final class File0
 	public static List<File> getFilesByType(String fileType, List<File> files)
 	{
 		//		Preconditions.checkNotNull(fileType);
-		List<String> rtnList = Lists.newArrayList();
+		List<String> typeList = Lists.newArrayList();
 
 		// BE Best-effort
 		if(!Strings.isNullOrEmpty(fileType))
 		{
-			rtnList.add(fileType);
+			typeList.add(fileType);
 		}
 
-		return getFilesByTypes(rtnList, files);
+		return getFilesByTypes(typeList, files);
 	}
 
 	/**
@@ -350,12 +356,12 @@ public final class File0
 	{
 		//		Preconditions.checkNotNull(files);
 		//		Preconditions.checkNotNull(fileTypes);
-		List<File> fileList = Lists.newArrayList();
+		List<File> rtnList = Lists.newArrayList();
 
 		// BE Best-effort
 		if(null == fileTypes || fileTypes.isEmpty() || null == files)
 		{
-			return fileList;
+			return rtnList;
 		}
 
 		for(File f : files)
@@ -364,18 +370,18 @@ public final class File0
 			{
 				if(fileTypes.contains(getFileType(f)))
 				{
-					fileList.add(f);
+					rtnList.add(f);
 				}
 			}
 		}
-		return fileList;
+		return rtnList;
 	}
 
 	/**
 	 * @see org.azolla.open.common.io.File0#getFilesByType(String, List)
 	 * @see org.azolla.open.common.io.File0#allFiles(String)
 	 */
-	public static List<File> getFilesByType(String fileType, String path)
+	public static List<File> getAllFilesByType(String fileType, String path)
 	{
 		return getFilesByType(fileType, allFiles(path));
 	}
@@ -383,7 +389,7 @@ public final class File0
 	/**
 	 * @see org.azolla.open.common.io.File0#getFilesByTypes(List, List)
 	 */
-	public static List<File> getFilesByTypes(List<String> fileTypes, String path)
+	public static List<File> getAllFilesByTypes(List<String> fileTypes, String path)
 	{
 		return getFilesByTypes(fileTypes, allFiles(path));
 	}
