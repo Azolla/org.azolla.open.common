@@ -56,6 +56,9 @@ public class File0Test
 	public static void tearDownAfterClass() throws Exception
 	{
 		File0.delFiles(testDir);
+
+		File f = new File(testDir, "empty.txt");
+		f.createNewFile();
 	}
 
 	/**
