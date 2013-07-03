@@ -25,42 +25,42 @@ public class AzollaException extends RuntimeException
 {
 	private static final long			serialVersionUID	= 6975777768178330101L;
 
-	private ErrorCoder					code;
-	private final Map<String, Object>	properties			= Maps.newLinkedHashMap();	//serializable//new TreeMap<String, Object>(); sort
+	private ErrorCoder					errorCode;
+	private final Map<String, Object>	properties			= Maps.newTreeMap();	//sort
 
 	/**
-	 * Constructs a AzollaException with the specified detail code. 
+	 * Constructs a AzollaException with the specified detail errorCode. 
 	 */
-	public AzollaException(ErrorCoder code)
+	public AzollaException(ErrorCoder errorCode)
 	{
-		setCode(code);
+		setErrorCode(errorCode);
 	}
 
 	/**
-	 * Constructs a AzollaException with the specified detail code and message. 
+	 * Constructs a AzollaException with the specified detail errorCode and message. 
 	 */
-	public AzollaException(ErrorCoder code, String message)
+	public AzollaException(ErrorCoder errorCode, String message)
 	{
 		super(message);
-		setCode(code);
+		setErrorCode(errorCode);
 	}
 
 	/**
-	 * Constructs a AzollaException with the specified detail code and cause.
+	 * Constructs a AzollaException with the specified detail errorCode and cause.
 	 */
-	public AzollaException(ErrorCoder code, Throwable cause)
+	public AzollaException(ErrorCoder errorCode, Throwable cause)
 	{
 		super(cause);
-		setCode(code);
+		setErrorCode(errorCode);
 	}
 
 	/**
-	 * Constructs a AzollaException with the specified detail code, message and cause.
+	 * Constructs a AzollaException with the specified detail errorCode, message and cause.
 	 */
-	public AzollaException(ErrorCoder code, String message, Throwable cause)
+	public AzollaException(ErrorCoder errorCode, String message, Throwable cause)
 	{
 		super(message, cause);
-		setCode(code);
+		setErrorCode(errorCode);
 	}
 
 	/**
@@ -80,12 +80,12 @@ public class AzollaException extends RuntimeException
 	 * The coder is very lazy, nothing to write for this wrap method
 	 * 
 	 * @param cause
-	 * @param code
+	 * @param errorCode
 	 * @return AzollaException
 	 */
-	public static AzollaException wrap(Throwable cause, ErrorCoder code)
+	public static AzollaException wrap(Throwable cause, ErrorCoder errorCode)
 	{
-		ErrorCoder ec = null == code ? AzollaCode.UNAZOLLA : code;
+		ErrorCoder ec = null == errorCode ? AzollaCode.UNAZOLLA : errorCode;
 		if(null == cause)
 		{
 			return new AzollaException(ec);
@@ -93,13 +93,13 @@ public class AzollaException extends RuntimeException
 		else if(cause instanceof AzollaException)
 		{
 			AzollaException se = (AzollaException) cause;
-
-			if(code != null && code != se.getCode())
+			ErrorCoder currentErrorCoder = se.getErrorCode();
+			if(errorCode != null && errorCode != currentErrorCoder)
 			{
 				//keep history
-				//return new AzollaException(code, cause.getMessage(), cause);
-				se.set(se.getCode().toString(), se.getCode().getClass().getName());
-				se.setCode(code);
+				return new AzollaException(errorCode, cause.getMessage(), cause);
+				//se.set(currentErrorCoder.getClass().getName() + "." + currentErrorCoder.toString(), currentErrorCoder.getCode());
+				//se.setErrorCode(errorCode);
 			}
 
 			return se;
@@ -120,9 +120,9 @@ public class AzollaException extends RuntimeException
 
 			s.println();
 			s.println("\t--------Azolla Exception Properties--------");
-			if(code != null)
+			if(errorCode != null)
 			{
-				s.println("\t" + code + ":" + code.getClass().getName());
+				s.println("\t" + errorCode + ":" + errorCode.getClass().getName());
 			}
 			for(Map.Entry<String, Object> entry : properties.entrySet())
 			{
@@ -159,9 +159,9 @@ public class AzollaException extends RuntimeException
 
 			s.println();
 			s.println("\t--------Azolla Exception Properties--------");
-			if(code != null)
+			if(errorCode != null)
 			{
-				s.println("\t" + code + ":" + code.getClass().getName());
+				s.println("\t" + errorCode + ":" + errorCode.getClass().getName());
 			}
 			for(Map.Entry<String, Object> entry : properties.entrySet())
 			{
@@ -197,27 +197,27 @@ public class AzollaException extends RuntimeException
 	}
 
 	/**
-	 * this is a getter method for code
+	 * this is a getter method for errorCode
 	 *
-	 * @return the code
+	 * @return the errorCode
 	 */
-	public ErrorCoder getCode()
+	public ErrorCoder getErrorCode()
 	{
-		if(null == code)
+		if(null == errorCode)
 		{
-			code = AzollaCode.UNAZOLLA;
+			errorCode = AzollaCode.UNAZOLLA;
 		}
-		return code;
+		return errorCode;
 	}
 
 	/**
-	 * this is a setter method for code
+	 * this is a setter method for errorCode
 	 *
-	 * @param code the code to set
+	 * @param errorCode the errorCode to set
 	 */
-	public void setCode(ErrorCoder code)
+	public void setErrorCode(ErrorCoder errorCode)
 	{
-		this.code = null == code ? AzollaCode.UNAZOLLA : code;
+		this.errorCode = null == errorCode ? AzollaCode.UNAZOLLA : errorCode;
 	}
 
 	/**

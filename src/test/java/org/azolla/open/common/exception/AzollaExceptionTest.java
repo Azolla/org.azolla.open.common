@@ -79,7 +79,7 @@ public class AzollaExceptionTest
 		if(null != ae)
 		{
 			//			ae.printStackTrace();
-			System.out.println(ae.getCode());
+			System.out.println(ae.getErrorCode());
 		}
 	}
 
@@ -190,22 +190,22 @@ public class AzollaExceptionTest
 	}
 
 	/**
-	 * Test method for {@link org.azolla.open.common.exception.AzollaException#getCode()}.
+	 * Test method for {@link org.azolla.open.common.exception.AzollaException#getErrorCode()}.
 	 */
 	@Test
 	public void testGetCode()
 	{
-		Assert.assertEquals(AzollaCode.UNAZOLLA, ae.getCode());
-		Assert.assertSame(AzollaCode.UNAZOLLA, ae.getCode());
+		Assert.assertEquals(AzollaCode.UNAZOLLA, ae.getErrorCode());
+		Assert.assertSame(AzollaCode.UNAZOLLA, ae.getErrorCode());
 	}
 
 	/**
-	 * Test method for {@link org.azolla.open.common.exception.AzollaException#setCode(org.azolla.exception.code.ExceptionCoder)}.
+	 * Test method for {@link org.azolla.open.common.exception.AzollaException#setErrorCode(org.azolla.exception.code.ExceptionCoder)}.
 	 */
 	@Test
 	public void testSetCode()
 	{
-		ae.setCode(AzollaCode.UNAZOLLA);
+		ae.setErrorCode(AzollaCode.UNAZOLLA);
 	}
 
 	/**
