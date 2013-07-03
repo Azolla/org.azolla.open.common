@@ -12,7 +12,7 @@ package org.azolla.open.common.io;
  * @author 	sk@azolla.org
  * @since 	ADK1.0
  */
-public class Encoding
+public class Encodes
 {
 	public static final String	UTF_8		= "UTF-8";
 
