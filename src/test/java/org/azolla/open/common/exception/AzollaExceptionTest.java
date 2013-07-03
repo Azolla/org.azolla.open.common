@@ -223,4 +223,41 @@ public class AzollaExceptionTest
 		testSet();
 		LoggerFactory.getLogger(AzollaExceptionTest.class).error(ae.toString(), ae);
 	}
+
+	@Test
+	public void testHistory()
+	{
+		Exception e = new Exception("Exception");
+		try
+		{
+			throw e;
+		}
+		catch(Exception ex)
+		{
+			try
+			{
+				throw AzollaException.wrap(ex, AzollaCode.UNAZOLLA).set("K1", "V1");
+			}
+			catch(Exception exc)
+			{
+				try
+				{
+					throw AzollaException.wrap(exc, AzollaCode.AZOLLA).set("K3", "V3");
+				}
+				catch(Exception exce)
+				{
+					try
+					{
+						throw AzollaException.wrap(exce, AzollaCode.UNAZOLLA).set("K2", "V2");
+					}
+					catch(Exception excep)
+					{
+						AzollaException ae = AzollaException.wrap(excep, AzollaCode.AZOLLA).set("K4", "V4");
+						LoggerFactory.getLogger(AzollaExceptionTest.class).error(ae.toString(), ae);
+					}
+				}
+
+			}
+		}
+	}
 }

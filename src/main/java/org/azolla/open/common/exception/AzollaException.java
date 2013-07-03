@@ -9,10 +9,11 @@ package org.azolla.open.common.exception;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.util.Map;
-import java.util.TreeMap;
 
 import org.azolla.open.common.exception.code.AzollaCode;
 import org.azolla.open.common.exception.code.ErrorCoder;
+
+import com.google.common.collect.Maps;
 
 /**
  * The exception for Azolla
@@ -25,7 +26,7 @@ public class AzollaException extends RuntimeException
 	private static final long			serialVersionUID	= 6975777768178330101L;
 
 	private ErrorCoder					code;
-	private final Map<String, Object>	properties			= new TreeMap<String, Object>();
+	private final Map<String, Object>	properties			= Maps.newLinkedHashMap();	//serializable//new TreeMap<String, Object>(); sort
 
 	/**
 	 * Constructs a AzollaException with the specified detail code. 
@@ -87,14 +88,6 @@ public class AzollaException extends RuntimeException
 		ErrorCoder ec = null == code ? AzollaCode.UNAZOLLA : code;
 		if(null == cause)
 		{
-			//			if(null == code)
-			//			{
-			//				return new AzollaException(AzollaCode.UNAZOLLA);
-			//			}
-			//			else
-			//			{
-			//				return new AzollaException(code);
-			//			}
 			return new AzollaException(ec);
 		}
 		else if(cause instanceof AzollaException)
@@ -103,7 +96,9 @@ public class AzollaException extends RuntimeException
 
 			if(code != null && code != se.getCode())
 			{
-				//				return new AzollaException(code, cause.getMessage(), cause);
+				//keep history
+				//return new AzollaException(code, cause.getMessage(), cause);
+				se.set(se.getCode().toString(), se.getCode().getClass().getName());
 				se.setCode(code);
 			}
 
@@ -129,9 +124,9 @@ public class AzollaException extends RuntimeException
 			{
 				s.println("\t" + code + ":" + code.getClass().getName());
 			}
-			for(String key : properties.keySet())
+			for(Map.Entry<String, Object> entry : properties.entrySet())
 			{
-				s.println("\t" + key + "=[" + properties.get(key) + "]");
+				s.println("\t" + entry.getKey() + "=[" + entry.getValue() + "]");
 			}
 			s.println("\t-------------------------------------------");
 			s.println();
@@ -168,9 +163,9 @@ public class AzollaException extends RuntimeException
 			{
 				s.println("\t" + code + ":" + code.getClass().getName());
 			}
-			for(String key : properties.keySet())
+			for(Map.Entry<String, Object> entry : properties.entrySet())
 			{
-				s.println("\t" + key + "=[" + properties.get(key) + "]");
+				s.println("\t" + entry.getKey() + "=[" + entry.getValue() + "]");
 			}
 			s.println("\t-------------------------------------------");
 			s.println();
