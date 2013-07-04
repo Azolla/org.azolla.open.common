@@ -14,6 +14,7 @@ import org.azolla.open.common.exception.AzollaException;
 import org.azolla.open.common.exception.code.AzollaCode;
 import org.azolla.open.common.io.Encoding;
 import org.azolla.open.common.text.Fmts;
+import org.azolla.open.common.util.KV;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -61,8 +62,7 @@ public final class FtpHelper
 		}
 		catch(Exception e)
 		{
-			//TODO
-			LOG.error(Fmts.LOG_WITH_KEY_FMT, e.toString(), AzollaCode.FTP_CONNECT_ERROR);
+			LOG.error(Fmts.LOG_WITH_KEY_FMT, e.toString(), AzollaCode.FTP_CONNECT_ERROR, KV.newKV().set("host", host).set("port", String.valueOf(port)).toString(";", "="));
 			throw AzollaException.wrap(e, AzollaCode.FTP_CONNECT_ERROR).set("host", host).set("port", port);
 		}
 
@@ -76,6 +76,7 @@ public final class FtpHelper
 			}
 			catch(IOException e)
 			{
+				//TODO
 				throw AzollaException.wrap(e, AzollaCode.FTP_LOGIN_ERROR).set("username", username).set("password", password);
 			}
 
