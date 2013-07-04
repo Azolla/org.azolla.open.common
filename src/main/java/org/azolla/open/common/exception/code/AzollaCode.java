@@ -18,7 +18,15 @@ public enum AzollaCode implements ErrorCoder
 	UNAZOLLA(0),
 
 	/** This code(11) is for exception AzollaException Error, It like your feet */
-	AZOLLA(11);
+	AZOLLA(11),
+
+	/** Component:FTP[10000,10099]*/
+	FTP_CONNECT_ERROR(10000),		//[Host or Port error]...
+	FTP_LOGIN_ERROR(10001),			//[Connection is not open][Connection unexpectedly closed][Connection closed without indication]...
+	FTP_LOGIN_FAILED(10002),		//[Username or Password incorrect]...
+	FTP_SET_FILETYPE_ERROR(10003),	//[Connection is not open][Connection unexpectedly closed][Connection closed without indication]...
+
+	UNKNOWN(1000000000);
 
 	private final int	code;
 

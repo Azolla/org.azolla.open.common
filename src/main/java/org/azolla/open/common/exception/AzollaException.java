@@ -94,15 +94,11 @@ public class AzollaException extends RuntimeException
 		{
 			AzollaException se = (AzollaException) cause;
 			ErrorCoder currentErrorCoder = se.getErrorCode();
-			if(errorCode != null && errorCode != currentErrorCoder)
-			{
-				//keep history
-				return new AzollaException(errorCode, cause.getMessage(), cause);
-				//se.set(currentErrorCoder.getClass().getName() + "." + currentErrorCoder.toString(), currentErrorCoder.getCode());
-				//se.setErrorCode(errorCode);
-			}
 
-			return se;
+			//keep history
+			//se.set(currentErrorCoder.getClass().getName() + "." + currentErrorCoder.toString(), currentErrorCoder.getCode());
+			//se.setErrorCode(errorCode);
+			return (errorCode != null && errorCode != currentErrorCoder) ? new AzollaException(errorCode, cause.getMessage(), cause) : se;
 		}
 		return new AzollaException(ec, cause.getMessage(), cause);
 	}
