@@ -32,26 +32,37 @@ public final class File0
 {
 	public static final String	ILLEGAL_FILENAME_REGEX	= "[{/\\\\:*?\"<>|}]";
 
+	public static final String	POINT					= ".";
+
+	public static final String	ZIP_FILETYPE			= "zip";
+	public static final String	ZIP_FILETYPE_WITH_POINT	= POINT + ZIP_FILETYPE;
+
+	public static final String	JAR_FILETYPE			= "jar";
+	public static final String	JAR_FILETYPE_WITH_POINT	= POINT + JAR_FILETYPE;
+
+	public static final String	WAR_FILETYPE			= "war";
+	public static final String	WAR_FILETYPE_WITH_POINT	= POINT + WAR_FILETYPE;
+
 	/**
 	 * @see org.azolla.open.common.io.File0#allFiles(File)
 	 */
 	public static List<String> allFilePaths(File file)
 	{
 		return Lists.transform(allFiles(file), new Function<File, String>()
+		{
+			@Override
+			public String apply(File input)
 			{
-				@Override
-				public String apply(File input)
+				try
 				{
-					try
-					{
-						return input.getCanonicalPath();
-					}
-					catch(IOException e)
-					{
-						return input.getAbsolutePath();
-					}
+					return input.getCanonicalPath();
 				}
-			});
+				catch(IOException e)
+				{
+					return input.getAbsolutePath();
+				}
+			}
+		});
 	}
 
 	/**

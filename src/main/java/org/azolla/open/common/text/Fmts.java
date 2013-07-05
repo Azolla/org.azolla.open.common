@@ -14,6 +14,7 @@ package org.azolla.open.common.text;
  */
 public final class Fmts
 {
-	public static final String	LOG_WITH_KEY_FMT	= "[{}][key={}][{}]";
+	public static final String	LOG_EC_P_M_FMT	= "[ErrorCode={}][{}]\n{}";	//EC=ErrorCode;P=Properties;M=Message
 
+	public static final String	LOG_EC_P_FMT	= "[ErrorCode={}][{}]";	//EC=ErrorCode;P=Properties
 }

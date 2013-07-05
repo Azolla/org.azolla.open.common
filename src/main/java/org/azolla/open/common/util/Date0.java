@@ -23,20 +23,26 @@ import com.google.common.base.Preconditions;
  */
 public final class Date0
 {
-	private static final Logger	LOG			= LoggerFactory.getLogger(Date0.class);
+	private static final Logger	LOG				= LoggerFactory.getLogger(Date0.class);
 
-	public static final String	Y			= "yyyy";
-	public static final String	M			= "MM";
-	public static final String	D			= "dd";
-	public static final String	YM			= "yyyyMM";
-	public static final String	YMD			= "yyyyMMdd";
-	public static final String	Y_M			= "yyyy-MM";
-	public static final String	Y_M_D		= "yyyy-MM-dd";
+	public static final String	Y				= "yyyy";
+	public static final String	M				= "MM";
+	public static final String	D				= "dd";
+	public static final String	YM				= "yyyyMM";
+	public static final String	YMD				= "yyyyMMdd";
+	public static final String	Y_M				= "yyyy-MM";
+	public static final String	Y_M_D			= "yyyy-MM-dd";
 
-	public static final String	DATE		= Y_M_D;
-	public static final String	TIME		= "HH:mm:ss";
-	public static final String	DATA_TIME	= "yyyy-MM-dd HH:mm:ss";				//2013-05-04 19:51:08
-	public static final String	DATATIME	= "yyyyMMddHHmmss";
+	public static final String	H				= "HH";
+	public static final String	MI				= "mm";
+	public static final String	S				= "ss";
+
+	public static final String	Y__M__D_H_MI_S	= "yyyy_MM_dd_HH_mm_ss";
+
+	public static final String	DATE			= Y_M_D;
+	public static final String	TIME			= "HH:mm:ss";
+	public static final String	DATA_TIME		= "yyyy-MM-dd HH:mm:ss";				//2013-05-04 19:51:08
+	public static final String	DATATIME		= "yyyyMMddHHmmss";
 
 	/**
 	 * 20130701195108
@@ -72,6 +78,17 @@ public final class Date0
 	public static String toString(Date date)
 	{
 		return toString(date, DATA_TIME);
+	}
+
+	/**
+	 * Date -> String
+	 * 
+	 * @param pattern
+	 * @return String
+	 */
+	public static String toString(String pattern)
+	{
+		return toString(now(), pattern);
 	}
 
 	/**
@@ -157,7 +174,7 @@ public final class Date0
 
 		return rtnDate;
 	}
-	
+
 	/**
 	 * date > now = 1
 	 * date = now = 0
