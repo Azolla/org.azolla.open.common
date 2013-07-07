@@ -36,7 +36,7 @@ import com.google.common.io.Closeables;
 /**
  * ZipHelper
  * 
- * <p>Support Chinese
+ * <p>Support Chinese:Encoding.GBK
  *
  * @author 	sk@azolla.org
  * @since 	ADK1.0
@@ -49,7 +49,12 @@ public class Zips
 
 	public static boolean unzip(File zip)
 	{
-		return null == zip ? false : unzip(zip.getPath(), null);
+		return null == zip ? false : unzip(zip.getPath(), "");
+	}
+
+	public static boolean unzip(File zip, Encoding encoding)
+	{
+		return null == zip ? false : unzip(zip.getPath(), null, encoding);
 	}
 
 	public static boolean unzip(File zip, String dest)
@@ -59,7 +64,12 @@ public class Zips
 
 	public static boolean unzip(String zip)
 	{
-		return unzip(zip, null);
+		return unzip(zip, "");
+	}
+
+	public static boolean unzip(String zip, Encoding encoding)
+	{
+		return unzip(zip, null, Encoding.UTF8);
 	}
 
 	public static boolean unzip(String zip, String dest)
@@ -209,12 +219,22 @@ public class Zips
 		return Strings.isNullOrEmpty(dir) ? false : zip(dir, new File(dir).getPath(), self);
 	}
 
-	public static boolean zip(String dir, String zip, boolean self)
+	public static boolean zip(String dir, Encoding encoding)
 	{
-		return zip(dir, zip, self, Encoding.UTF8);
+		return Strings.isNullOrEmpty(dir) ? false : zip(dir, new File(dir).getPath(), encoding);
 	}
 
-	public static boolean zip(String dir, String zip, boolean self, Encoding encoding)
+	public static boolean zip(String dir, String zip, boolean self)
+	{
+		return zip(dir, zip, Encoding.UTF8, self);
+	}
+
+	public static boolean zip(String dir, String zip, Encoding encoding)
+	{
+		return zip(dir, zip, encoding, false);
+	}
+
+	public static boolean zip(String dir, String zip, Encoding encoding, boolean self)
 	{
 		boolean rtnBoolean = false;
 		if(!Strings.isNullOrEmpty(dir))
