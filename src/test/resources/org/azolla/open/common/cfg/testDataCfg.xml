@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<testRootNode testAttrbuteNode2="5" testAttrbuteNode1="testRootNode">
+    <testRefElementNode>
+        <testElementNode>testElementNode</testElementNode>
+    </testRefElementNode>
+</testRootNode>

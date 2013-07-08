@@ -9,6 +9,7 @@ package org.azolla.open.common.collect;
 import org.azolla.open.common.collect.Tuple.Quadruple;
 import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -21,6 +22,7 @@ import org.junit.Test;
  */
 public class TupleTest
 {
+	private static final String	LOCAL_IP	= "127.0.0.1";
 
 	/**
 	 * The coder is very lazy, nothing to write for this setUpBeforeClass method
@@ -67,8 +69,8 @@ public class TupleTest
 	{
 		//		fail("Not yet implemented");
 		Quadruple<Integer, Integer, Integer, Integer> ip = Tuple.of(127, 0, 0, 1);
-		System.out.println(Tuple.joinWith("", ".", "").join(ip));
-		System.out.println(Tuple.joinWith(".").join(ip));
+		Assert.assertEquals(LOCAL_IP, Tuple.joinWith("", ".", "").join(ip));
+		Assert.assertEquals(LOCAL_IP, Tuple.joinWith(".").join(ip));
 
 		//		MessageFormat.format(pattern, arguments)
 

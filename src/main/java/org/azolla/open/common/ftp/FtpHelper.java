@@ -15,6 +15,8 @@ import java.net.InetAddress;
 import java.util.List;
 
 import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPFile;
+import org.apache.commons.net.ftp.FTPFileFilter;
 import org.apache.commons.net.ftp.FTPReply;
 import org.azolla.open.common.exception.AzollaException;
 import org.azolla.open.common.exception.code.AzollaCode;
@@ -189,9 +191,6 @@ public final class FtpHelper
 
 		//5.timeout
 		setTimeout(timeout);
-
-		//6.encoding
-		setEncoding(encoding);
 	}
 
 	public boolean disconnect()
@@ -201,7 +200,10 @@ public final class FtpHelper
 		{
 			try
 			{
-				client.logout();
+				if(client.isConnected())
+				{
+					client.logout();
+				}
 			}
 			catch(Exception e)
 			{
@@ -438,6 +440,116 @@ public final class FtpHelper
 		return rtnList;
 	}
 
+	public List<String> allNames()
+	{
+		return allNames(null);
+	}
+
+	public List<String> allNames(String remotePath)
+	{
+		return allNames(remotePath, null);
+	}
+
+	public List<String> allNames(String remotePath, FTPFileFilter filter)
+	{
+		List<String> rtnList = Lists.newArrayList();
+
+		try
+		{
+			activeClient();
+
+			FTPFile[] pathArray = null == filter ? client.listFiles(remotePath) : client.listFiles(remotePath, filter);
+			if(null != pathArray)
+			{
+				String filePrefix = (null == remotePath) ? "" : (remotePath.startsWith("/") ? remotePath : "/" + remotePath);
+				String folderPrefix = filePrefix.endsWith("/") ? filePrefix : filePrefix + "/";
+				for(FTPFile f : pathArray)
+				{
+					if(f.isDirectory())
+					{
+						rtnList.addAll(allNames(folderPrefix + f.getName(), filter));
+					}
+					else
+					{
+						if(pathArray.length > 1)
+						{
+							rtnList.add(folderPrefix + f.getName());
+						}
+						else
+						{
+							int index = filePrefix.lastIndexOf("/");
+							rtnList.add(f.getName().equals(-1 == index ? filePrefix : filePrefix.substring(index + 1)) ? filePrefix : filePrefix + "/" + f.getName());
+						}
+
+					}
+				}
+			}
+		}
+		catch(Exception e)
+		{
+			LOG.error(Fmts.LOG_EC_P_M_FMT, AzollaCode.FTP_LIST_FILE_ERROR, KV.newKV().set("remotePath", remotePath).toString(), e.toString());
+		}
+		finally
+		{
+			disconnect();
+		}
+
+		return rtnList;
+	}
+
+	/**
+	 * @see org.azolla.open.common.ftp.FtpHelper#listFiles(String)
+	 */
+	public List<FTPFile> listFiles()
+	{
+		return listFiles(null);
+	}
+
+	/**
+	 * @see org.azolla.open.common.ftp.FtpHelper#listFiles(String,FTPFileFilter)
+	 */
+	public List<FTPFile> listFiles(String remotePath)
+	{
+		return listFiles(remotePath, null);
+	}
+
+	/**
+	 * list of remotePath
+	 * 
+	 * @param remotePath
+	 * @return List<FTPFile>
+	 */
+	public List<FTPFile> listFiles(String remotePath, FTPFileFilter filter)
+	{
+		List<FTPFile> rtnList = Lists.newArrayList();
+
+		try
+		{
+			activeClient();
+
+			FTPFile[] pathArray = null == filter ? client.listFiles(remotePath) : client.listFiles(remotePath, filter);
+			if(null != pathArray)
+			{
+				rtnList = Lists.newArrayList(pathArray);
+			}
+		}
+		catch(Exception e)
+		{
+			LOG.error(Fmts.LOG_EC_P_M_FMT, AzollaCode.FTP_LIST_FILE_ERROR, KV.newKV().set("remotePath", remotePath).toString(), e.toString());
+		}
+		finally
+		{
+			disconnect();
+		}
+
+		return rtnList;
+	}
+
+	public boolean storeFile(String remotePath, File localFile)
+	{
+		return null == localFile ? false : storeFile(remotePath, localFile.getAbsolutePath());
+	}
+
 	/**
 	 * upload file to ftp
 	 * 
@@ -662,8 +774,9 @@ public final class FtpHelper
 	 */
 	public FtpHelper setEncoding(Encoding encoding)
 	{
-		client.setControlEncoding(encoding.getEncoding());
-		this.encoding = encoding;
+		Encoding e = null == encoding ? Encoding.UTF8 : encoding;
+		client.setControlEncoding(e.getEncoding());
+		this.encoding = e;
 		return this;
 	}
 
@@ -696,4 +809,15 @@ public final class FtpHelper
 		}
 		return this;
 	}
+
+	/**
+	 * this is a getter method for client
+	 *
+	 * @return the client
+	 */
+	public FTPClient getClient()
+	{
+		return client;
+	}
+
 }

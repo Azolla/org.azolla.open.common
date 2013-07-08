@@ -10,7 +10,9 @@ import java.io.File;
 import java.util.concurrent.ExecutionException;
 
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Marshaller;
 
+import org.azolla.open.common.io.Encoding;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,10 +31,21 @@ public final class DataCfg
 {
 	private static final Logger									LOG		= LoggerFactory.getLogger(DataCfg.class);
 
-	private static final LoadingCache<Class<?>, JAXBContext>	CACHE	= CacheBuilder.newBuilder().softValues().build(new ConfigLoader());
+	private static final LoadingCache<Class<?>, JAXBContext>	CACHE	= CacheBuilder.newBuilder().softValues().build(ConfigLoader.ins());
 
 	private static class ConfigLoader extends CacheLoader<Class<?>, JAXBContext>
 	{
+		private static ConfigLoader	instance;
+
+		private ConfigLoader()
+		{
+
+		}
+
+		public static ConfigLoader ins()
+		{
+			return null == instance ? new ConfigLoader() : instance;
+		}
 
 		/**
 		 * @see com.google.common.cache.CacheLoader#load(java.lang.Object)
@@ -75,11 +88,19 @@ public final class DataCfg
 
 	public static <T> void marshal(T t, String filePath)
 	{
+		marshal(t, filePath, null);
+	}
+
+	public static <T> void marshal(T t, String filePath, Encoding encoding)
+	{
 		Preconditions.checkNotNull(t);
 		Preconditions.checkNotNull(filePath);
 		try
 		{
-			getJAXBContext(t.getClass()).createMarshaller().marshal(t, new File(filePath));
+			Marshaller m = getJAXBContext(t.getClass()).createMarshaller();
+			m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+			m.setProperty(Marshaller.JAXB_ENCODING, null == encoding ? Encoding.UTF8.getEncoding() : encoding.getEncoding());
+			m.marshal(t, new File(filePath));
 		}
 		catch(Exception e)
 		{

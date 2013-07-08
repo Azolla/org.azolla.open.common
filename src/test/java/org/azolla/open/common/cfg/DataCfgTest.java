@@ -6,8 +6,12 @@
  */
 package org.azolla.open.common.cfg;
 
+import java.io.File;
+
+import org.azolla.open.common.cfg.test.TestRootNode;
 import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -20,6 +24,10 @@ import org.junit.Test;
  */
 public class DataCfgTest
 {
+
+	private TestRootNode	testRootNode;
+
+	private File			testDataCfgFile	= new File(System.getProperty("user.dir"), "src/test/resources/org/azolla/open/common/cfg/testDataCfg.xml");
 
 	/**
 	 * The coder is very lazy, nothing to write for this setUpBeforeClass method
@@ -67,8 +75,10 @@ public class DataCfgTest
 	@Test
 	public void testUnmarshal()
 	{
+		testRootNode = DataCfg.unmarshal(TestRootNode.class, testDataCfgFile.getAbsolutePath());
+		Assert.assertNotNull(testRootNode);
 		//Just test log
-		System.out.println(DataCfg.unmarshal(Object.class, System.getProperty("user.dir")));
+		//		System.out.println(DataCfg.unmarshal(Object.class, System.getProperty("user.dir")));
 	}
 
 	/**
@@ -77,8 +87,10 @@ public class DataCfgTest
 	@Test
 	public void testMarshal()
 	{
-		//Just test log
-		DataCfg.marshal(Object.class, System.getProperty("user.dir"));
+		testUnmarshal();
+
+		testRootNode.setTestAttrbuteNode2(testRootNode.getTestAttrbuteNode2() + 1);
+		DataCfg.marshal(testRootNode, testDataCfgFile.getAbsolutePath());
 	}
 
 }
