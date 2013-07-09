@@ -15,6 +15,7 @@ package org.azolla.open.common.io;
 public enum Encoding
 {
 	UTF8("UTF-8"),
+	ASCII("ASCII"),
 	GBK("GBK");
 
 	private String	encoding;

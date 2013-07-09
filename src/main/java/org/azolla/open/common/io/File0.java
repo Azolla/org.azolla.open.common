@@ -43,6 +43,9 @@ public final class File0
 	public static final String	WAR_FILETYPE			= "war";
 	public static final String	WAR_FILETYPE_WITH_POINT	= POINT + WAR_FILETYPE;
 
+	public static final String	TXT_FILETYPE			= "txt";
+	public static final String	TXT_FILETYPE_WITH_POINT	= POINT + TXT_FILETYPE;
+
 	/**
 	 * @see org.azolla.open.common.io.File0#allFiles(File)
 	 */

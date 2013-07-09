@@ -32,8 +32,7 @@ public class File0Test
 
 	private List<String>		stringList			= Lists.newArrayList();
 
-	private static final File	testDir				= File0.newFile(File0.getUserDir(), "src", "test",
-															"resources", "org", "azolla", "open", "common", "io");
+	private static final File	testDir				= File0.newFile(File0.getUserDir(), "src/test/resources/org/azolla/open/common/io");
 
 	/**
 	 * The coder is very lazy, nothing to write for this setUpBeforeClass method
@@ -43,8 +42,7 @@ public class File0Test
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception
 	{
-		File f = new File(testDir, System.currentTimeMillis() + ".txt");
-		f.createNewFile();
+		new File(testDir, System.currentTimeMillis() + ".txt").createNewFile();
 	}
 
 	/**
@@ -69,6 +67,7 @@ public class File0Test
 	@Before
 	public void setUp() throws Exception
 	{
+		new File(testDir, System.currentTimeMillis() + ".txt").createNewFile();
 		fileList = Lists.newArrayList();
 		stringList = Lists.newArrayList();
 	}
@@ -142,10 +141,9 @@ public class File0Test
 	public void testGetFileTypeFile()
 	{
 		currentMethodName = "testGetFileTypeFile";
-		//		Assert.assertSame("txt", FileHelper.getFileType(FileHelper.getFile(FileHelper.getUserDir(), "src", "test",
-		//				"resources", "readme.txt")));
-		Assert.assertEquals("txt", File0.getFileType(File0.newFile(File0.getUserDir(), "src", "test",
-				"resources", "readme.txt")));
+		//		Assert.assertSame("txt", FileHelper.getFileType(FileHelper.getFile(FileHelper.getUserDir(), "src/test",
+		//				"resources/readme.txt")));
+		Assert.assertEquals("txt", File0.getFileType(File0.newFile(File0.getUserDir(), "src/test/resources/readme.txt")));
 	}
 
 	/**
@@ -157,12 +155,9 @@ public class File0Test
 		currentMethodName = "testGetFileTypeString";
 		//		Assert.assertSame(
 		//				"txt",
-		//				FileHelper.getFileType(FileHelper.getFile(FileHelper.getUserDir(), "src", "test", "resources",
+		//				FileHelper.getFileType(FileHelper.getFile(FileHelper.getUserDir(), "src/test/resources",
 		//						"readme.txt").getAbsolutePath()));
-		Assert.assertEquals(
-				"txt",
- File0.getFileType(File0.newFile(File0.getUserDir(), "src", "test", "resources",
-						"readme.txt").getAbsolutePath()));
+		Assert.assertEquals("txt", File0.getFileType(File0.newFile(File0.getUserDir(), "src/test/resources/readme.txt").getAbsolutePath()));
 	}
 
 	@Test

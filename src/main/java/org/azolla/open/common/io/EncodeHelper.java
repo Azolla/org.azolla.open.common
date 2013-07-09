@@ -33,7 +33,14 @@ public class EncodeHelper
 
 	public String getFileEncoding(String filePath)
 	{
-		return ByteEncoding.javaname[new ByteEncoding().detectEncoding(new File(filePath))];
+		int index = new ByteEncoding().detectEncoding(new File(filePath));
+		return Encoding.javaname[index];
+	}
+
+	public String getByteEncoding(byte[] bytes)
+	{
+		int index = new ByteEncoding().detectEncoding(bytes);
+		return Encoding.nicename[index];
 	}
 
 	class ByteEncoding extends Encoding

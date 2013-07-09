@@ -22,7 +22,7 @@ import org.junit.runners.Suite;
  * @since 	ADK1.0
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({TupleTest.class, DataCfgTest.class, AzollaExceptionTest.class, CodeTests.class, File0Test.class})
+@Suite.SuiteClasses({DataCfgTest.class, TupleTest.class, AzollaExceptionTest.class, CodeTests.class, File0Test.class})
 public class CommonTests
 {
 
