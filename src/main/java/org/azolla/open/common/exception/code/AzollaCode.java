@@ -55,6 +55,9 @@ public enum AzollaCode implements ErrorCoder
 	/** Component:ZIP[10100,10199]*/
 	ZIP_ZIP_ERROR(10100),		//[Host or Port error]...
 
+	/** Component:COMMAND[10200,10299]*/
+	COMMAND_ERROR(10200),
+
 	UNKNOWN(1000000000);
 
 	private final int	code;

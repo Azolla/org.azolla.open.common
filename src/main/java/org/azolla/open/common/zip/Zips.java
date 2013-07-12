@@ -41,7 +41,7 @@ import com.google.common.io.Closeables;
  * @author 	sk@azolla.org
  * @since 	ADK1.0
  */
-public class Zips
+public final class Zips
 {
 	private static final Logger	LOG		= LoggerFactory.getLogger(Zips.class);
 
