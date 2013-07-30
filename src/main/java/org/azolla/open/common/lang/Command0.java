@@ -1,5 +1,5 @@
 /*
- * @(#)Commands.java		Created at 2013-7-12
+ * @(#)Command0.java		Created at 2013-7-12
  * 
  * Copyright (c) 2011-2013 azolla.org All rights reserved.
  * Azolla PROPRIETARY/CONFIDENTIAL. Use is subject to license terms. 
@@ -17,7 +17,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import org.azolla.open.common.exception.code.AzollaCode;
-import org.azolla.open.common.text.Fmts;
+import org.azolla.open.common.text.Fmt0;
 import org.azolla.open.common.util.KV;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,14 +26,14 @@ import com.google.common.base.Strings;
 import com.google.common.io.Closeables;
 
 /**
- * The coder is very lazy, nothing to write for this Commands class
+ * The coder is very lazy, nothing to write for this Command0 class
  *
  * @author 	sk@azolla.org
  * @since 	ADK1.0
  */
-public final class Commands
+public final class Command0
 {
-	private static final Logger	LOG						= LoggerFactory.getLogger(Commands.class);
+	private static final Logger	LOG						= LoggerFactory.getLogger(Command0.class);
 
 	private static final String	INPUT					= "INPUT";
 
@@ -49,7 +49,7 @@ public final class Commands
 	public static final long	DEFAULT_TIMEOUT_MINUTES	= 33;
 
 	/**
-	 * @see org.azolla.open.common.lang.Commands#exec(String, long)
+	 * @see org.azolla.open.common.lang.Command0#exec(String, long)
 	 */
 	public static boolean exec(String command)
 	{
@@ -57,7 +57,7 @@ public final class Commands
 	}
 
 	/**
-	 * @see org.azolla.open.common.lang.Commands#exec(String, long, boolean, String)
+	 * @see org.azolla.open.common.lang.Command0#exec(String, long, boolean, String)
 	 */
 	public static boolean exec(String command, long timeout)
 	{
@@ -65,7 +65,7 @@ public final class Commands
 	}
 
 	/**
-	 * @see org.azolla.open.common.lang.Commands#exec(String, long, boolean, String)
+	 * @see org.azolla.open.common.lang.Command0#exec(String, long, boolean, String)
 	 */
 	public static boolean exec(String command, boolean value4pause, String pauseFlag)
 	{
@@ -104,7 +104,7 @@ public final class Commands
 			}
 			catch(Exception e)
 			{
-				LOG.error(Fmts.LOG_EC_P_M, AzollaCode.COMMAND_ERROR, KV.new0("command", command).set("timeout", timeout).set("value4pause", value4pause).set("pauseFlag", pauseFlag), e.toString(), e);
+				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.COMMAND_ERROR, KV.new0("command", command).set("timeout", timeout).set("value4pause", value4pause).set("pauseFlag", pauseFlag), e.toString(), e);
 				rtnBoolean = false;
 			}
 			finally
@@ -190,7 +190,7 @@ public final class Commands
 			}
 			catch(Exception e)
 			{
-				LOG.error(Fmts.LOG_EC_P_M, AzollaCode.COMMAND_ERROR, KV.new0("type", type).set("value4pause", value4pause).set("pauseFlag", pauseFlag), e.toString(), e);
+				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.COMMAND_ERROR, KV.new0("type", type).set("value4pause", value4pause).set("pauseFlag", pauseFlag), e.toString(), e);
 				rtnBoolean = false;
 			}
 			finally

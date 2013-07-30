@@ -16,7 +16,7 @@ import com.google.common.collect.Maps;
  * @author 	sk@azolla.org
  * @since 	ADK1.0
  */
-public class KV
+public final class KV
 {
 	Map<String, String>	map	= Maps.newHashMap();
 

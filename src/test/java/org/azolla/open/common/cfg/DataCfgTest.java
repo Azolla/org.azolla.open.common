@@ -70,19 +70,19 @@ public class DataCfgTest
 	}
 
 	/**
-	 * Test method for {@link org.azolla.open.common.cfg.DataCfg#unmarshal(java.lang.Class, java.lang.String)}.
+	 * Test method for {@link org.azolla.open.common.cfg.Cfg0#unmarshal(java.lang.Class, java.lang.String)}.
 	 */
 	@Test
 	public void testUnmarshal()
 	{
-		testRootNode = DataCfg.unmarshal(TestRootNode.class, testDataCfgFile.getAbsolutePath());
+		testRootNode = Cfg0.unmarshal(TestRootNode.class, testDataCfgFile.getAbsolutePath());
 		Assert.assertNotNull(testRootNode);
 		//Just test log
 		//		System.out.println(DataCfg.unmarshal(Object.class, System.getProperty("user.dir")));
 	}
 
 	/**
-	 * Test method for {@link org.azolla.open.common.cfg.DataCfg#marshal(java.lang.Object, java.lang.String)}.
+	 * Test method for {@link org.azolla.open.common.cfg.Cfg0#marshal(java.lang.Object, java.lang.String)}.
 	 */
 	@Test
 	public void testMarshal()
@@ -90,7 +90,7 @@ public class DataCfgTest
 		testUnmarshal();
 
 		testRootNode.setTestAttrbuteNode2(testRootNode.getTestAttrbuteNode2() + 1);
-		DataCfg.marshal(testRootNode, testDataCfgFile.getAbsolutePath());
+		Cfg0.marshal(testRootNode, testDataCfgFile.getAbsolutePath());
 	}
 
 }

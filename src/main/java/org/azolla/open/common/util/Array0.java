@@ -16,7 +16,7 @@ import com.google.common.collect.Lists;
  * @author 	sk@azolla.org
  * @since 	ADK1.0
  */
-public class Array0
+public final class Array0
 {
 	public static <T> List<T> array2List(T[] array)
 	{

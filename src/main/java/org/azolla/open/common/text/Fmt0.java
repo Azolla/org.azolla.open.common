@@ -12,7 +12,7 @@ package org.azolla.open.common.text;
  * @author 	sk@azolla.org
  * @since 	ADK1.0
  */
-public final class Fmts
+public final class Fmt0
 {
 	public static final String	LOG_EC_P_M	= "[ErrorCode={}][{}]\n{}";	//EC=ErrorCode;P=Properties;M=Message
 

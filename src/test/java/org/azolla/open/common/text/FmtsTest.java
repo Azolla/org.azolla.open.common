@@ -68,7 +68,7 @@ public class FmtsTest
 	@Test
 	public void test()
 	{
-		LOG.info(Fmts.LOG_EC_P);
+		LOG.info(Fmt0.LOG_EC_P);
 	}
 
 }

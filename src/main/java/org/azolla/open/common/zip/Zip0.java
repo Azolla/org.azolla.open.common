@@ -1,5 +1,5 @@
 /*
- * @(#)Zips.java		Created at 2013-7-3
+ * @(#)Zip0.java		Created at 2013-7-3
  * 
  * Copyright (c) 2011-2013 azolla.org All rights reserved.
  * Azolla PROPRIETARY/CONFIDENTIAL. Use is subject to license terms. 
@@ -21,7 +21,7 @@ import org.apache.tools.zip.ZipOutputStream;
 import org.azolla.open.common.exception.code.AzollaCode;
 import org.azolla.open.common.io.Encoding;
 import org.azolla.open.common.io.File0;
-import org.azolla.open.common.text.Fmts;
+import org.azolla.open.common.text.Fmt0;
 import org.azolla.open.common.util.Date0;
 import org.azolla.open.common.util.KV;
 import org.slf4j.Logger;
@@ -33,16 +33,16 @@ import com.google.common.collect.Lists;
 import com.google.common.io.Closeables;
 
 /**
- * ZipHelper
+ * Zip0
  * 
  * <p>Support Chinese:Encoding.GBK
  *
  * @author 	sk@azolla.org
  * @since 	ADK1.0
  */
-public final class Zips
+public final class Zip0
 {
-	private static final Logger	LOG		= LoggerFactory.getLogger(Zips.class);
+	private static final Logger	LOG		= LoggerFactory.getLogger(Zip0.class);
 
 	private static int			bufSize	= 8096;								//size of bytes
 
@@ -104,7 +104,7 @@ public final class Zips
 			catch(Exception e)
 			{
 				rtnBoolean = false;
-				LOG.error(Fmts.LOG_EC_P_M, AzollaCode.ZIP_ZIP_ERROR, KV.new0("zip", zip).set("dest", dest).set("encoding", encoding), e.toString(), e);
+				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.ZIP_ZIP_ERROR, KV.new0("zip", zip).set("dest", dest).set("encoding", encoding), e.toString(), e);
 			}
 		}
 		return rtnBoolean;
@@ -140,7 +140,7 @@ public final class Zips
 			catch(Exception e)
 			{
 				rtnBoolean = false;
-				LOG.error(Fmts.LOG_EC_P_M, AzollaCode.ZIP_ZIP_ERROR, KV.new0("destFile", destFile), e.toString(), e);
+				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.ZIP_ZIP_ERROR, KV.new0("destFile", destFile), e.toString(), e);
 			}
 			finally
 			{
@@ -196,7 +196,7 @@ public final class Zips
 			catch(Exception e)
 			{
 				rtnBoolean = false;
-				LOG.error(Fmts.LOG_EC_P_M, AzollaCode.ZIP_ZIP_ERROR, KV.new0("fileList", Joiner.on("|").join(fileList)).set("zip", zip).set("encoding", encoding), e.toString(), e);
+				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.ZIP_ZIP_ERROR, KV.new0("fileList", Joiner.on("|").join(fileList)).set("zip", zip).set("encoding", encoding), e.toString(), e);
 			}
 			finally
 			{
@@ -296,7 +296,7 @@ public final class Zips
 		catch(Exception e)
 		{
 			rtnBoolean = false;
-			LOG.error(Fmts.LOG_EC_P_M, AzollaCode.ZIP_ZIP_ERROR, KV.new0("file", file).set("pathName", pathName), e.toString(), e);
+			LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.ZIP_ZIP_ERROR, KV.new0("file", file).set("pathName", pathName), e.toString(), e);
 		}
 		finally
 		{

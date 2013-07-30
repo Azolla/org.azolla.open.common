@@ -67,8 +67,8 @@ public class EncodeHelperTest
 	@Test
 	public void test()
 	{
-		Assert.assertEquals(Encoding.ASCII.getEncoding(), EncodeHelper.ins().getFileEncoding(File0.newFile(File0.getUserDir(), "src/test/resources/org/azolla/open/common/io/empty.txt").getAbsolutePath()));
-		Assert.assertEquals(Encoding.ASCII.getEncoding(), EncodeHelper.ins().getByteEncoding(new String("Azolla").getBytes()));
-		Assert.assertEquals(Encoding.ASCII.getEncoding(), EncodeHelper.ins().getByteEncoding(new String("Azolla".getBytes(), Charset.forName("UTF-8")).getBytes(Charset.forName("UTF-8"))));
+		Assert.assertEquals(Encoding.ASCII.getEncoding(), Encodes.SINGLETON.getFileEncoding(File0.newFile(File0.getUserDir(), "src/test/resources/org/azolla/open/common/io/empty.txt").getAbsolutePath()));
+		Assert.assertEquals(Encoding.ASCII.getEncoding(), Encodes.SINGLETON.getByteEncoding(new String("Azolla").getBytes()));
+		Assert.assertEquals(Encoding.ASCII.getEncoding(), Encodes.SINGLETON.getByteEncoding(new String("Azolla".getBytes(), Charset.forName("UTF-8")).getBytes(Charset.forName("UTF-8"))));
 	}
 }

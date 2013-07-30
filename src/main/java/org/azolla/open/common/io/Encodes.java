@@ -1,5 +1,5 @@
 /*
- * @(#)EncodeHelper.java		Created at 2013-7-1
+ * @(#)Encodes.java		Created at 2013-7-1
  * 
  * Copyright (c) 2011-2013 azolla.org All rights reserved.
  * Azolla PROPRIETARY/CONFIDENTIAL. Use is subject to license terms. 
@@ -11,39 +11,37 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.net.URL;
 
+import com.google.common.io.Closeables;
+
 /**
- * The coder is very lazy, nothing to write for this Encoding class
+ * The coder is very lazy, nothing to write for this Encodes class
  *
  * @author 	sk@azolla.org
  * @since 	ADK1.0
  */
-public class EncodeHelper
+public enum Encodes
 {
-	private static EncodeHelper	instance	= null;
-
-	private EncodeHelper()
-	{
-		//do nothing
-	}
-
-	public synchronized static EncodeHelper ins()
-	{
-		return null == instance ? new EncodeHelper() : instance;
-	}
+	SINGLETON;
 
 	public String getFileEncoding(String filePath)
 	{
-		int index = new ByteEncoding().detectEncoding(new File(filePath));
-		return Encoding.javaname[index];
+		int index = new ByteEncode().detectEncoding(new File(filePath));
+		return Encode.javaname[index];
 	}
 
 	public String getByteEncoding(byte[] bytes)
 	{
-		int index = new ByteEncoding().detectEncoding(bytes);
-		return Encoding.nicename[index];
+		int index = new ByteEncode().detectEncoding(bytes);
+		return Encode.nicename[index];
 	}
 
-	class ByteEncoding extends Encoding
+	public String getUrlEncoding(URL url)
+	{
+		int index = new ByteEncode().detectEncoding(url);
+		return Encode.nicename[index];
+	}
+
+	private class ByteEncode extends Encode
 	{
 		// Frequency tables to hold the GB, Big5, and EUC-TW character
 		// frequencies
@@ -60,7 +58,7 @@ public class EncodeHelper
 		// public static String[] codings;
 		public boolean	debug;
 
-		public ByteEncoding()
+		public ByteEncode()
 		{
 			super();
 			debug = false;
@@ -88,7 +86,7 @@ public class EncodeHelper
 			byte[] rawtext = new byte[10000];
 			int bytesread = 0, byteoffset = 0;
 			int guess = OTHER;
-			InputStream chinesestream;
+			InputStream chinesestream = null;
 			try
 			{
 				chinesestream = testurl.openStream();
@@ -105,6 +103,10 @@ public class EncodeHelper
 				System.err.println("Error loading or using URL " + e.toString());
 				guess = -1;
 			}
+			finally
+			{
+				Closeables.closeQuietly(chinesestream);
+			}
 			return guess;
 		}
 
@@ -118,7 +120,7 @@ public class EncodeHelper
 		 */
 		public int detectEncoding(File testfile)
 		{
-			FileInputStream chinesefile;
+			FileInputStream chinesefile = null;
 			byte[] rawtext;
 			rawtext = new byte[(int) testfile.length()];
 			try
@@ -130,6 +132,10 @@ public class EncodeHelper
 			catch(Exception e)
 			{
 				System.err.println("Error: " + e);
+			}
+			finally
+			{
+				Closeables.closeQuietly(chinesefile);
 			}
 			return detectEncoding(rawtext);
 		}
@@ -544,6 +550,7 @@ public class EncodeHelper
 		 * Function: big5plus_probability Argument: pointer to unsigned char array Returns : number from 0 to 100
 		 * representing probability text in array uses Big5+ encoding
 		 */
+		@SuppressWarnings("unused")
 		int big5plus_probability(byte[] rawtext)
 		{
 			int i, rawtextlen = 0;
@@ -4686,7 +4693,7 @@ public class EncodeHelper
 
 	}
 
-	static class Encoding
+	private static class Encode
 	{
 		// Supported Encoding Types
 		public static int		GB2312			= 0;
@@ -4714,7 +4721,9 @@ public class EncodeHelper
 		public static int		ASCII			= 22;
 		public static int		OTHER			= 23;
 		public static int		TOTALTYPES		= 24;
+		@SuppressWarnings("unused")
 		public final static int	SIMP			= 0;
+		@SuppressWarnings("unused")
 		public final static int	TRAD			= 1;
 
 		// Names of the encodings as understood by Java
@@ -4727,7 +4736,7 @@ public class EncodeHelper
 		public static String[]	htmlname;
 
 		// Constructor
-		public Encoding()
+		public Encode()
 		{
 			javaname = new String[TOTALTYPES];
 			nicename = new String[TOTALTYPES];

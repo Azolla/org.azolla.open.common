@@ -25,7 +25,7 @@ import com.google.common.base.Joiner;
  */
 public class FtpHelperTest
 {
-	FtpHelper					ftpHelper			= null;
+	Ftps						ftpHelper			= null;
 
 	private static final String	REMOTE_TEST_ROOT	= "/test/";
 
@@ -61,7 +61,7 @@ public class FtpHelperTest
 	@Before
 	public void setUp() throws Exception
 	{
-		ftpHelper = FtpHelper.ins("42.121.28.127", "ftpuser", "ft9VK9aUW");
+		ftpHelper = Ftps.new0("42.121.28.127", "ftpuser", "ft9VK9aUW");
 	}
 
 	/**

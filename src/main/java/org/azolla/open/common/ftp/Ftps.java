@@ -1,5 +1,5 @@
 /*
- * @(#)FtpHelper.java		Created at 2013-7-3
+ * @(#)Ftps.java		Created at 2013-7-3
  * 
  * Copyright (c) 2011-2013 azolla.org All rights reserved.
  * Azolla PROPRIETARY/CONFIDENTIAL. Use is subject to license terms. 
@@ -21,7 +21,7 @@ import org.apache.commons.net.ftp.FTPReply;
 import org.azolla.open.common.exception.AzollaException;
 import org.azolla.open.common.exception.code.AzollaCode;
 import org.azolla.open.common.io.Encoding;
-import org.azolla.open.common.text.Fmts;
+import org.azolla.open.common.text.Fmt0;
 import org.azolla.open.common.util.KV;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,23 +32,23 @@ import com.google.common.collect.Lists;
 import com.google.common.io.Closeables;
 
 /**
- * FtpHelper
+ * Ftps
  * 
  * @see http://blog.csdn.net/cuiran/article/details/7186621
  *
  * @author 	sk@azolla.org
  * @since 	ADK1.0
  */
-public final class FtpHelper
+public final class Ftps
 {
-	private static final Logger	LOG					= LoggerFactory.getLogger(FtpHelper.class);
+	private static final Logger	LOG					= LoggerFactory.getLogger(Ftps.class);
 
 	public static final int		DEFAULT_PORT		= 21;
 	public static final int		DEFAULT_FILE_TYPE	= FTPClient.BINARY_FILE_TYPE;
 	public static final int		DEFAULT_MODE		= FTPClient.PASSIVE_LOCAL_DATA_CONNECTION_MODE;
 	public static final int		DEFAULT_TIMEOUT		= 3000;
 
-	private static FtpHelper	instance			= null;
+	private static Ftps			instance			= null;
 
 	private String				host;
 	private String				username;
@@ -63,62 +63,62 @@ public final class FtpHelper
 
 	private FTPClient			client;
 
-	public static synchronized FtpHelper ins(String host, String username, String password)
+	public static synchronized Ftps new0(String host, String username, String password)
 	{
-		return ins(host, username, password, DEFAULT_PORT);
+		return new0(host, username, password, DEFAULT_PORT);
 	}
 
-	public static synchronized FtpHelper ins(String host, String username, String password, int port)
+	public static synchronized Ftps new0(String host, String username, String password, int port)
 	{
-		return ins(host, username, password, port, DEFAULT_FILE_TYPE);
+		return new0(host, username, password, port, DEFAULT_FILE_TYPE);
 	}
 
-	public static synchronized FtpHelper ins(String host, String username, String password, int port, int fileType)
+	public static synchronized Ftps new0(String host, String username, String password, int port, int fileType)
 	{
-		return ins(host, username, password, port, fileType, DEFAULT_MODE);
+		return new0(host, username, password, port, fileType, DEFAULT_MODE);
 	}
 
-	public static synchronized FtpHelper ins(String host, String username, String password, int port, int fileType, int mode)
+	public static synchronized Ftps new0(String host, String username, String password, int port, int fileType, int mode)
 	{
-		return ins(host, username, password, port, fileType, mode, DEFAULT_TIMEOUT);
+		return new0(host, username, password, port, fileType, mode, DEFAULT_TIMEOUT);
 	}
 
-	public static synchronized FtpHelper ins(String host, String username, String password, int port, int fileType, int mode, int timeout)
+	public static synchronized Ftps new0(String host, String username, String password, int port, int fileType, int mode, int timeout)
 	{
-		return ins(host, username, password, port, fileType, mode, timeout, Encoding.UTF8);
+		return new0(host, username, password, port, fileType, mode, timeout, Encoding.UTF8);
 	}
 
-	public static synchronized FtpHelper ins(String host, String username, String password, int port, int fileType, int mode, int timeout, Encoding encoding)
+	public static synchronized Ftps new0(String host, String username, String password, int port, int fileType, int mode, int timeout, Encoding encoding)
 	{
-		return null == instance ? new FtpHelper(host, username, password, port, fileType, mode, timeout, encoding) : instance;
+		return null == instance ? new Ftps(host, username, password, port, fileType, mode, timeout, encoding) : instance;
 	}
 
-	public FtpHelper(String host, String username, String password)
+	public Ftps(String host, String username, String password)
 	{
 		this(host, username, password, DEFAULT_PORT);
 	}
 
-	public FtpHelper(String host, String username, String password, int port)
+	public Ftps(String host, String username, String password, int port)
 	{
 		this(host, username, password, DEFAULT_PORT, DEFAULT_FILE_TYPE);
 	}
 
-	public FtpHelper(String host, String username, String password, int port, int fileType)
+	public Ftps(String host, String username, String password, int port, int fileType)
 	{
 		this(host, username, password, port, fileType, DEFAULT_MODE);
 	}
 
-	public FtpHelper(String host, String username, String password, int port, int fileType, int mode)
+	public Ftps(String host, String username, String password, int port, int fileType, int mode)
 	{
 		this(host, username, password, port, fileType, mode, DEFAULT_TIMEOUT);
 	}
 
-	public FtpHelper(String host, String username, String password, int port, int fileType, int mode, int timeout)
+	public Ftps(String host, String username, String password, int port, int fileType, int mode, int timeout)
 	{
 		this(host, username, password, port, fileType, mode, timeout, Encoding.UTF8);
 	}
 
-	public FtpHelper(String host, String username, String password, int port, int fileType, int mode, int timeout, Encoding encoding)
+	public Ftps(String host, String username, String password, int port, int fileType, int mode, int timeout, Encoding encoding)
 	{
 		connect(host, username, password, port, fileType, mode, timeout, encoding);
 	}
@@ -146,7 +146,7 @@ public final class FtpHelper
 		}
 		catch(Exception e)
 		{
-			LOG.error(Fmts.LOG_EC_P_M, AzollaCode.FTP_CONNECT_ERROR, KV.new0("host", host).set("port", port), e.toString(), e);
+			LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_CONNECT_ERROR, KV.new0("host", host).set("port", port), e.toString(), e);
 			throw AzollaException.wrap(e, AzollaCode.FTP_CONNECT_ERROR).set("host", host).set("port", port);
 		}
 
@@ -161,7 +161,7 @@ public final class FtpHelper
 			}
 			catch(Exception e)
 			{
-				LOG.error(Fmts.LOG_EC_P_M, AzollaCode.FTP_LOGIN_ERROR, KV.new0("username", username).set("password", password), e.toString(), e);
+				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_LOGIN_ERROR, KV.new0("username", username).set("password", password), e.toString(), e);
 				throw AzollaException.wrap(e, AzollaCode.FTP_LOGIN_ERROR).set("username", username).set("password", password);
 			}
 
@@ -174,7 +174,7 @@ public final class FtpHelper
 			}
 			else
 			{
-				LOG.error(Fmts.LOG_EC_P, AzollaCode.FTP_LOGIN_FAILED, KV.new0("username", username).set("password", password));
+				LOG.error(Fmt0.LOG_EC_P, AzollaCode.FTP_LOGIN_FAILED, KV.new0("username", username).set("password", password));
 				throw new AzollaException(AzollaCode.FTP_LOGIN_FAILED).set("username", username).set("password", password);
 			}
 		}
@@ -208,7 +208,7 @@ public final class FtpHelper
 			catch(Exception e)
 			{
 				rtnBoolean = false;
-				LOG.error(Fmts.LOG_EC_P_M, AzollaCode.FTP_LOGOUT_ERROR, KV.new0("host", host), e.toString(), e);
+				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_LOGOUT_ERROR, KV.new0("host", host), e.toString(), e);
 			}
 
 			if(client.isConnected())
@@ -220,7 +220,7 @@ public final class FtpHelper
 				catch(Exception e)
 				{
 					rtnBoolean = false;
-					LOG.error(Fmts.LOG_EC_P_M, AzollaCode.FTP_DISCONNECT_ERROR, KV.new0("host", host), e.toString(), e);
+					LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_DISCONNECT_ERROR, KV.new0("host", host), e.toString(), e);
 				}
 			}
 		}
@@ -249,7 +249,7 @@ public final class FtpHelper
 			catch(Exception e)
 			{
 				rtnBoolean = false;
-				LOG.error(Fmts.LOG_EC_P_M, AzollaCode.FTP_DELETE_FILE_ERROR, KV.new0("remotePath", remotePath), e.toString(), e);
+				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_DELETE_FILE_ERROR, KV.new0("remotePath", remotePath), e.toString(), e);
 			}
 			finally
 			{
@@ -283,7 +283,7 @@ public final class FtpHelper
 			catch(Exception e)
 			{
 				rtnBoolean = false;
-				LOG.error(Fmts.LOG_EC_P_M, AzollaCode.FTP_DELETE_FILE_ERROR, KV.new0("remotePathList", Joiner.on("|").join(remotePathList)), e.toString(), e);
+				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_DELETE_FILE_ERROR, KV.new0("remotePathList", Joiner.on("|").join(remotePathList)), e.toString(), e);
 			}
 			finally
 			{
@@ -315,7 +315,7 @@ public final class FtpHelper
 			catch(Exception e)
 			{
 				rtnBoolean = false;
-				LOG.error(Fmts.LOG_EC_P_M, AzollaCode.FTP_RETRIEVE_FILE_ERROR, KV.new0("remotePath", remotePath), e.toString(), e);
+				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_RETRIEVE_FILE_ERROR, KV.new0("remotePath", remotePath), e.toString(), e);
 			}
 			finally
 			{
@@ -350,7 +350,7 @@ public final class FtpHelper
 			catch(Exception e)
 			{
 				rtnBoolean = false;
-				LOG.error(Fmts.LOG_EC_P_M, AzollaCode.FTP_RETRIEVE_FILE_ERROR, KV.new0("remotePath", remotePath).set("localPath", localPath), e.toString(), e);
+				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_RETRIEVE_FILE_ERROR, KV.new0("remotePath", remotePath).set("localPath", localPath), e.toString(), e);
 			}
 			finally
 			{
@@ -390,7 +390,7 @@ public final class FtpHelper
 			catch(Exception e)
 			{
 				rtnBoolean = false;
-				LOG.error(Fmts.LOG_EC_P_M, AzollaCode.FTP_LIST_FILE_ERROR, KV.new0("remotePath", remotePath), e.toString(), e);
+				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_LIST_FILE_ERROR, KV.new0("remotePath", remotePath), e.toString(), e);
 			}
 			finally
 			{
@@ -401,7 +401,7 @@ public final class FtpHelper
 	}
 
 	/**
-	 * @see org.azolla.open.common.ftp.FtpHelper#listNames(String)
+	 * @see org.azolla.open.common.ftp.Ftps#listNames(String)
 	 */
 	public List<String> listNames()
 	{
@@ -430,7 +430,7 @@ public final class FtpHelper
 		}
 		catch(Exception e)
 		{
-			LOG.error(Fmts.LOG_EC_P_M, AzollaCode.FTP_LIST_FILE_ERROR, KV.new0("remotePath", remotePath), e.toString(), e);
+			LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_LIST_FILE_ERROR, KV.new0("remotePath", remotePath), e.toString(), e);
 		}
 		finally
 		{
@@ -487,7 +487,7 @@ public final class FtpHelper
 		}
 		catch(Exception e)
 		{
-			LOG.error(Fmts.LOG_EC_P_M, AzollaCode.FTP_LIST_FILE_ERROR, KV.new0("remotePath", remotePath), e.toString(), e);
+			LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_LIST_FILE_ERROR, KV.new0("remotePath", remotePath), e.toString(), e);
 		}
 		finally
 		{
@@ -498,7 +498,7 @@ public final class FtpHelper
 	}
 
 	/**
-	 * @see org.azolla.open.common.ftp.FtpHelper#listFiles(String)
+	 * @see org.azolla.open.common.ftp.Ftps#listFiles(String)
 	 */
 	public List<FTPFile> listFiles()
 	{
@@ -506,7 +506,7 @@ public final class FtpHelper
 	}
 
 	/**
-	 * @see org.azolla.open.common.ftp.FtpHelper#listFiles(String,FTPFileFilter)
+	 * @see org.azolla.open.common.ftp.Ftps#listFiles(String,FTPFileFilter)
 	 */
 	public List<FTPFile> listFiles(String remotePath)
 	{
@@ -535,7 +535,7 @@ public final class FtpHelper
 		}
 		catch(Exception e)
 		{
-			LOG.error(Fmts.LOG_EC_P_M, AzollaCode.FTP_LIST_FILE_ERROR, KV.new0("remotePath", remotePath), e.toString(), e);
+			LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_LIST_FILE_ERROR, KV.new0("remotePath", remotePath), e.toString(), e);
 		}
 		finally
 		{
@@ -574,7 +574,7 @@ public final class FtpHelper
 			catch(Exception e)
 			{
 				rtnBoolean = false;
-				LOG.error(Fmts.LOG_EC_P_M, AzollaCode.FTP_STORE_FILE_ERROR, KV.new0("remotePath", remotePath).set("localPath", localPath), e.toString(), e);
+				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_STORE_FILE_ERROR, KV.new0("remotePath", remotePath).set("localPath", localPath), e.toString(), e);
 			}
 			finally
 			{
@@ -681,7 +681,7 @@ public final class FtpHelper
 	 *
 	 * @param fileType the fileType to set
 	 */
-	public FtpHelper setFileType(int fileType)
+	public Ftps setFileType(int fileType)
 	{
 		try
 		{
@@ -690,7 +690,7 @@ public final class FtpHelper
 		}
 		catch(Exception e)
 		{
-			LOG.error(Fmts.LOG_EC_P_M, AzollaCode.FTP_SET_FILETYPE_ERROR, KV.new0("fileType", fileType), e.toString(), e);
+			LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_SET_FILETYPE_ERROR, KV.new0("fileType", fileType), e.toString(), e);
 			throw AzollaException.wrap(e, AzollaCode.FTP_SET_FILETYPE_ERROR).set("fileType", fileType);
 		}
 		return this;
@@ -711,7 +711,7 @@ public final class FtpHelper
 	 *
 	 * @param mode the mode to set
 	 */
-	public FtpHelper setMode(int mode)
+	public Ftps setMode(int mode)
 	{
 		boolean successed = true;
 		switch(mode)
@@ -730,7 +730,7 @@ public final class FtpHelper
 				catch(Exception e)
 				{
 					successed = false;
-					LOG.error(Fmts.LOG_EC_P_M, AzollaCode.FTP_SET_MODE_ERROR, KV.new0("mode", mode), e.toString(), e);
+					LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_SET_MODE_ERROR, KV.new0("mode", mode), e.toString(), e);
 					throw AzollaException.wrap(e, AzollaCode.FTP_SET_MODE_ERROR).set("mode", mode);
 				}
 				break;
@@ -742,7 +742,7 @@ public final class FtpHelper
 				catch(Exception e)
 				{
 					successed = false;
-					LOG.error(Fmts.LOG_EC_P_M, AzollaCode.FTP_SET_MODE_ERROR, KV.new0("mode", mode), e.toString(), e);
+					LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_SET_MODE_ERROR, KV.new0("mode", mode), e.toString(), e);
 					throw AzollaException.wrap(e, AzollaCode.FTP_SET_MODE_ERROR).set("mode", mode);
 				}
 				break;
@@ -772,7 +772,7 @@ public final class FtpHelper
 	 *
 	 * @param encoding the encoding to set
 	 */
-	public FtpHelper setEncoding(Encoding encoding)
+	public Ftps setEncoding(Encoding encoding)
 	{
 		Encoding e = null == encoding ? Encoding.UTF8 : encoding;
 		client.setControlEncoding(e.getEncoding());
@@ -795,7 +795,7 @@ public final class FtpHelper
 	 *
 	 * @param timeout the timeout to set
 	 */
-	public FtpHelper setTimeout(int timeout)
+	public Ftps setTimeout(int timeout)
 	{
 		try
 		{
@@ -804,7 +804,7 @@ public final class FtpHelper
 		}
 		catch(Exception e)
 		{
-			LOG.error(Fmts.LOG_EC_P_M, AzollaCode.FTP_SET_TIMEOUT_ERROR, KV.new0("timeout", timeout), e.toString(), e);
+			LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_SET_TIMEOUT_ERROR, KV.new0("timeout", timeout), e.toString(), e);
 			throw AzollaException.wrap(e, AzollaCode.FTP_SET_TIMEOUT_ERROR).set("timeout", timeout);
 		}
 		return this;
