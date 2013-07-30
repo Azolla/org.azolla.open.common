@@ -11,7 +11,6 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.List;
@@ -102,10 +101,10 @@ public final class Zips
 					unzipFile(destFile, zf, entry); //执行解压
 				}
 			}
-			catch(IOException e)
+			catch(Exception e)
 			{
 				rtnBoolean = false;
-				LOG.error(Fmts.LOG_EC_P_M_FMT, AzollaCode.ZIP_ZIP_ERROR, KV.newKV().set("zip", zip).set("dest", dest).set("encoding", encoding.getEncoding()), e.toString());
+				LOG.error(Fmts.LOG_EC_P_M, AzollaCode.ZIP_ZIP_ERROR, KV.new0("zip", zip).set("dest", dest).set("encoding", encoding), e.toString(), e);
 			}
 		}
 		return rtnBoolean;
@@ -141,7 +140,7 @@ public final class Zips
 			catch(Exception e)
 			{
 				rtnBoolean = false;
-				LOG.error(Fmts.LOG_EC_P_M_FMT, AzollaCode.ZIP_ZIP_ERROR, KV.newKV().set("destFile", destFile.getAbsolutePath()), e.toString());
+				LOG.error(Fmts.LOG_EC_P_M, AzollaCode.ZIP_ZIP_ERROR, KV.new0("destFile", destFile), e.toString(), e);
 			}
 			finally
 			{
@@ -197,7 +196,7 @@ public final class Zips
 			catch(Exception e)
 			{
 				rtnBoolean = false;
-				LOG.error(Fmts.LOG_EC_P_M_FMT, AzollaCode.ZIP_ZIP_ERROR, KV.newKV().set("fileList", Joiner.on("|").join(fileList)).set("zip", zip).set("encoding", encoding.getEncoding()), e.toString());
+				LOG.error(Fmts.LOG_EC_P_M, AzollaCode.ZIP_ZIP_ERROR, KV.new0("fileList", Joiner.on("|").join(fileList)).set("zip", zip).set("encoding", encoding), e.toString(), e);
 			}
 			finally
 			{
@@ -297,7 +296,7 @@ public final class Zips
 		catch(Exception e)
 		{
 			rtnBoolean = false;
-			LOG.error(Fmts.LOG_EC_P_M_FMT, AzollaCode.ZIP_ZIP_ERROR, KV.newKV().set("file", file.getAbsolutePath()).set("pathName", pathName), e.toString());
+			LOG.error(Fmts.LOG_EC_P_M, AzollaCode.ZIP_ZIP_ERROR, KV.new0("file", file).set("pathName", pathName), e.toString(), e);
 		}
 		finally
 		{

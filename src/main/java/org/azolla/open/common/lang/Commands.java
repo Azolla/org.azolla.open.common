@@ -104,7 +104,7 @@ public final class Commands
 			}
 			catch(Exception e)
 			{
-				LOG.error(Fmts.LOG_EC_P_M_FMT, AzollaCode.COMMAND_ERROR, KV.newKV().set("command", command).set("timeout", String.valueOf(timeout)).set("value4pause", String.valueOf(value4pause)).set("pauseFlag", pauseFlag).toString(), e.toString());
+				LOG.error(Fmts.LOG_EC_P_M, AzollaCode.COMMAND_ERROR, KV.new0("command", command).set("timeout", timeout).set("value4pause", value4pause).set("pauseFlag", pauseFlag), e.toString(), e);
 				rtnBoolean = false;
 			}
 			finally
@@ -190,7 +190,7 @@ public final class Commands
 			}
 			catch(Exception e)
 			{
-				LOG.error(Fmts.LOG_EC_P_M_FMT, AzollaCode.COMMAND_ERROR, KV.newKV().set("type", type).set("value4pause", String.valueOf(value4pause)).set("pauseFlag", pauseFlag).toString(), e.toString());
+				LOG.error(Fmts.LOG_EC_P_M, AzollaCode.COMMAND_ERROR, KV.new0("type", type).set("value4pause", value4pause).set("pauseFlag", pauseFlag), e.toString(), e);
 				rtnBoolean = false;
 			}
 			finally

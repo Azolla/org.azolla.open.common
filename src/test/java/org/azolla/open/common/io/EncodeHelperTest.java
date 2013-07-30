@@ -6,6 +6,8 @@
  */
 package org.azolla.open.common.io;
 
+import java.nio.charset.Charset;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -67,5 +69,6 @@ public class EncodeHelperTest
 	{
 		Assert.assertEquals(Encoding.ASCII.getEncoding(), EncodeHelper.ins().getFileEncoding(File0.newFile(File0.getUserDir(), "src/test/resources/org/azolla/open/common/io/empty.txt").getAbsolutePath()));
 		Assert.assertEquals(Encoding.ASCII.getEncoding(), EncodeHelper.ins().getByteEncoding(new String("Azolla").getBytes()));
+		Assert.assertEquals(Encoding.ASCII.getEncoding(), EncodeHelper.ins().getByteEncoding(new String("Azolla".getBytes(), Charset.forName("UTF-8")).getBytes(Charset.forName("UTF-8"))));
 	}
 }

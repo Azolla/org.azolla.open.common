@@ -29,4 +29,14 @@ public enum Encoding
 	{
 		return encoding;
 	}
+
+	/**
+	 * @see java.lang.Enum#toString()
+	 * @return
+	 */
+	@Override
+	public String toString()
+	{
+		return encoding;
+	}
 }

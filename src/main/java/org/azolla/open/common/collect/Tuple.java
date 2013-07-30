@@ -120,32 +120,27 @@ public class Tuple<First, Rest> implements Iterable<Object>
 		return new Sextuple<T1, T2, T3, T4, T5, T6>(t1, t2, t3, t4, t5, t6);
 	}
 
-	public static <T1, T2, T3, T4, T5, T6, T7> Septuple<T1, T2, T3, T4, T5, T6, T7> of(T1 t1, T2 t2, T3 t3, T4 t4,
-			T5 t5, T6 t6, T7 t7)
+	public static <T1, T2, T3, T4, T5, T6, T7> Septuple<T1, T2, T3, T4, T5, T6, T7> of(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7)
 	{
 		return new Septuple<T1, T2, T3, T4, T5, T6, T7>(t1, t2, t3, t4, t5, t6, t7);
 	}
 
-	public static <T1, T2, T3, T4, T5, T6, T7, T8> Octuple<T1, T2, T3, T4, T5, T6, T7, T8> of(T1 t1, T2 t2, T3 t3,
-			T4 t4, T5 t5, T6 t6, T7 t7, T8 t8)
+	public static <T1, T2, T3, T4, T5, T6, T7, T8> Octuple<T1, T2, T3, T4, T5, T6, T7, T8> of(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8)
 	{
 		return new Octuple<T1, T2, T3, T4, T5, T6, T7, T8>(t1, t2, t3, t4, t5, t6, t7, t8);
 	}
 
-	public static <T1, T2, T3, T4, T5, T6, T7, T8, T9> Nonuple<T1, T2, T3, T4, T5, T6, T7, T8, T9> of(T1 t1, T2 t2,
-			T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9)
+	public static <T1, T2, T3, T4, T5, T6, T7, T8, T9> Nonuple<T1, T2, T3, T4, T5, T6, T7, T8, T9> of(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9)
 	{
 		return new Nonuple<T1, T2, T3, T4, T5, T6, T7, T8, T9>(t1, t2, t3, t4, t5, t6, t7, t8, t9);
 	}
 
-	public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> Decuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> of(T1 t1,
-			T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10)
+	public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> Decuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> of(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10)
 	{
 		return new Decuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10);
 	}
 
-	public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> DecuplePlus<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> of(
-			T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, Object... rest)
+	public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> DecuplePlus<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> of(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, Object... rest)
 	{
 		return new DecuplePlus<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, rest);
 	}
@@ -170,38 +165,32 @@ public class Tuple<First, Rest> implements Iterable<Object>
 		return tuple.rest.rest.rest.first;
 	}
 
-	public static <T1, T2, T3, T4, T5, Rest> T5 getFifth(
-			Tuple<T1, Tuple<T2, Tuple<T3, Tuple<T4, Tuple<T5, Rest>>>>> tuple)
+	public static <T1, T2, T3, T4, T5, Rest> T5 getFifth(Tuple<T1, Tuple<T2, Tuple<T3, Tuple<T4, Tuple<T5, Rest>>>>> tuple)
 	{
 		return tuple.rest.rest.rest.rest.first;
 	}
 
-	public static <T1, T2, T3, T4, T5, T6, Rest> T6 getSixth(
-			Tuple<T1, Tuple<T2, Tuple<T3, Tuple<T4, Tuple<T5, Tuple<T6, Rest>>>>>> tuple)
+	public static <T1, T2, T3, T4, T5, T6, Rest> T6 getSixth(Tuple<T1, Tuple<T2, Tuple<T3, Tuple<T4, Tuple<T5, Tuple<T6, Rest>>>>>> tuple)
 	{
 		return tuple.rest.rest.rest.rest.rest.first;
 	}
 
-	public static <T1, T2, T3, T4, T5, T6, T7, Rest> T7 getSeventh(
-			Tuple<T1, Tuple<T2, Tuple<T3, Tuple<T4, Tuple<T5, Tuple<T6, Tuple<T7, Rest>>>>>>> tuple)
+	public static <T1, T2, T3, T4, T5, T6, T7, Rest> T7 getSeventh(Tuple<T1, Tuple<T2, Tuple<T3, Tuple<T4, Tuple<T5, Tuple<T6, Tuple<T7, Rest>>>>>>> tuple)
 	{
 		return tuple.rest.rest.rest.rest.rest.rest.first;
 	}
 
-	public static <T1, T2, T3, T4, T5, T6, T7, T8, Rest> T8 getEighth(
-			Tuple<T1, Tuple<T2, Tuple<T3, Tuple<T4, Tuple<T5, Tuple<T6, Tuple<T7, Tuple<T8, Rest>>>>>>>> tuple)
+	public static <T1, T2, T3, T4, T5, T6, T7, T8, Rest> T8 getEighth(Tuple<T1, Tuple<T2, Tuple<T3, Tuple<T4, Tuple<T5, Tuple<T6, Tuple<T7, Tuple<T8, Rest>>>>>>>> tuple)
 	{
 		return tuple.rest.rest.rest.rest.rest.rest.rest.first;
 	}
 
-	public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, Rest> T9 getNinth(
-			Tuple<T1, Tuple<T2, Tuple<T3, Tuple<T4, Tuple<T5, Tuple<T6, Tuple<T7, Tuple<T8, Tuple<T9, Rest>>>>>>>>> tuple)
+	public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, Rest> T9 getNinth(Tuple<T1, Tuple<T2, Tuple<T3, Tuple<T4, Tuple<T5, Tuple<T6, Tuple<T7, Tuple<T8, Tuple<T9, Rest>>>>>>>>> tuple)
 	{
 		return tuple.rest.rest.rest.rest.rest.rest.rest.rest.first;
 	}
 
-	public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, Rest> T10 getTenth(
-			Tuple<T1, Tuple<T2, Tuple<T3, Tuple<T4, Tuple<T5, Tuple<T6, Tuple<T7, Tuple<T8, Tuple<T9, Tuple<T10, Rest>>>>>>>>>> tuple)
+	public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, Rest> T10 getTenth(Tuple<T1, Tuple<T2, Tuple<T3, Tuple<T4, Tuple<T5, Tuple<T6, Tuple<T7, Tuple<T8, Tuple<T9, Tuple<T10, Rest>>>>>>>>>> tuple)
 	{
 		return tuple.rest.rest.rest.rest.rest.rest.rest.rest.rest.first;
 	}
@@ -217,9 +206,7 @@ public class Tuple<First, Rest> implements Iterable<Object>
 		SINGLETON;
 	}
 
-	public static class DecuplePlus<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>
-			extends
-			Tuple<T1, Tuple<T2, Tuple<T3, Tuple<T4, Tuple<T5, Tuple<T6, Tuple<T7, Tuple<T8, Tuple<T9, Tuple<T10, Tuple<Object[], End>>>>>>>>>>>
+	public static class DecuplePlus<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> extends Tuple<T1, Tuple<T2, Tuple<T3, Tuple<T4, Tuple<T5, Tuple<T6, Tuple<T7, Tuple<T8, Tuple<T9, Tuple<T10, Tuple<Object[], End>>>>>>>>>>>
 	{
 		public DecuplePlus(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, Object[] rest)
 		{
@@ -229,25 +216,11 @@ public class Tuple<First, Rest> implements Iterable<Object>
 		@Override
 		public Iterator<Object> iterator()
 		{
-			return Iterables.concat(
-					Lists.newArrayList(new Object[] {
-							first, 
-							rest.first, 
-							rest.rest.first, 
-							rest.rest.rest.first,
-							rest.rest.rest.rest.first, 
-							rest.rest.rest.rest.rest.first,
-							rest.rest.rest.rest.rest.rest.first, 
-							rest.rest.rest.rest.rest.rest.rest.first,
-							rest.rest.rest.rest.rest.rest.rest.rest.first,
-							rest.rest.rest.rest.rest.rest.rest.rest.rest.first}),
-					Lists.newArrayList(rest.rest.rest.rest.rest.rest.rest.rest.rest.rest.first)).iterator();
+			return Iterables.concat(Lists.newArrayList(new Object[] {first, rest.first, rest.rest.first, rest.rest.rest.first, rest.rest.rest.rest.first, rest.rest.rest.rest.rest.first, rest.rest.rest.rest.rest.rest.first, rest.rest.rest.rest.rest.rest.rest.first, rest.rest.rest.rest.rest.rest.rest.rest.first, rest.rest.rest.rest.rest.rest.rest.rest.rest.first}), Lists.newArrayList(rest.rest.rest.rest.rest.rest.rest.rest.rest.rest.first)).iterator();
 		}
 	}
 
-	public static class Decuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>
-			extends
-			Tuple<T1, Tuple<T2, Tuple<T3, Tuple<T4, Tuple<T5, Tuple<T6, Tuple<T7, Tuple<T8, Tuple<T9, Tuple<T10, End>>>>>>>>>>
+	public static class Decuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> extends Tuple<T1, Tuple<T2, Tuple<T3, Tuple<T4, Tuple<T5, Tuple<T6, Tuple<T7, Tuple<T8, Tuple<T9, Tuple<T10, End>>>>>>>>>>
 	{
 		public Decuple(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10)
 		{
@@ -257,24 +230,11 @@ public class Tuple<First, Rest> implements Iterable<Object>
 		@Override
 		public Iterator<Object> iterator()
 		{
-			return Lists.newArrayList(
-					new Object[] {
-							first, 
-							rest.first, 
-							rest.rest.first, 
-							rest.rest.rest.first, 
-							rest.rest.rest.rest.first,
-							rest.rest.rest.rest.rest.first, 
-							rest.rest.rest.rest.rest.rest.first,
-							rest.rest.rest.rest.rest.rest.rest.first, 
-							rest.rest.rest.rest.rest.rest.rest.rest.first,
-							rest.rest.rest.rest.rest.rest.rest.rest.rest.first}).iterator();
+			return Lists.newArrayList(new Object[] {first, rest.first, rest.rest.first, rest.rest.rest.first, rest.rest.rest.rest.first, rest.rest.rest.rest.rest.first, rest.rest.rest.rest.rest.rest.first, rest.rest.rest.rest.rest.rest.rest.first, rest.rest.rest.rest.rest.rest.rest.rest.first, rest.rest.rest.rest.rest.rest.rest.rest.rest.first}).iterator();
 		}
 	}
 
-	public static class Nonuple<T1, T2, T3, T4, T5, T6, T7, T8, T9>
-			extends
-			Tuple<T1, Tuple<T2, Tuple<T3, Tuple<T4, Tuple<T5, Tuple<T6, Tuple<T7, Tuple<T8, Tuple<T9, End>>>>>>>>>
+	public static class Nonuple<T1, T2, T3, T4, T5, T6, T7, T8, T9> extends Tuple<T1, Tuple<T2, Tuple<T3, Tuple<T4, Tuple<T5, Tuple<T6, Tuple<T7, Tuple<T8, Tuple<T9, End>>>>>>>>>
 	{
 		public Nonuple(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9)
 		{
@@ -284,22 +244,11 @@ public class Tuple<First, Rest> implements Iterable<Object>
 		@Override
 		public Iterator<Object> iterator()
 		{
-			return Lists.newArrayList(
-					new Object[] {
-							first, 
-							rest.first, 
-							rest.rest.first, 
-							rest.rest.rest.first, 
-							rest.rest.rest.rest.first,
-							rest.rest.rest.rest.rest.first, 
-							rest.rest.rest.rest.rest.rest.first,
-							rest.rest.rest.rest.rest.rest.rest.first, 
-							rest.rest.rest.rest.rest.rest.rest.rest.first}).iterator();
+			return Lists.newArrayList(new Object[] {first, rest.first, rest.rest.first, rest.rest.rest.first, rest.rest.rest.rest.first, rest.rest.rest.rest.rest.first, rest.rest.rest.rest.rest.rest.first, rest.rest.rest.rest.rest.rest.rest.first, rest.rest.rest.rest.rest.rest.rest.rest.first}).iterator();
 		}
 	}
 
-	public static class Octuple<T1, T2, T3, T4, T5, T6, T7, T8> extends
-			Tuple<T1, Tuple<T2, Tuple<T3, Tuple<T4, Tuple<T5, Tuple<T6, Tuple<T7, Tuple<T8, End>>>>>>>>
+	public static class Octuple<T1, T2, T3, T4, T5, T6, T7, T8> extends Tuple<T1, Tuple<T2, Tuple<T3, Tuple<T4, Tuple<T5, Tuple<T6, Tuple<T7, Tuple<T8, End>>>>>>>>
 	{
 		public Octuple(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8)
 		{
@@ -309,21 +258,11 @@ public class Tuple<First, Rest> implements Iterable<Object>
 		@Override
 		public Iterator<Object> iterator()
 		{
-			return Lists.newArrayList(
-					new Object[] {
-							first, 
-							rest.first, 
-							rest.rest.first, 
-							rest.rest.rest.first, 
-							rest.rest.rest.rest.first,
-							rest.rest.rest.rest.rest.first, 
-							rest.rest.rest.rest.rest.rest.first,
-							rest.rest.rest.rest.rest.rest.rest.first}).iterator();
+			return Lists.newArrayList(new Object[] {first, rest.first, rest.rest.first, rest.rest.rest.first, rest.rest.rest.rest.first, rest.rest.rest.rest.rest.first, rest.rest.rest.rest.rest.rest.first, rest.rest.rest.rest.rest.rest.rest.first}).iterator();
 		}
 	}
 
-	public static class Septuple<T1, T2, T3, T4, T5, T6, T7> extends
-			Tuple<T1, Tuple<T2, Tuple<T3, Tuple<T4, Tuple<T5, Tuple<T6, Tuple<T7, End>>>>>>>
+	public static class Septuple<T1, T2, T3, T4, T5, T6, T7> extends Tuple<T1, Tuple<T2, Tuple<T3, Tuple<T4, Tuple<T5, Tuple<T6, Tuple<T7, End>>>>>>>
 	{
 		public Septuple(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7)
 		{
@@ -333,20 +272,11 @@ public class Tuple<First, Rest> implements Iterable<Object>
 		@Override
 		public Iterator<Object> iterator()
 		{
-			return Lists.newArrayList(
-					new Object[] {
-							first, 
-							rest.first, 
-							rest.rest.first, 
-							rest.rest.rest.first, 
-							rest.rest.rest.rest.first,
-							rest.rest.rest.rest.rest.first, 
-							rest.rest.rest.rest.rest.rest.first}).iterator();
+			return Lists.newArrayList(new Object[] {first, rest.first, rest.rest.first, rest.rest.rest.first, rest.rest.rest.rest.first, rest.rest.rest.rest.rest.first, rest.rest.rest.rest.rest.rest.first}).iterator();
 		}
 	}
 
-	public static class Sextuple<T1, T2, T3, T4, T5, T6> extends
-			Tuple<T1, Tuple<T2, Tuple<T3, Tuple<T4, Tuple<T5, Tuple<T6, End>>>>>>
+	public static class Sextuple<T1, T2, T3, T4, T5, T6> extends Tuple<T1, Tuple<T2, Tuple<T3, Tuple<T4, Tuple<T5, Tuple<T6, End>>>>>>
 	{
 		public Sextuple(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6)
 		{
@@ -356,19 +286,11 @@ public class Tuple<First, Rest> implements Iterable<Object>
 		@Override
 		public Iterator<Object> iterator()
 		{
-			return Lists.newArrayList(
-					new Object[] {
-							first, 
-							rest.first, 
-							rest.rest.first, 
-							rest.rest.rest.first, 
-							rest.rest.rest.rest.first,
-							rest.rest.rest.rest.rest.first}).iterator();
+			return Lists.newArrayList(new Object[] {first, rest.first, rest.rest.first, rest.rest.rest.first, rest.rest.rest.rest.first, rest.rest.rest.rest.rest.first}).iterator();
 		}
 	}
 
-	public static class Quintuple<T1, T2, T3, T4, T5> extends
-			Tuple<T1, Tuple<T2, Tuple<T3, Tuple<T4, Tuple<T5, End>>>>>
+	public static class Quintuple<T1, T2, T3, T4, T5> extends Tuple<T1, Tuple<T2, Tuple<T3, Tuple<T4, Tuple<T5, End>>>>>
 	{
 		public Quintuple(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5)
 		{
@@ -378,13 +300,7 @@ public class Tuple<First, Rest> implements Iterable<Object>
 		@Override
 		public Iterator<Object> iterator()
 		{
-			return Lists.newArrayList(
-					new Object[] {
-							first, 
-							rest.first, 
-							rest.rest.first, 
-							rest.rest.rest.first, 
-							rest.rest.rest.rest.first}).iterator();
+			return Lists.newArrayList(new Object[] {first, rest.first, rest.rest.first, rest.rest.rest.first, rest.rest.rest.rest.first}).iterator();
 		}
 	}
 
@@ -398,11 +314,7 @@ public class Tuple<First, Rest> implements Iterable<Object>
 		@Override
 		public Iterator<Object> iterator()
 		{
-			return Lists.newArrayList(new Object[] {
-					first, 
-					rest.first, 
-					rest.rest.first, 
-					rest.rest.rest.first}).iterator();
+			return Lists.newArrayList(new Object[] {first, rest.first, rest.rest.first, rest.rest.rest.first}).iterator();
 		}
 	}
 
@@ -416,10 +328,7 @@ public class Tuple<First, Rest> implements Iterable<Object>
 		@Override
 		public Iterator<Object> iterator()
 		{
-			return Lists.newArrayList(new Object[] {
-					first, 
-					rest.first, 
-					rest.rest.first}).iterator();
+			return Lists.newArrayList(new Object[] {first, rest.first, rest.rest.first}).iterator();
 		}
 	}
 
@@ -433,9 +342,7 @@ public class Tuple<First, Rest> implements Iterable<Object>
 		@Override
 		public Iterator<Object> iterator()
 		{
-			return Lists.newArrayList(new Object[] {
-					first, 
-					rest.first}).iterator();
+			return Lists.newArrayList(new Object[] {first, rest.first}).iterator();
 		}
 	}
 

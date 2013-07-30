@@ -98,28 +98,28 @@ public class File0Test
 	public void testAllFilePathsFile()
 	{
 		currentMethodName = "testAllFilePathsFile";
-		stringList = File0.allFilePaths(testDir);
+		stringList = File0.paths(testDir);
 	}
 
 	@Test
 	public void testAllFilePathsString()
 	{
 		currentMethodName = "testAllFilePathsString";
-		stringList = File0.allFilePaths(testDir.getAbsolutePath());
+		stringList = File0.paths(testDir.getAbsolutePath());
 	}
 
 	@Test
 	public void testAllFileFile()
 	{
 		currentMethodName = "testAllFileFile";
-		fileList = File0.allFiles(testDir);
+		fileList = File0.files(testDir);
 	}
 
 	@Test
 	public void testAllFileString()
 	{
 		currentMethodName = "testAllFileString";
-		fileList = File0.allFiles(testDir.getAbsolutePath());
+		fileList = File0.files(testDir.getAbsolutePath());
 	}
 
 	@Test

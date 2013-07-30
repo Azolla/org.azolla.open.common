@@ -13,6 +13,8 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 
 import org.azolla.open.common.io.Encoding;
+import org.azolla.open.common.text.Fmts;
+import org.azolla.open.common.util.KV;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -79,7 +81,7 @@ public final class DataCfg
 		}
 		catch(Exception e)
 		{
-			LOG.error("clazz = [{}], filePath = [{}]", clazz, filePath, e.toString(), e);
+			LOG.error(Fmts.LOG_P_M, KV.new0("clazz", clazz).set("filePath", filePath), e.toString(), e);
 			rtnT = null;
 		}
 
@@ -104,7 +106,7 @@ public final class DataCfg
 		}
 		catch(Exception e)
 		{
-			LOG.error("t = [{}], filePath = [{}]", t, filePath, e.toString(), e);	//既然已记录日志不应再抛出
+			LOG.error(Fmts.LOG_P_M, KV.new0("t", t).set("filePath", filePath), e.toString(), e);	//既然已记录日志不应再抛出
 			//			throw new AzollaException(AzollaCode.MODELHELPER_MARSHAL, e).set("t", t).set("filePath", filePath);
 		}
 	}

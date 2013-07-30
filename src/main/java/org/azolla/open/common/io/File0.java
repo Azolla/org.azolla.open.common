@@ -47,11 +47,11 @@ public final class File0
 	public static final String	TXT_FILETYPE_WITH_POINT	= POINT + TXT_FILETYPE;
 
 	/**
-	 * @see org.azolla.open.common.io.File0#allFiles(File)
+	 * @see org.azolla.open.common.io.File0#files(File)
 	 */
-	public static List<String> allFilePaths(File file)
+	public static List<String> paths(File file)
 	{
-		return Lists.transform(allFiles(file), new Function<File, String>()
+		return Lists.transform(files(file), new Function<File, String>()
 		{
 			@Override
 			public String apply(File input)
@@ -69,9 +69,9 @@ public final class File0
 	}
 
 	/**
-	 * @see org.azolla.open.common.io.File0#allFilePaths(File)
+	 * @see org.azolla.open.common.io.File0#paths(File)
 	 */
-	public static List<String> allFilePaths(String path)
+	public static List<String> paths(String path)
 	{
 		List<String> rtnList = Lists.newArrayList();
 		if(!Strings.isNullOrEmpty(path))
@@ -79,7 +79,7 @@ public final class File0
 			File f = new File(path);
 			if(f.exists())
 			{
-				rtnList = allFilePaths(f);
+				rtnList = paths(f);
 			}
 		}
 		return rtnList;
@@ -98,7 +98,7 @@ public final class File0
 	 * @param file document or directory
 	 * @return the container with document
 	 */
-	public static List<File> allFiles(File file)
+	public static List<File> files(File file)
 	{
 		List<File> rtnList = Lists.newArrayList();
 
@@ -108,7 +108,7 @@ public final class File0
 			{
 				for(File f : file.listFiles())
 				{
-					rtnList.addAll(allFiles(f));
+					rtnList.addAll(files(f));
 				}
 			}
 			else
@@ -120,9 +120,9 @@ public final class File0
 	}
 
 	/**
-	 * @see org.azolla.open.common.io.File0#allFiles(File)
+	 * @see org.azolla.open.common.io.File0#files(File)
 	 */
-	public static List<File> allFiles(String path)
+	public static List<File> files(String path)
 	{
 		List<File> rtnList = Lists.newArrayList();
 		if(!Strings.isNullOrEmpty(path))
@@ -130,7 +130,7 @@ public final class File0
 			File f = new File(path);
 			if(f.exists())
 			{
-				rtnList = allFiles(f);
+				rtnList = files(f);
 			}
 		}
 		return rtnList;
@@ -393,11 +393,11 @@ public final class File0
 
 	/**
 	 * @see org.azolla.open.common.io.File0#getFilesByType(String, List)
-	 * @see org.azolla.open.common.io.File0#allFiles(String)
+	 * @see org.azolla.open.common.io.File0#files(String)
 	 */
 	public static List<File> getAllFilesByType(String fileType, String path)
 	{
-		return getFilesByType(fileType, allFiles(path));
+		return getFilesByType(fileType, files(path));
 	}
 
 	/**
@@ -405,7 +405,7 @@ public final class File0
 	 */
 	public static List<File> getAllFilesByTypes(List<String> fileTypes, String path)
 	{
-		return getFilesByTypes(fileTypes, allFiles(path));
+		return getFilesByTypes(fileTypes, files(path));
 	}
 
 	/**
