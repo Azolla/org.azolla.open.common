@@ -81,7 +81,7 @@ public final class Cfg0
 		}
 		catch(Exception e)
 		{
-			LOG.error(Fmt0.LOG_P_M, KV.new0("clazz", clazz).set("filePath", filePath), e.toString(), e);
+			LOG.error(Fmt0.LOG_P_M, KV.ins("clazz", clazz).set("filePath", filePath), e.toString(), e);
 			rtnT = null;
 		}
 
@@ -106,7 +106,7 @@ public final class Cfg0
 		}
 		catch(Exception e)
 		{
-			LOG.error(Fmt0.LOG_P_M, KV.new0("t", t).set("filePath", filePath), e.toString(), e);	//既然已记录日志不应再抛出
+			LOG.error(Fmt0.LOG_P_M, KV.ins("t", t).set("filePath", filePath), e.toString(), e);	//既然已记录日志不应再抛出
 			//			throw new AzollaException(AzollaCode.MODELHELPER_MARSHAL, e).set("t", t).set("filePath", filePath);
 		}
 	}

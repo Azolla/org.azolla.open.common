@@ -61,7 +61,7 @@ public class FtpHelperTest
 	@Before
 	public void setUp() throws Exception
 	{
-		ftpHelper = Ftps.new0("42.121.28.127", "ftpuser", "ft9VK9aUW");
+		ftpHelper = Ftps.ins("42.121.28.127", "ftpuser", "ft9VK9aUW");
 	}
 
 	/**

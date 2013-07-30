@@ -457,6 +457,11 @@ public final class File0
 		return System.getProperty("user.dir");
 	}
 
+	public static String getUserHome()
+	{
+		return System.getProperty("user.home");
+	}
+
 	public static File newFile(String... strings)
 	{
 		Preconditions.checkNotNull(strings);

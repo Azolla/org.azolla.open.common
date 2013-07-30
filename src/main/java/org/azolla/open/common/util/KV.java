@@ -34,12 +34,12 @@ public final class KV
 	//		return new KV();
 	//	}
 
-	public static KV new0(String key, String value)
+	public static KV ins(String key, String value)
 	{
 		return new KV().set(key, value);
 	}
 
-	public static KV new0(String key, Object o)
+	public static KV ins(String key, Object o)
 	{
 		return new KV().set(key, o);
 	}
