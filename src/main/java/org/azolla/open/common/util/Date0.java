@@ -13,8 +13,6 @@ import java.util.Date;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.base.Preconditions;
-
 /**
  * DateHelper
  *
@@ -100,9 +98,6 @@ public final class Date0
 	 */
 	public static String toString(Date date, String pattern)
 	{
-		Preconditions.checkNotNull(date);
-		Preconditions.checkNotNull(pattern);
-
 		return new SimpleDateFormat(pattern).format(date);
 	}
 
@@ -124,8 +119,6 @@ public final class Date0
 	 */
 	public static long toUnixTimestamp(Date date)
 	{
-		Preconditions.checkNotNull(date);
-
 		return date.getTime();
 	}
 
@@ -185,8 +178,6 @@ public final class Date0
 	 */
 	public static int compareWithNow(Date date)
 	{
-		Preconditions.checkNotNull(date);
-
 		return date.compareTo(now());
 	}
 

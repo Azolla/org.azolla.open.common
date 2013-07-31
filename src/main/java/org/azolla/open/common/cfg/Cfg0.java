@@ -18,7 +18,6 @@ import org.azolla.open.common.util.KV;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.base.Preconditions;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
@@ -70,9 +69,6 @@ public final class Cfg0
 	@SuppressWarnings("unchecked")
 	public static <T> T unmarshal(Class<T> clazz, String filePath)
 	{
-		Preconditions.checkNotNull(clazz);
-		Preconditions.checkNotNull(filePath);
-
 		T rtnT = null;
 
 		try
@@ -90,18 +86,16 @@ public final class Cfg0
 
 	public static <T> void marshal(T t, String filePath)
 	{
-		marshal(t, filePath, null);
+		marshal(t, filePath, Encoding.UTF8);
 	}
 
 	public static <T> void marshal(T t, String filePath, Encoding encoding)
 	{
-		Preconditions.checkNotNull(t);
-		Preconditions.checkNotNull(filePath);
 		try
 		{
 			Marshaller m = getJAXBContext(t.getClass()).createMarshaller();
 			m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-			m.setProperty(Marshaller.JAXB_ENCODING, null == encoding ? Encoding.UTF8.getEncoding() : encoding.getEncoding());
+			m.setProperty(Marshaller.JAXB_ENCODING, encoding.getEncoding());
 			m.marshal(t, new File(filePath));
 		}
 		catch(Exception e)

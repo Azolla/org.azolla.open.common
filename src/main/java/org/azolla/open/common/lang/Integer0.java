@@ -33,7 +33,7 @@ public final class Integer0
 			}
 			catch(NumberFormatException e)
 			{
-				LOG.error(e.toString(), e);
+				LOG.warn(e.toString(), e);
 			}
 		}
 		return rtnBoolean;

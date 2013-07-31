@@ -8,11 +8,12 @@ package org.azolla.open.common.io;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
-import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 
@@ -413,7 +414,6 @@ public final class File0
 	 */
 	public static String getFileType(File file)
 	{
-		Preconditions.checkNotNull(file);
 		return getFileType(file.getName());
 	}
 
@@ -426,7 +426,6 @@ public final class File0
 	 */
 	public static String getFileType(String fileName)
 	{
-		Preconditions.checkNotNull(fileName);
 		int lastPointIndex = fileName.lastIndexOf(".");
 		return -1 == lastPointIndex ? fileName : fileName.substring(lastPointIndex + 1);
 	}
@@ -436,7 +435,7 @@ public final class File0
 	 */
 	public static String toLegalFileName(String fileName)
 	{
-		return toLegalFileName(fileName, null);
+		return toLegalFileName(fileName, "_");
 	}
 
 	/**
@@ -448,8 +447,7 @@ public final class File0
 	 */
 	public static String toLegalFileName(String fileName, String legalString)
 	{
-		Preconditions.checkNotNull(fileName);
-		return fileName.replaceAll(ILLEGAL_FILENAME_REGEX, Strings.isNullOrEmpty(legalString) ? "_" : legalString);
+		return fileName.replaceAll(ILLEGAL_FILENAME_REGEX, legalString);
 	}
 
 	public static String getUserDir()
@@ -464,15 +462,24 @@ public final class File0
 
 	public static File newFile(String... strings)
 	{
-		Preconditions.checkNotNull(strings);
 		return new File(Joiner.on(File.separator).join(strings));
 	}
 
 	public static File newFile(File parent, String... strings)
 	{
-		Preconditions.checkNotNull(parent);
-		Preconditions.checkNotNull(strings);
 		return new File(parent, Joiner.on(File.separator).join(strings));
+	}
+
+	public static String getEncoding(String filePath)
+	{
+		try
+		{
+			return Files.probeContentType(Paths.get(filePath));
+		}
+		catch(IOException e)
+		{
+			return Encode0.SINGLETON.getFileEncoding(filePath);
+		}
 	}
 
 	@SuppressWarnings("null")
