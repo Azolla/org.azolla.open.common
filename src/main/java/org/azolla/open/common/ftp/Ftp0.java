@@ -39,16 +39,16 @@ import com.google.common.io.Closeables;
  * @author 	sk@azolla.org
  * @since 	ADK1.0
  */
-public final class Ftps
+public final class Ftp0
 {
-	private static final Logger	LOG					= LoggerFactory.getLogger(Ftps.class);
+	private static final Logger	LOG					= LoggerFactory.getLogger(Ftp0.class);
 
 	public static final int		DEFAULT_PORT		= 21;
 	public static final int		DEFAULT_FILE_TYPE	= FTPClient.BINARY_FILE_TYPE;
 	public static final int		DEFAULT_MODE		= FTPClient.PASSIVE_LOCAL_DATA_CONNECTION_MODE;
 	public static final int		DEFAULT_TIMEOUT		= 3000;
 
-	private static Ftps			instance			= null;
+	private static Ftp0			instance			= null;
 
 	private String				host;
 	private String				username;
@@ -63,62 +63,62 @@ public final class Ftps
 
 	private FTPClient			client;
 
-	public static synchronized Ftps ins(String host, String username, String password)
+	public static synchronized Ftp0 ins(String host, String username, String password)
 	{
 		return ins(host, username, password, DEFAULT_PORT);
 	}
 
-	public static synchronized Ftps ins(String host, String username, String password, int port)
+	public static synchronized Ftp0 ins(String host, String username, String password, int port)
 	{
 		return ins(host, username, password, port, DEFAULT_FILE_TYPE);
 	}
 
-	public static synchronized Ftps ins(String host, String username, String password, int port, int fileType)
+	public static synchronized Ftp0 ins(String host, String username, String password, int port, int fileType)
 	{
 		return ins(host, username, password, port, fileType, DEFAULT_MODE);
 	}
 
-	public static synchronized Ftps ins(String host, String username, String password, int port, int fileType, int mode)
+	public static synchronized Ftp0 ins(String host, String username, String password, int port, int fileType, int mode)
 	{
 		return ins(host, username, password, port, fileType, mode, DEFAULT_TIMEOUT);
 	}
 
-	public static synchronized Ftps ins(String host, String username, String password, int port, int fileType, int mode, int timeout)
+	public static synchronized Ftp0 ins(String host, String username, String password, int port, int fileType, int mode, int timeout)
 	{
 		return ins(host, username, password, port, fileType, mode, timeout, Encoding.UTF8);
 	}
 
-	public static synchronized Ftps ins(String host, String username, String password, int port, int fileType, int mode, int timeout, Encoding encoding)
+	public static synchronized Ftp0 ins(String host, String username, String password, int port, int fileType, int mode, int timeout, Encoding encoding)
 	{
-		return null == instance ? new Ftps(host, username, password, port, fileType, mode, timeout, encoding) : instance;
+		return null == instance ? new Ftp0(host, username, password, port, fileType, mode, timeout, encoding) : instance;
 	}
 
-	public Ftps(String host, String username, String password)
+	public Ftp0(String host, String username, String password)
 	{
 		this(host, username, password, DEFAULT_PORT);
 	}
 
-	public Ftps(String host, String username, String password, int port)
+	public Ftp0(String host, String username, String password, int port)
 	{
 		this(host, username, password, DEFAULT_PORT, DEFAULT_FILE_TYPE);
 	}
 
-	public Ftps(String host, String username, String password, int port, int fileType)
+	public Ftp0(String host, String username, String password, int port, int fileType)
 	{
 		this(host, username, password, port, fileType, DEFAULT_MODE);
 	}
 
-	public Ftps(String host, String username, String password, int port, int fileType, int mode)
+	public Ftp0(String host, String username, String password, int port, int fileType, int mode)
 	{
 		this(host, username, password, port, fileType, mode, DEFAULT_TIMEOUT);
 	}
 
-	public Ftps(String host, String username, String password, int port, int fileType, int mode, int timeout)
+	public Ftp0(String host, String username, String password, int port, int fileType, int mode, int timeout)
 	{
 		this(host, username, password, port, fileType, mode, timeout, Encoding.UTF8);
 	}
 
-	public Ftps(String host, String username, String password, int port, int fileType, int mode, int timeout, Encoding encoding)
+	public Ftp0(String host, String username, String password, int port, int fileType, int mode, int timeout, Encoding encoding)
 	{
 		connect(host, username, password, port, fileType, mode, timeout, encoding);
 	}
@@ -401,7 +401,7 @@ public final class Ftps
 	}
 
 	/**
-	 * @see org.azolla.open.common.ftp.Ftps#listNames(String)
+	 * @see org.azolla.open.common.ftp.Ftp0#listNames(String)
 	 */
 	public List<String> listNames()
 	{
@@ -498,7 +498,7 @@ public final class Ftps
 	}
 
 	/**
-	 * @see org.azolla.open.common.ftp.Ftps#listFiles(String)
+	 * @see org.azolla.open.common.ftp.Ftp0#listFiles(String)
 	 */
 	public List<FTPFile> listFiles()
 	{
@@ -506,7 +506,7 @@ public final class Ftps
 	}
 
 	/**
-	 * @see org.azolla.open.common.ftp.Ftps#listFiles(String,FTPFileFilter)
+	 * @see org.azolla.open.common.ftp.Ftp0#listFiles(String,FTPFileFilter)
 	 */
 	public List<FTPFile> listFiles(String remotePath)
 	{
@@ -681,7 +681,7 @@ public final class Ftps
 	 *
 	 * @param fileType the fileType to set
 	 */
-	public Ftps setFileType(int fileType)
+	public Ftp0 setFileType(int fileType)
 	{
 		try
 		{
@@ -711,7 +711,7 @@ public final class Ftps
 	 *
 	 * @param mode the mode to set
 	 */
-	public Ftps setMode(int mode)
+	public Ftp0 setMode(int mode)
 	{
 		boolean successed = true;
 		switch(mode)
@@ -772,7 +772,7 @@ public final class Ftps
 	 *
 	 * @param encoding the encoding to set
 	 */
-	public Ftps setEncoding(Encoding encoding)
+	public Ftp0 setEncoding(Encoding encoding)
 	{
 		Encoding e = null == encoding ? Encoding.UTF8 : encoding;
 		client.setControlEncoding(e.getEncoding());
@@ -795,7 +795,7 @@ public final class Ftps
 	 *
 	 * @param timeout the timeout to set
 	 */
-	public Ftps setTimeout(int timeout)
+	public Ftp0 setTimeout(int timeout)
 	{
 		try
 		{
