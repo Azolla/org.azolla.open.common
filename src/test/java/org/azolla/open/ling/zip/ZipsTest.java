@@ -12,7 +12,6 @@ import java.io.File;
 import java.io.IOException;
 
 import org.azolla.open.ling.io.File0;
-import org.azolla.open.ling.zip.Zip0;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -71,7 +70,7 @@ public class ZipsTest
 	@After
 	public void tearDown() throws Exception
 	{
-		File0.delDirectory(testDir.getParentFile());
+		File0.delFile(testDir.getParentFile());
 		testDir.mkdirs();
 		File0.newFile(testDir, "empty.txt").createNewFile();
 	}

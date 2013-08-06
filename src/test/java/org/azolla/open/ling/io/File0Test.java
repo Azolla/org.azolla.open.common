@@ -9,7 +9,6 @@ package org.azolla.open.ling.io;
 import java.io.File;
 import java.util.List;
 
-import org.azolla.open.ling.io.File0;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -54,7 +53,7 @@ public class File0Test
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception
 	{
-		File0.delFiles(testDir);
+		File0.emptyFile(testDir);
 
 		File f = new File(testDir, "empty.txt");
 		f.createNewFile();
@@ -96,31 +95,10 @@ public class File0Test
 	}
 
 	@Test
-	public void testAllFilePathsFile()
-	{
-		currentMethodName = "testAllFilePathsFile";
-		stringList = File0.paths(testDir);
-	}
-
-	@Test
-	public void testAllFilePathsString()
-	{
-		currentMethodName = "testAllFilePathsString";
-		stringList = File0.paths(testDir.getAbsolutePath());
-	}
-
-	@Test
 	public void testAllFileFile()
 	{
 		currentMethodName = "testAllFileFile";
-		fileList = File0.files(testDir);
-	}
-
-	@Test
-	public void testAllFileString()
-	{
-		currentMethodName = "testAllFileString";
-		fileList = File0.files(testDir.getAbsolutePath());
+		fileList = File0.listFile(testDir);
 	}
 
 	@Test
@@ -136,7 +114,7 @@ public class File0Test
 	}
 
 	/**
-	 * Test method for {@link org.azolla.open.ling.io.File0#getFileType(java.io.File)}.
+	 * Test method for {@link org.azolla.open.ling.io.File0#fileType(java.io.File)}.
 	 */
 	@Test
 	public void testGetFileTypeFile()
@@ -144,11 +122,11 @@ public class File0Test
 		currentMethodName = "testGetFileTypeFile";
 		//		Assert.assertSame("txt", FileHelper.getFileType(FileHelper.getFile(FileHelper.getUserDir(), "src/test",
 		//				"resources/readme.txt")));
-		Assert.assertEquals("txt", File0.getFileType(File0.newFile(File0.getUserDir(), "src/test/resources/readme.txt")));
+		Assert.assertEquals("txt", File0.fileType(File0.newFile(File0.getUserDir(), "src/test/resources/readme.txt")));
 	}
 
 	/**
-	 * Test method for {@link org.azolla.open.ling.io.File0#getFileType(java.lang.String)}.
+	 * Test method for {@link org.azolla.open.ling.io.File0#fileType(java.lang.String)}.
 	 */
 	@Test
 	public void testGetFileTypeString()
@@ -158,7 +136,7 @@ public class File0Test
 		//				"txt",
 		//				FileHelper.getFileType(FileHelper.getFile(FileHelper.getUserDir(), "src/test/resources",
 		//						"readme.txt").getAbsolutePath()));
-		Assert.assertEquals("txt", File0.getFileType(File0.newFile(File0.getUserDir(), "src/test/resources/readme.txt").getAbsolutePath()));
+		Assert.assertEquals("txt", File0.fileType(File0.newFile(File0.getUserDir(), "src/test/resources/readme.txt").getAbsolutePath()));
 	}
 
 	@Test

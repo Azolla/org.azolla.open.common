@@ -12,9 +12,12 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
-import com.google.common.base.Function;
+import org.azolla.open.ling.text.Fmt0;
+import org.azolla.open.ling.util.KV;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.common.base.Joiner;
-import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 
 /**
@@ -31,6 +34,8 @@ import com.google.common.collect.Lists;
  */
 public final class File0
 {
+	private static final Logger	LOG						= LoggerFactory.getLogger(File0.class);
+
 	public static final String	ILLEGAL_FILENAME_REGEX	= "[{/\\\\:*?\"<>|}]";
 
 	public static final String	POINT					= ".";
@@ -47,374 +52,154 @@ public final class File0
 	public static final String	TXT_FILETYPE			= "txt";
 	public static final String	TXT_FILETYPE_WITH_POINT	= POINT + TXT_FILETYPE;
 
+	public static final String	BAK_FILETYPE			= "bak";
+	public static final String	BAK_FILETYPE_WITH_POINT	= POINT + BAK_FILETYPE;
+
 	/**
-	 * @see org.azolla.open.ling.io.File0#files(File)
+	 * new File
+	 * 
+	 * @param strings
+	 * @return File
 	 */
-	public static List<String> paths(File file)
+	public static File newFile(String... strings)
 	{
-		return Lists.transform(files(file), new Function<File, String>()
-		{
-			@Override
-			public String apply(File input)
-			{
-				try
-				{
-					return input.getCanonicalPath();
-				}
-				catch(IOException e)
-				{
-					return input.getAbsolutePath();
-				}
-			}
-		});
+		return new File(Joiner.on(File.separator).join(strings));
 	}
 
 	/**
-	 * @see org.azolla.open.ling.io.File0#paths(File)
+	 * new File
+	 * 
+	 * @param parent
+	 * @param strings
+	 * @return File
 	 */
-	public static List<String> paths(String path)
+	public static File newFile(File parent, String... strings)
 	{
-		List<String> rtnList = Lists.newArrayList();
-		if(!Strings.isNullOrEmpty(path))
-		{
-			File f = new File(path);
-			if(f.exists())
-			{
-				rtnList = paths(f);
-			}
-		}
-		return rtnList;
+		return new File(parent, Joiner.on(File.separator).join(strings));
 	}
 
 	/**
-	 * Return all document under this directory and sub directory.
-	 * if the file is document return it.
+	 * delete File
 	 * 
-	 * Return empty when:
-	 * 1.file not exist
-	 * 2.file is an empty directory
-	 * 
-	 * inner -> outer
-	 * 
-	 * @param file document or directory
-	 * @return the container with document
+	 * @param file	documnet or directory
+	 * @return boolean
 	 */
-	public static List<File> files(File file)
+	public static boolean delFile(File file)
 	{
-		List<File> rtnList = Lists.newArrayList();
+		boolean rtnBoolean = true;
 
 		if(null != file && file.exists())
 		{
-			if(file.isDirectory() && file.list() != null)
+			if(file.isDirectory() && null != file.listFiles())
 			{
-				for(File f : file.listFiles())
+				for(File subFile : file.listFiles())
 				{
-					rtnList.addAll(files(f));
+					rtnBoolean = rtnBoolean && delFile(subFile);
+				}
+			}
+			rtnBoolean = rtnBoolean && file.delete();
+		}
+
+		return rtnBoolean;
+	}
+
+	/**
+	 * empty File
+	 * 
+	 * @param file	documnet or directory
+	 * @return boolean
+	 */
+	public static boolean emptyFile(File file)
+	{
+		boolean rtnBoolean = true;
+
+		if(null != file && file.exists())
+		{
+			if(file.isDirectory() && null != file.listFiles())
+			{
+				for(File subFile : file.listFiles())
+				{
+					rtnBoolean = rtnBoolean && delFile(subFile);
 				}
 			}
 			else
 			{
-				rtnList.add(file);
-			}
-		}
-		return rtnList;
-	}
-
-	/**
-	 * @see org.azolla.open.ling.io.File0#files(File)
-	 */
-	public static List<File> files(String path)
-	{
-		List<File> rtnList = Lists.newArrayList();
-		if(!Strings.isNullOrEmpty(path))
-		{
-			File f = new File(path);
-			if(f.exists())
-			{
-				rtnList = files(f);
-			}
-		}
-		return rtnList;
-	}
-
-	/**
-	 * Delete all empty document under this directory and sub directory.
-	 * if the file is empty document delete it.
-	 * 
-	 * return false when some empty document delete failure,delete stop
-	 * 
-	 * inner -> outer
-	 * 
-	 * @param file document or directory
-	 * @return will return true with out false when some empty document delete failure
-	 */
-	public static boolean delAllEmptyFiles(File file)
-	{
-		boolean rtn = true;
-
-		if(null != file && file.exists())
-		{
-			if(file.isDirectory() && file.list() != null)
-			{
-				for(File f : file.listFiles())
+				File bakFile = bakFileName(file);
+				rtnBoolean = rtnBoolean && file.renameTo(bakFile);
+				if(rtnBoolean)
 				{
-					rtn = rtn && delAllEmptyFiles(f);
-				}
-			}
-			else
-			{
-				if(file.length() == 0)
-				{
-					rtn = rtn && file.delete();
-				}
-			}
-		}
-		return rtn;
-	}
-
-	/**
-	 * @see org.azolla.open.ling.io.File0#delAllEmptyFiles(File)
-	 */
-	public static boolean delAllEmptyFiles(String path)
-	{
-		boolean rtn = true;
-		if(!Strings.isNullOrEmpty(path))
-		{
-			File f = new File(path);
-			if(f.exists())
-			{
-				rtn = delAllEmptyFiles(f);
-			}
-		}
-		return rtn;
-	}
-
-	/**
-	 * Delete file sub files and  under this directory and sub directory.
-	 * if this file is document or empty directory delete it.
-	 * 
-	 * inner -> outer
-	 * 
-	 * @param file document or directory
-	 * @return will return true with out false when some file delete failure
-	 */
-	public static boolean delDirectory(File file)
-	{
-		boolean rtn = true;
-
-		if(null != file && file.exists())
-		{
-			if(file.isDirectory() && file.list() != null)
-			{
-				for(File f : file.listFiles())
-				{
-					rtn = rtn && delDirectory(f);
-				}
-				rtn = rtn && file.delete();
-			}
-			else
-			{
-				rtn = rtn && file.delete();
-			}
-		}
-		return rtn;
-	}
-
-	/**
-	 * @see org.azolla.open.ling.io.File0#delDirectory(File)
-	 */
-	public static boolean delDirectory(String path)
-	{
-		boolean rtn = true;
-		if(!Strings.isNullOrEmpty(path))
-		{
-			File f = new File(path);
-			if(f.exists())
-			{
-				rtn = delDirectory(f);
-			}
-		}
-		return rtn;
-	}
-
-	/**
-	 * Delete all empty document under this directory.
-	 * if the file is empty document delete it.
-	 * 
-	 * return false when some empty document delete failure,delete stop
-	 * 
-	 * @param file document or directory
-	 * @return will return true with out false when some empty document delete failure
-	 */
-	public static boolean delEmptyFiles(File file)
-	{
-		boolean rtn = true;
-
-		if(null != file && file.exists())
-		{
-			if(file.isDirectory() && file.list() != null)
-			{
-				for(File f : file.listFiles())
-				{
-					if(!f.isDirectory())
+					try
 					{
-						if(f.length() == 0)
+						rtnBoolean = rtnBoolean && file.createNewFile();
+						if(rtnBoolean)
 						{
-							rtn = rtn && f.delete();
+							bakFile.delete();	//ignore failed to delete
 						}
 					}
-				}
-			}
-			else
-			{
-				if(file.length() == 0)
-				{
-					rtn = rtn && file.delete();
-				}
-			}
-		}
-		return rtn;
-	}
-
-	/**
-	 * @see org.azolla.open.ling.io.File0#delEmptyFiles(File)
-	 */
-	public static boolean delEmptyFiles(String path)
-	{
-		boolean rtn = true;
-		if(!Strings.isNullOrEmpty(path))
-		{
-			File f = new File(path);
-			if(f.exists())
-			{
-				rtn = delEmptyFiles(f);
-			}
-		}
-		return rtn;
-	}
-
-	/**
-	 * Delete all document under this directory.
-	 * if the file is document delete it.
-	 * 
-	 * return false when some document delete failure,delete stop
-	 * 
-	 * @param file document or directory
-	 * @return will return true with out false when some empty document delete failure
-	 */
-	public static boolean delFiles(File file)
-	{
-		boolean rtn = true;
-
-		if(null != file && file.exists())
-		{
-			if(file.isDirectory() && file.list() != null)
-			{
-				for(File f : file.listFiles())
-				{
-					if(!f.isDirectory())
+					catch(Exception e)
 					{
-						rtn = rtn && f.delete();
+						LOG.error(Fmt0.LOG_P_M, KV.ins("file", file), e.toString(), e);
+						bakFile.renameTo(file);
+						rtnBoolean = false;
 					}
 				}
 			}
-			else
-			{
-				rtn = rtn && file.delete();
-			}
 		}
-		return rtn;
+
+		return rtnBoolean;
 	}
 
 	/**
-	 * @see org.azolla.open.ling.io.File0#delFiles(File)
-	 */
-	public static boolean delFiles(String path)
-	{
-		boolean rtn = true;
-		if(!Strings.isNullOrEmpty(path))
-		{
-			File f = new File(path);
-			if(f.exists())
-			{
-				rtn = delFiles(f);
-			}
-		}
-		return rtn;
-	}
-
-	/**
-	 * @see org.azolla.open.ling.io.File0#getFilesByTypes(List, List)
-	 */
-	public static List<File> getFilesByType(String fileType, List<File> files)
-	{
-		//		Preconditions.checkNotNull(fileType);
-		List<String> typeList = Lists.newArrayList();
-
-		// BE Best-effort
-		if(!Strings.isNullOrEmpty(fileType))
-		{
-			typeList.add(fileType);
-		}
-
-		return getFilesByTypes(typeList, files);
-	}
-
-	/**
-	 * filter files by file type list.
+	 * Return file's bakName
 	 * 
-	 * @param fileTypes file type list
-	 * @param files	file list
-	 * @return  file list of the file type in file type list
+	 * sample.txt -> sample.txt.bak
+	 * 
+	 * @param file
+	 * @return File
 	 */
-	public static List<File> getFilesByTypes(List<String> fileTypes, List<File> files)
+	public static File bakFileName(File file)
 	{
-		//		Preconditions.checkNotNull(files);
-		//		Preconditions.checkNotNull(fileTypes);
+		File rtnFile = null;
+
+		if(null != file)
+		{
+			rtnFile = newFile(file.getParentFile(), file.getName() + BAK_FILETYPE_WITH_POINT);
+		}
+
+		return rtnFile;
+	}
+
+	/**
+	 * list of file contain sub file
+	 * 
+	 * @param file
+	 * @return List<File>	
+	 */
+	public static List<File> listFile(File file)
+	{
 		List<File> rtnList = Lists.newArrayList();
 
-		// BE Best-effort
-		if(null == fileTypes || fileTypes.isEmpty() || null == files)
+		if(null != file && file.exists() && file.isDirectory() && null != file.listFiles())
 		{
-			return rtnList;
-		}
-
-		for(File f : files)
-		{
-			if(!f.isDirectory())
+			for(File subFile : file.listFiles())
 			{
-				if(fileTypes.contains(getFileType(f)))
+				rtnList.add(subFile);
+				if(subFile.isDirectory())
 				{
-					rtnList.add(f);
+					rtnList.addAll(listFile(subFile));
 				}
 			}
 		}
+
 		return rtnList;
 	}
 
 	/**
-	 * @see org.azolla.open.ling.io.File0#getFilesByType(String, List)
-	 * @see org.azolla.open.ling.io.File0#files(String)
+	 * @see org.azolla.open.ling.io.File0#fileType(String)
 	 */
-	public static List<File> getAllFilesByType(String fileType, String path)
+	public static String fileType(File file)
 	{
-		return getFilesByType(fileType, files(path));
-	}
-
-	/**
-	 * @see org.azolla.open.ling.io.File0#getFilesByTypes(List, List)
-	 */
-	public static List<File> getAllFilesByTypes(List<String> fileTypes, String path)
-	{
-		return getFilesByTypes(fileTypes, files(path));
-	}
-
-	/**
-	 * @see org.azolla.open.ling.io.File0#getFileType(String)
-	 */
-	public static String getFileType(File file)
-	{
-		return getFileType(file.getName());
+		return fileType(file.getName());
 	}
 
 	/**
@@ -424,7 +209,7 @@ public final class File0
 	 * @param fileName file name
 	 * @return type of file
 	 */
-	public static String getFileType(String fileName)
+	public static String fileType(String fileName)
 	{
 		int lastPointIndex = fileName.lastIndexOf(".");
 		return -1 == lastPointIndex ? fileName : fileName.substring(lastPointIndex + 1);
@@ -458,16 +243,6 @@ public final class File0
 	public static String getUserHome()
 	{
 		return System.getProperty("user.home");
-	}
-
-	public static File newFile(String... strings)
-	{
-		return new File(Joiner.on(File.separator).join(strings));
-	}
-
-	public static File newFile(File parent, String... strings)
-	{
-		return new File(parent, Joiner.on(File.separator).join(strings));
 	}
 
 	public static String getEncoding(String filePath)

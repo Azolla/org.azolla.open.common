@@ -170,7 +170,7 @@ public final class Zip0
 			{
 				zip = Date0.toString(Date0.Y__M__D_H_MI_S);
 			}
-			if(!Lists.newArrayList(File0.ZIP_FILETYPE, File0.JAR_FILETYPE, File0.WAR_FILETYPE).contains(File0.getFileType(zip).toLowerCase()))
+			if(!Lists.newArrayList(File0.ZIP_FILETYPE, File0.JAR_FILETYPE, File0.WAR_FILETYPE).contains(File0.fileType(zip).toLowerCase()))
 			{
 				zip += File0.ZIP_FILETYPE_WITH_POINT;
 			}
