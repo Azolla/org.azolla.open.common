@@ -6,7 +6,7 @@
  */
 package org.azolla.open.ling;
 
-import org.azolla.open.ling.cfg.DataCfgTest;
+import org.azolla.open.ling.cfg.Cfg0Test;
 import org.azolla.open.ling.collect.TupleTest;
 import org.azolla.open.ling.exception.AzollaExceptionTest;
 import org.azolla.open.ling.exception.CodeTests;
@@ -22,7 +22,7 @@ import org.junit.runners.Suite;
  * @since 	ADK1.0
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({DataCfgTest.class, TupleTest.class, AzollaExceptionTest.class, CodeTests.class, File0Test.class})
+@Suite.SuiteClasses({Cfg0Test.class, TupleTest.class, AzollaExceptionTest.class, CodeTests.class, File0Test.class})
 public class CommonTests
 {
 

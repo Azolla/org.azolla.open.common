@@ -66,7 +66,7 @@ public final class KV
 	{
 		String rtn = String.valueOf(o);
 
-		if(o.getClass().isArray())
+		if(null != o && o.getClass().isArray())
 		{
 			// check for primitive array types because they
 			// unfortunately cannot be cast to Object[]
@@ -112,12 +112,13 @@ public final class KV
 
 	public String toString(String separator, String connector)
 	{
+		separator = String.valueOf(separator);
 		StringBuilder sb = new StringBuilder();
 		for(Map.Entry<String, String> entry : map.entrySet())
 		{
 			sb.append(separator).append(entry.getKey()).append(connector).append(entry.getValue());
 		}
-		return "[" + sb.toString().substring(null == separator ? 4 : separator.length()) + "]";
+		return "[" + sb.toString().substring(separator.length()) + "]";
 	}
 
 	@Override

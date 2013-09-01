@@ -66,43 +66,55 @@ public final class Cfg0
 		return CACHE.get(clazz);
 	}
 
+	/**
+	 * Unmarshal XML data from the specified file
+	 */
 	@SuppressWarnings("unchecked")
-	public static <T> T unmarshal(Class<T> clazz, String filePath)
+	public static <T> T unmarshal(Class<T> clazz, File file)
 	{
 		T rtnT = null;
 
 		try
 		{
-			rtnT = (T) getJAXBContext(clazz).createUnmarshaller().unmarshal(new File(filePath));
+			rtnT = (T) getJAXBContext(clazz).createUnmarshaller().unmarshal(file);
 		}
 		catch(Exception e)
 		{
-			LOG.error(Fmt0.LOG_P_M, KV.ins("clazz", clazz).set("filePath", filePath), e.toString(), e);
+			LOG.error(Fmt0.LOG_P_M, KV.ins("clazz", clazz).set("filePath", file), e.toString(), e);
 			rtnT = null;
 		}
 
 		return rtnT;
 	}
 
-	public static <T> void marshal(T t, String filePath)
+	/**
+	 * Marshal Ojbect to the specified file
+	 */
+	public static <T> boolean marshal(T t, File file)
 	{
-		marshal(t, filePath, Encoding.UTF8);
+		return marshal(t, file, Encoding.UTF8);
 	}
 
-	public static <T> void marshal(T t, String filePath, Encoding encoding)
+	/**
+	 * Marshal Ojbect to File with Encoding
+	 */
+	public static <T> boolean marshal(T t, File file, Encoding encoding)
 	{
+		boolean rtnBoolean = true;
 		try
 		{
 			Marshaller m = getJAXBContext(t.getClass()).createMarshaller();
 			m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 			m.setProperty(Marshaller.JAXB_ENCODING, encoding.getEncoding());
-			m.marshal(t, new File(filePath));
+			m.marshal(t, file);
 		}
 		catch(Exception e)
 		{
-			LOG.error(Fmt0.LOG_P_M, KV.ins("t", t).set("filePath", filePath), e.toString(), e);	//既然已记录日志不应再抛出
+			LOG.error(Fmt0.LOG_P_M, KV.ins("t", t).set("file", file).set("encoding", encoding), e.toString(), e);	//既然已记录日志不应再抛出
 			//			throw new AzollaException(AzollaCode.MODELHELPER_MARSHAL, e).set("t", t).set("filePath", filePath);
+			rtnBoolean = false;
 		}
+		return rtnBoolean;
 	}
 
 	public static void reset()
