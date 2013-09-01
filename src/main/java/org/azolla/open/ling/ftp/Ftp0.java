@@ -14,6 +14,8 @@ import java.io.OutputStream;
 import java.net.InetAddress;
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileFilter;
@@ -70,7 +72,7 @@ public final class Ftp0
 		return ins(host, username, password, DEFAULT_PORT);
 	}
 
-	public static synchronized Ftp0 ins(String host, String username, String password, int port)
+	public static synchronized Ftp0 ins(@Nullable String host, String username, String password, int port)
 	{
 		return ins(host, username, password, port, DEFAULT_FILE_TYPE);
 	}

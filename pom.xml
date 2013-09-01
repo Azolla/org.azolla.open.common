@@ -8,10 +8,10 @@
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>org.azolla.open.common</artifactId>
+	<artifactId>org.azolla.open.ling</artifactId>
 	<packaging>jar</packaging>
-	<name>Azolla - Commons</name>
-	<description>Azolla - Commons</description>
+	<name>Azolla - Ling</name>
+	<description>Azolla - Ling</description>
 
 	<dependencies>
 		<dependency>
@@ -46,6 +46,10 @@
 		<dependency>
 			<groupId>org.apache.ant</groupId>
 			<artifactId>ant</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code.findbugs</groupId>
+			<artifactId>jsr305</artifactId>
 		</dependency>
 	</dependencies>
 </project>
