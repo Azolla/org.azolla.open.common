@@ -19,4 +19,6 @@ public final class Fmt0
 	public static final String	LOG_EC_P	= "[ErrorCode={}][{}]";	//EC=ErrorCode;P=Properties
 
 	public static final String	LOG_P_M		= "[{}]\n{}";				//P=Properties;M=Message
+
+	public static final String	LOG_P		= "[{}]";					//P=Properties
 }

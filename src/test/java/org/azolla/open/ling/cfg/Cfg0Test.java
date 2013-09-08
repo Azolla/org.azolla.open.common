@@ -89,6 +89,9 @@ public class Cfg0Test
 	public void testMarshalTString()
 	{
 		Cfg0.marshal(testRootNode, testDataCfgFile);
+		Cfg0.marshal(testRootNode, null);
+		Cfg0.marshal(null, testDataCfgFile);
+		Cfg0.marshal(null, null);
 	}
 
 	/**
@@ -98,6 +101,14 @@ public class Cfg0Test
 	public void testMarshalTStringEncoding()
 	{
 		Cfg0.marshal(testRootNode, testDataCfgFile, Encoding.UTF8);
+		Cfg0.marshal(testRootNode, testDataCfgFile, null);
+		Cfg0.marshal(testRootNode, null, Encoding.UTF8);
+		Cfg0.marshal(null, testDataCfgFile, Encoding.UTF8);
+		Cfg0.marshal(testRootNode, null, null);
+		Cfg0.marshal(null, null, Encoding.UTF8);
+		Cfg0.marshal(null, testDataCfgFile, Encoding.UTF8);
+		Cfg0.marshal(testRootNode, testDataCfgFile, null);
+		Cfg0.marshal(null, null, null);
 	}
 
 	/**

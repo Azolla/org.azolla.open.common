@@ -12,12 +12,15 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import org.azolla.open.ling.text.Fmt0;
 import org.azolla.open.ling.util.KV;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Joiner;
+import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 
 /**
@@ -90,15 +93,30 @@ public final class File0
 
 		if(null != file && file.exists())
 		{
-			if(file.isDirectory() && null != file.listFiles())
-			{
-				for(File subFile : file.listFiles())
-				{
-					rtnBoolean = rtnBoolean && delFile(subFile);
-				}
-			}
-			rtnBoolean = rtnBoolean && file.delete();
+			rtnBoolean = delFile0(file);
 		}
+
+		return rtnBoolean;
+	}
+
+	/**
+	 * delete File
+	 * 
+	 * @param file existed
+	 * @return boolean
+	 */
+	private static boolean delFile0(File file)
+	{
+		boolean rtnBoolean = true;
+
+		if(file.isDirectory())
+		{
+			for(File subFile : file.listFiles())
+			{
+				rtnBoolean = rtnBoolean && delFile0(subFile);
+			}
+		}
+		rtnBoolean = rtnBoolean && file.delete();
 
 		return rtnBoolean;
 	}
@@ -115,11 +133,11 @@ public final class File0
 
 		if(null != file && file.exists())
 		{
-			if(file.isDirectory() && null != file.listFiles())
+			if(file.isDirectory())
 			{
 				for(File subFile : file.listFiles())
 				{
-					rtnBoolean = rtnBoolean && delFile(subFile);
+					rtnBoolean = rtnBoolean && delFile0(subFile);
 				}
 			}
 			else
@@ -138,7 +156,7 @@ public final class File0
 					}
 					catch(Exception e)
 					{
-						LOG.error(Fmt0.LOG_P_M, KV.ins("file", file), e.toString(), e);
+						LOG.error(Fmt0.LOG_P, KV.ins("file", file), e);
 						bakFile.renameTo(file);
 						rtnBoolean = false;
 					}
@@ -179,15 +197,37 @@ public final class File0
 	{
 		List<File> rtnList = Lists.newArrayList();
 
-		if(null != file && file.exists() && file.isDirectory() && null != file.listFiles())
+		if(null != file && file.exists() && file.isDirectory())
 		{
 			for(File subFile : file.listFiles())
 			{
 				rtnList.add(subFile);
 				if(subFile.isDirectory())
 				{
-					rtnList.addAll(listFile(subFile));
+					rtnList.addAll(listFile0(subFile));
 				}
+			}
+		}
+
+		return rtnList;
+	}
+
+	/**
+	 * list of file contain sub file
+	 * 
+	 * @param file existed folder
+	 * @return List<File>
+	 */
+	private static List<File> listFile0(File file)
+	{
+		List<File> rtnList = Lists.newArrayList();
+
+		for(File subFile : file.listFiles())
+		{
+			rtnList.add(subFile);
+			if(subFile.isDirectory())
+			{
+				rtnList.addAll(listFile(subFile));
 			}
 		}
 
@@ -211,6 +251,8 @@ public final class File0
 	 */
 	public static String fileType(String fileName)
 	{
+		fileName = String.valueOf(fileName);
+
 		int lastPointIndex = fileName.lastIndexOf(".");
 		return -1 == lastPointIndex ? fileName : fileName.substring(lastPointIndex + 1);
 	}
@@ -220,18 +262,21 @@ public final class File0
 	 */
 	public static String toLegalFileName(String fileName)
 	{
-		return toLegalFileName(fileName, "_");
+		return toLegalFileName(fileName, null);
 	}
 
 	/**
 	 * transform legal file name
 	 * 
 	 * @param fileName file name
-	 * @param legalString legal string, if null or empty to "_"
+	 * @param legalString legal string
 	 * @return legal file name
 	 */
-	public static String toLegalFileName(String fileName, String legalString)
+	public static String toLegalFileName(String fileName, @Nullable String legalString)
 	{
+		fileName = String.valueOf(fileName);
+		legalString = Strings.isNullOrEmpty(legalString) ? "_" : legalString;
+
 		return fileName.replaceAll(ILLEGAL_FILENAME_REGEX, legalString);
 	}
 

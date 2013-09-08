@@ -83,7 +83,7 @@ public final class Zip0
 			catch(Exception e)
 			{
 				rtnBoolean = false;
-				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.ZIP_ZIP_ERROR, KV.ins("zipFile", zipFile).put("dest", dest).put("encoding", encoding), e.toString(), e);
+				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.ZIP_ZIP_ERROR, KV.ins("zipFile", zipFile).put("dest", dest).put("encoding", encoding), e);
 			}
 		}
 		return rtnBoolean;
@@ -119,7 +119,7 @@ public final class Zip0
 			catch(Exception e)
 			{
 				rtnBoolean = false;
-				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.ZIP_ZIP_ERROR, KV.ins("destFile", destFile), e.toString(), e);
+				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.ZIP_ZIP_ERROR, KV.ins("destFile", destFile), e);
 			}
 			finally
 			{
@@ -217,7 +217,7 @@ public final class Zip0
 			catch(Exception e)
 			{
 				rtnBoolean = false;
-				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.ZIP_ZIP_ERROR, KV.ins("fileList", Joiner.on("|").join(fileList)).put("zip", zip).put("encoding", encoding), e.toString(), e);
+				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.ZIP_ZIP_ERROR, KV.ins("fileList", Joiner.on("|").join(fileList)).put("zip", zip).put("encoding", encoding), e);
 			}
 			finally
 			{
@@ -272,7 +272,7 @@ public final class Zip0
 		catch(Exception e)
 		{
 			rtnBoolean = false;
-			LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.ZIP_ZIP_ERROR, KV.ins("file", file).put("pathName", pathName), e.toString(), e);
+			LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.ZIP_ZIP_ERROR, KV.ins("file", file).put("pathName", pathName), e);
 		}
 		finally
 		{

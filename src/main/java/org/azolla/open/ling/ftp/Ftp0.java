@@ -151,7 +151,7 @@ public final class Ftp0
 		}
 		catch(Exception e)
 		{
-			LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_CONNECT_ERROR, KV.ins("host", host).put("port", port), e.toString(), e);
+			LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_CONNECT_ERROR, KV.ins("host", host).put("port", port), e);
 			throw AzollaException.wrap(e, AzollaCode.FTP_CONNECT_ERROR).set("host", host).set("port", port);
 		}
 
@@ -166,7 +166,7 @@ public final class Ftp0
 			}
 			catch(Exception e)
 			{
-				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_LOGIN_ERROR, KV.ins("username", username).put("password", password), e.toString(), e);
+				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_LOGIN_ERROR, KV.ins("username", username).put("password", password), e);
 				throw AzollaException.wrap(e, AzollaCode.FTP_LOGIN_ERROR).set("username", username).set("password", password);
 			}
 
@@ -214,7 +214,7 @@ public final class Ftp0
 			catch(Exception e)
 			{
 				rtnBoolean = false;
-				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_LOGOUT_ERROR, KV.ins("host", host), e.toString(), e);
+				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_LOGOUT_ERROR, KV.ins("host", host), e);
 			}
 
 			if(client.isConnected())
@@ -226,7 +226,7 @@ public final class Ftp0
 				catch(Exception e)
 				{
 					rtnBoolean = false;
-					LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_DISCONNECT_ERROR, KV.ins("host", host), e.toString(), e);
+					LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_DISCONNECT_ERROR, KV.ins("host", host), e);
 				}
 			}
 		}
@@ -266,7 +266,7 @@ public final class Ftp0
 			catch(Exception e)
 			{
 				rtnBoolean = false;
-				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_DELETE_FILE_ERROR, KV.ins("remotePath", remotePath), e.toString(), e);
+				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_DELETE_FILE_ERROR, KV.ins("remotePath", remotePath), e);
 			}
 		}
 
@@ -310,7 +310,7 @@ public final class Ftp0
 			catch(Exception e)
 			{
 				rtnBoolean = false;
-				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_DELETE_FILE_ERROR, KV.ins("remotePathList", Joiner.on("|").join(remotePathList)), e.toString(), e);
+				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_DELETE_FILE_ERROR, KV.ins("remotePathList", Joiner.on("|").join(remotePathList)), e);
 			}
 		}
 
@@ -338,6 +338,7 @@ public final class Ftp0
 	{
 		boolean rtnBoolean = false;
 
+		//If remotePath is null or empty will be very dangerous
 		if(!Strings.isNullOrEmpty(remotePath) && output != null)
 		{
 			try
@@ -349,7 +350,7 @@ public final class Ftp0
 			catch(Exception e)
 			{
 				rtnBoolean = false;
-				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_RETRIEVE_FILE_ERROR, KV.ins("remotePath", remotePath), e.toString(), e);
+				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_RETRIEVE_FILE_ERROR, KV.ins("remotePath", remotePath), e);
 			}
 		}
 
@@ -377,6 +378,7 @@ public final class Ftp0
 	{
 		boolean rtnBoolean = false;
 
+		//If remotePath is null or empty will be very dangerous
 		if(!Strings.isNullOrEmpty(remotePath) && !Strings.isNullOrEmpty(localPath))
 		{
 			OutputStream output = null;
@@ -390,7 +392,7 @@ public final class Ftp0
 			catch(Exception e)
 			{
 				rtnBoolean = false;
-				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_RETRIEVE_FILE_ERROR, KV.ins("remotePath", remotePath).put("localPath", localPath), e.toString(), e);
+				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_RETRIEVE_FILE_ERROR, KV.ins("remotePath", remotePath).put("localPath", localPath), e);
 			}
 			finally
 			{
@@ -419,6 +421,7 @@ public final class Ftp0
 	{
 		boolean rtnBoolean = false;
 
+		//If remotePath is null or empty will be very dangerous
 		if(!Strings.isNullOrEmpty(remotePath))
 		{
 			try
@@ -433,7 +436,7 @@ public final class Ftp0
 			catch(Exception e)
 			{
 				rtnBoolean = false;
-				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_LIST_FILE_ERROR, KV.ins("remotePath", remotePath), e.toString(), e);
+				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_LIST_FILE_ERROR, KV.ins("remotePath", remotePath), e);
 			}
 		}
 		return rtnBoolean;
@@ -472,7 +475,7 @@ public final class Ftp0
 		}
 		catch(Exception e)
 		{
-			LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_LIST_FILE_ERROR, KV.ins("remotePath", remotePath), e.toString(), e);
+			LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_LIST_FILE_ERROR, KV.ins("remotePath", remotePath), e);
 		}
 
 		return rtnList;
@@ -535,7 +538,7 @@ public final class Ftp0
 		}
 		catch(Exception e)
 		{
-			LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_LIST_FILE_ERROR, KV.ins("remotePath", remotePath), e.toString(), e);
+			LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_LIST_FILE_ERROR, KV.ins("remotePath", remotePath), e);
 		}
 
 		return rtnList;
@@ -574,7 +577,7 @@ public final class Ftp0
 		}
 		catch(Exception e)
 		{
-			LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_LIST_FILE_ERROR, KV.ins("remotePath", remotePath), e.toString(), e);
+			LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_LIST_FILE_ERROR, KV.ins("remotePath", remotePath), e);
 		}
 
 		return rtnList;
@@ -602,6 +605,7 @@ public final class Ftp0
 	{
 		boolean rtnBoolean = false;
 
+		//If remotePath is null or empty will be very dangerous
 		if(!Strings.isNullOrEmpty(remotePath) && !Strings.isNullOrEmpty(localPath))
 		{
 			InputStream input = null;
@@ -615,7 +619,7 @@ public final class Ftp0
 			catch(Exception e)
 			{
 				rtnBoolean = false;
-				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_STORE_FILE_ERROR, KV.ins("remotePath", remotePath).put("localPath", localPath), e.toString(), e);
+				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_STORE_FILE_ERROR, KV.ins("remotePath", remotePath).put("localPath", localPath), e);
 			}
 			finally
 			{
@@ -730,7 +734,7 @@ public final class Ftp0
 		}
 		catch(Exception e)
 		{
-			LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_SET_FILETYPE_ERROR, KV.ins("fileType", fileType), e.toString(), e);
+			LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_SET_FILETYPE_ERROR, KV.ins("fileType", fileType), e);
 			throw AzollaException.wrap(e, AzollaCode.FTP_SET_FILETYPE_ERROR).set("fileType", fileType);
 		}
 		return this;
@@ -770,7 +774,7 @@ public final class Ftp0
 				catch(Exception e)
 				{
 					successed = false;
-					LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_SET_MODE_ERROR, KV.ins("mode", mode), e.toString(), e);
+					LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_SET_MODE_ERROR, KV.ins("mode", mode), e);
 					throw AzollaException.wrap(e, AzollaCode.FTP_SET_MODE_ERROR).set("mode", mode);
 				}
 				break;
@@ -782,7 +786,7 @@ public final class Ftp0
 				catch(Exception e)
 				{
 					successed = false;
-					LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_SET_MODE_ERROR, KV.ins("mode", mode), e.toString(), e);
+					LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_SET_MODE_ERROR, KV.ins("mode", mode), e);
 					throw AzollaException.wrap(e, AzollaCode.FTP_SET_MODE_ERROR).set("mode", mode);
 				}
 				break;
@@ -844,7 +848,7 @@ public final class Ftp0
 		}
 		catch(Exception e)
 		{
-			LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_SET_TIMEOUT_ERROR, KV.ins("timeout", timeout), e.toString(), e);
+			LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_SET_TIMEOUT_ERROR, KV.ins("timeout", timeout), e);
 			throw AzollaException.wrap(e, AzollaCode.FTP_SET_TIMEOUT_ERROR).set("timeout", timeout);
 		}
 		return this;

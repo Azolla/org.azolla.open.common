@@ -161,7 +161,7 @@ public final class Date0
 		}
 		catch(ParseException e)
 		{
-			LOG.error("dateString = [{}], pattern = [{}]", date, pattern, e.toString(), e);
+			LOG.error("dateString = [{}], pattern = [{}]", date, pattern, e);
 			rtnDate = null;
 		}
 
