@@ -6,12 +6,16 @@
  */
 package org.azolla.open.ling.ftp;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetAddress;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.Nullable;
@@ -23,6 +27,7 @@ import org.apache.commons.net.ftp.FTPReply;
 import org.azolla.open.ling.exception.AzollaException;
 import org.azolla.open.ling.exception.code.AzollaCode;
 import org.azolla.open.ling.io.Encoding;
+import org.azolla.open.ling.io.File0;
 import org.azolla.open.ling.text.Fmt0;
 import org.azolla.open.ling.util.KV;
 import org.slf4j.Logger;
@@ -244,7 +249,7 @@ public final class Ftp0
 
 	/**
 	 * 
-	 * Delete file from ftp
+	 * Delete file(document or directory) from ftp
 	 * 
 	 * @param client
 	 * @param remotePath
@@ -261,7 +266,14 @@ public final class Ftp0
 			{
 				client = client == null ? activeClient() : client;
 
-				rtnBoolean = client.deleteFile(remotePath);
+				if(isDirectory(client, remotePath))
+				{
+					rtnBoolean = deleteFile0(client, remotePath);
+				}
+				else
+				{
+					rtnBoolean = client.deleteFile(remotePath);
+				}
 			}
 			catch(Exception e)
 			{
@@ -274,95 +286,43 @@ public final class Ftp0
 	}
 
 	/**
-	 * @see org.azolla.open.ling.ftp.Ftp0#deleteFile(FTPClient, List<String>)
-	 */
-	public boolean deleteFile(List<String> remotePathList)
-	{
-		return deleteFile(null, remotePathList);
-	}
-
-	/**
 	 * 
-	 * Delete files from ftp
-	 * 
-	 * @param client
-	 * @param remotePathList
+	 * @param client available client
+	 * @param remotePath exsited path
 	 * @return boolean
 	 */
-	public boolean deleteFile(FTPClient client, List<String> remotePathList)
+	private boolean deleteFile0(FTPClient client, String remotePath)
 	{
-		boolean rtnBoolean = false;
+		boolean rtnBoolean = true;
 
-		if(remotePathList != null)
+		try
 		{
-			try
+			for(FTPFile file : client.listFiles(remotePath))
 			{
-				client = client == null ? activeClient() : client;
-
-				boolean temp = true;
-				for(String pathname : remotePathList)
+				String prefix = remotePath + (remotePath.endsWith("/") ? "" : "/");
+				if(file.isDirectory())
 				{
-					temp = temp && client.deleteFile(pathname);
+					rtnBoolean = rtnBoolean && deleteFile0(client, prefix + file.getName());
 				}
-
-				rtnBoolean = temp;
+				rtnBoolean = rtnBoolean && client.deleteFile(prefix + file.getName());
 			}
-			catch(Exception e)
-			{
-				rtnBoolean = false;
-				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_DELETE_FILE_ERROR, KV.ins("remotePathList", Joiner.on("|").join(remotePathList)), e);
-			}
+			rtnBoolean = rtnBoolean && client.deleteFile(remotePath);
 		}
-
-		return rtnBoolean;
-	}
-
-	/**
-	 * @see org.azolla.open.ling.ftp.Ftp0#retrieveFile(FTPClient, String, OutputStream)
-	 */
-	public boolean retrieveFile(String remotePath, OutputStream output)
-	{
-		return retrieveFile(null, remotePath, output);
-	}
-
-	/**
-	 * 
-	 * download file to output stream
-	 * 
-	 * @param client
-	 * @param remotePath
-	 * @param output
-	 * @return boolean
-	 */
-	public boolean retrieveFile(FTPClient client, String remotePath, OutputStream output)
-	{
-		boolean rtnBoolean = false;
-
-		//If remotePath is null or empty will be very dangerous
-		if(!Strings.isNullOrEmpty(remotePath) && output != null)
+		catch(IOException e)
 		{
-			try
-			{
-				client = client == null ? activeClient() : client;
-
-				rtnBoolean = client.retrieveFile(remotePath, output);
-			}
-			catch(Exception e)
-			{
-				rtnBoolean = false;
-				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_RETRIEVE_FILE_ERROR, KV.ins("remotePath", remotePath), e);
-			}
+			rtnBoolean = false;
+			LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_DELETE_FILE_ERROR, KV.ins("remotePath", remotePath), e);
 		}
 
 		return rtnBoolean;
 	}
 
 	/**
-	 * @see org.azolla.open.ling.ftp.Ftp0#retrieveFile(FTPClient, String, String)
+	 * @see org.azolla.open.ling.ftp.Ftp0#retrieveFile(FTPClient, String, File)
 	 */
-	public boolean retrieveFile(String remotePath, String localPath)
+	public boolean retrieveFile(String remotePath, File localFile)
 	{
-		return retrieveFile(null, remotePath, localPath);
+		return retrieveFile(null, remotePath, localFile);
 	}
 
 	/**
@@ -374,64 +334,194 @@ public final class Ftp0
 	 * @param localPath
 	 * @return boolean
 	 */
-	public boolean retrieveFile(FTPClient client, String remotePath, String localPath)
+	public boolean retrieveFile(FTPClient client, String remotePath, File localFile)
 	{
 		boolean rtnBoolean = false;
 
 		//If remotePath is null or empty will be very dangerous
-		if(!Strings.isNullOrEmpty(remotePath) && !Strings.isNullOrEmpty(localPath))
+		if(!Strings.isNullOrEmpty(remotePath) && localFile != null)
 		{
-			OutputStream output = null;
 			try
 			{
 				client = client == null ? activeClient() : client;
 
-				output = new FileOutputStream(localPath);
-				rtnBoolean = client.retrieveFile(remotePath, output);
+				if((isDirectory(client, remotePath) && localFile.isDirectory()) || (!isDirectory(client, remotePath) && !localFile.isDirectory()))
+				{
+					rtnBoolean = retrieveFile0(client, remotePath, localFile);
+				}
+				else if(isExist(client, remotePath) && !isDirectory(client, remotePath) && localFile.isDirectory())
+				{
+					File file = File0.newFile(localFile, listFiles(client, remotePath).get(0).getName());
+					rtnBoolean = file.createNewFile() && retrieveFile0(client, remotePath, file);
+				}
 			}
 			catch(Exception e)
 			{
 				rtnBoolean = false;
-				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_RETRIEVE_FILE_ERROR, KV.ins("remotePath", remotePath).put("localPath", localPath), e);
-			}
-			finally
-			{
-				Closeables.closeQuietly(output);
+				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_RETRIEVE_FILE_ERROR, KV.ins("remotePath", remotePath).put("localFile", localFile), e);
 			}
 		}
 		return rtnBoolean;
 	}
 
 	/**
-	 * @see org.azolla.open.ling.ftp.Ftp0#exist(FTPClient, String)
+	 * both directory or both document
+	 * 
+	 * @param client available client
+	 * @param remotePath exsited path
+	 * @param localFile exsited file
+	 * @return boolean
 	 */
-	public boolean exist(String remotePath)
+	private boolean retrieveFile0(FTPClient client, String remotePath, File localFile)
 	{
-		return exist(null, remotePath);
+		boolean rtnBoolean = true;
+
+		BufferedOutputStream bos = null;
+		OutputStream os = null;
+		try
+		{
+			if(isDirectory(client, remotePath) && localFile.isDirectory())
+			{
+				String prefix = remotePath + (remotePath.endsWith("/") ? "" : "/");
+				for(FTPFile file : client.listFiles(remotePath))
+				{
+					String newPath = prefix + file.getName();
+					File newFile = File0.newFile(localFile, file.getName());
+					rtnBoolean = rtnBoolean && file.isDirectory() ? newFile.mkdirs() : newFile.createNewFile();
+					rtnBoolean = rtnBoolean && retrieveFile0(client, newPath, newFile);
+				}
+			}
+			else
+			{
+				os = new FileOutputStream(localFile);
+				bos = new BufferedOutputStream(os);
+				rtnBoolean = rtnBoolean && client.retrieveFile(remotePath, bos);
+			}
+
+		}
+		catch(Exception e)
+		{
+			rtnBoolean = false;
+			LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_RETRIEVE_FILE_ERROR, KV.ins("remotePath", remotePath).put("localFile", localFile), e);
+		}
+		finally
+		{
+			Closeables.closeQuietly(os);
+			Closeables.closeQuietly(bos);
+		}
+
+		return rtnBoolean;
 	}
 
 	/**
-	 * file is exist
+	 * @see org.azolla.open.ling.ftp.Ftp0#isExist(FTPClient, String)
+	 */
+	public boolean isExist(String remotePath)
+	{
+		return isExist(null, remotePath);
+	}
+
+	/**
+	 * is file existed
 	 * 
 	 * @param client
 	 * @param remotePath
 	 * @return boolean
 	 */
-	public boolean exist(FTPClient client, String remotePath)
+	public boolean isExist(FTPClient client, String remotePath)
 	{
 		boolean rtnBoolean = false;
 
-		//If remotePath is null or empty will be very dangerous
-		if(!Strings.isNullOrEmpty(remotePath))
+		if(remotePath != null)
 		{
 			try
 			{
 				client = client == null ? activeClient() : client;
 
-				File file = new File(remotePath);
-				String remoteFolderPath = remotePath.substring(0, (remotePath.indexOf(file.getName()) - 1));
-				String[] pathArray = client.listNames(remoteFolderPath);
-				rtnBoolean = pathArray == null ? rtnBoolean : Lists.newArrayList(pathArray).contains(remotePath);
+				String[] pathArray = client.listNames(remotePath);
+				if(pathArray != null && pathArray.length > 0)
+				{
+					rtnBoolean = true;
+				}
+				else
+				{
+					//1.empty root:"/"
+					if(Strings.isNullOrEmpty(remotePath) && "/".equalsIgnoreCase(remotePath))
+					{
+						rtnBoolean = true;
+					}
+					else
+					{
+						//2.empty folder:"/folder","/folder/","folder","folder/","folder/subfolder"
+						remotePath = (remotePath.startsWith("/") ? "" : "/") + remotePath;
+						remotePath = remotePath + (remotePath.endsWith("/") ? "" : "/");
+						String[] nameArray = remotePath.split("/");
+						FTPFile[] array = client.listFiles("/" + Joiner.on("/").join(Arrays.copyOfRange(nameArray, 1, nameArray.length - 1)));
+						if(array != null && array.length > 0)
+						{
+							for(FTPFile file : array)
+							{
+								if(file.getName().equals(nameArray[nameArray.length - 1]))
+								{
+									rtnBoolean = true;
+									break;
+								}
+							}
+						}
+					}
+				}
+			}
+			catch(Exception e)
+			{
+				rtnBoolean = false;
+				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_LIST_FILE_ERROR, KV.ins("remotePath", remotePath), e);
+			}
+		}
+		return rtnBoolean;
+	}
+
+	public boolean isDirectory(String remotePath)
+	{
+		return isDirectory(null, remotePath);
+	}
+
+	public boolean isDirectory(FTPClient client, String remotePath)
+	{
+		boolean rtnBoolean = false;
+
+		if(remotePath != null)
+		{
+			try
+			{
+				client = client == null ? activeClient() : client;
+
+				if(isExist(client, remotePath))
+				{
+					//1.empty root:"/"
+					if(Strings.isNullOrEmpty(remotePath) && "/".equalsIgnoreCase(remotePath))
+					{
+						rtnBoolean = true;
+					}
+					else
+					{
+						//2.empty folder:"/folder","/folder/","folder","folder/","folder/subfolder"
+						remotePath = (remotePath.startsWith("/") ? "" : "/") + remotePath;
+						remotePath = remotePath + (remotePath.endsWith("/") ? "" : "/");
+						String[] nameArray = remotePath.split("/");
+						FTPFile[] array = client.listFiles("/" + Joiner.on("/").join(Arrays.copyOfRange(nameArray, 1, nameArray.length - 1)));
+						if(array != null && array.length > 0)
+						{
+							for(FTPFile file : array)
+							{
+								if(file.isDirectory() && file.getName().equals(nameArray[nameArray.length - 1]))
+								{
+									rtnBoolean = true;
+									break;
+								}
+							}
+						}
+					}
+				}
 			}
 			catch(Exception e)
 			{
@@ -456,11 +546,11 @@ public final class Ftp0
 	}
 
 	/**
-	 * list of remotePath
+	 * List of fullpath under this folder, if remotePath is document return it
 	 * 
 	 * @param client
 	 * @param remotePath
-	 * @return List<String>
+	 * @return List<String>	like "/test/ftp.test.txt"
 	 */
 	public List<String> listNames(FTPClient client, @Nullable String remotePath)
 	{
@@ -501,6 +591,14 @@ public final class Ftp0
 		return allNames(null, remotePath, filter);
 	}
 
+	/**
+	 * All of fullpath under this folder, if remotePath is document return it
+	 * 
+	 * @param client
+	 * @param remotePath 
+	 * @param filter
+	 * @return List<String>
+	 */
 	public List<String> allNames(FTPClient client, @Nullable String remotePath, @Nullable FTPFileFilter filter)
 	{
 		List<String> rtnList = Lists.newArrayList();
@@ -510,7 +608,7 @@ public final class Ftp0
 			client = client == null ? activeClient() : client;
 
 			FTPFile[] pathArray = filter == null ? client.listFiles(remotePath) : client.listFiles(remotePath, filter);
-			if(pathArray != null)
+			if(pathArray != null && pathArray.length > 0)
 			{
 				String filePrefix = Strings.isNullOrEmpty(remotePath) ? "" : (remotePath.startsWith("/") ? remotePath : "/" + remotePath);
 				String folderPrefix = filePrefix.endsWith("/") ? filePrefix : filePrefix + "/";
@@ -520,18 +618,14 @@ public final class Ftp0
 					{
 						rtnList.addAll(allNames(folderPrefix + f.getName(), filter));
 					}
+					if(pathArray.length > 1)
+					{
+						rtnList.add(folderPrefix + f.getName());
+					}
 					else
 					{
-						if(pathArray.length > 1)
-						{
-							rtnList.add(folderPrefix + f.getName());
-						}
-						else
-						{
-							int index = filePrefix.lastIndexOf("/");
-							rtnList.add(f.getName().equals(-1 == index ? filePrefix : filePrefix.substring(index + 1)) ? filePrefix : filePrefix + "/" + f.getName());
-						}
-
+						int index = filePrefix.lastIndexOf("/");
+						rtnList.add(f.getName().equals(-1 == index ? filePrefix : filePrefix.substring(index + 1)) ? filePrefix : filePrefix + "/" + f.getName());
 					}
 				}
 			}
@@ -564,6 +658,14 @@ public final class Ftp0
 		return listFiles(null, remotePath, filter);
 	}
 
+	/**
+	 * List of FTPFile under this folder, if remotePath is document return it
+	 * 
+	 * @param client
+	 * @param remotePath If remotePath is document return it
+	 * @param filter
+	 * @return List<FTPFile>
+	 */
 	public List<FTPFile> listFiles(FTPClient client, @Nullable String remotePath, @Nullable FTPFileFilter filter)
 	{
 		List<FTPFile> rtnList = Lists.newArrayList();
@@ -585,12 +687,7 @@ public final class Ftp0
 
 	public boolean storeFile(String remotePath, File localFile)
 	{
-		return localFile == null ? false : storeFile(null, remotePath, localFile.getAbsolutePath());
-	}
-
-	public boolean storeFile(String remotePath, String localPath)
-	{
-		return storeFile(null, remotePath, localPath);
+		return storeFile(null, remotePath, localFile);
 	}
 
 	/**
@@ -601,30 +698,80 @@ public final class Ftp0
 	 * @param localPath
 	 * @return boolean
 	 */
-	public boolean storeFile(FTPClient client, String remotePath, String localPath)
+	public boolean storeFile(FTPClient client, String remotePath, File localFile)
 	{
 		boolean rtnBoolean = false;
 
 		//If remotePath is null or empty will be very dangerous
-		if(!Strings.isNullOrEmpty(remotePath) && !Strings.isNullOrEmpty(localPath))
+		if(!Strings.isNullOrEmpty(remotePath) && localFile != null)
 		{
-			InputStream input = null;
 			try
 			{
 				client = client == null ? activeClient() : client;
 
-				input = new FileInputStream(localPath);
-				rtnBoolean = client.storeFile(remotePath, input);
+				if((isDirectory(client, remotePath) && localFile.isDirectory()) || (!isDirectory(client, remotePath) && !localFile.isDirectory()))
+				{
+					rtnBoolean = storeFile0(client, remotePath, localFile);
+				}
+				else if(isDirectory(client, remotePath) && localFile.exists() && !localFile.isDirectory())
+				{
+					String prefix = remotePath + (remotePath.endsWith("/") ? "" : "/");
+					rtnBoolean = storeFile0(client, prefix + localFile.getName(), localFile);
+				}
 			}
 			catch(Exception e)
 			{
 				rtnBoolean = false;
-				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_STORE_FILE_ERROR, KV.ins("remotePath", remotePath).put("localPath", localPath), e);
+				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_STORE_FILE_ERROR, KV.ins("remotePath", remotePath).put("localPath", localFile), e);
 			}
-			finally
+		}
+
+		return rtnBoolean;
+	}
+
+	/**
+	 * both directory or both document
+	 * 
+	 * @param client available client
+	 * @param remotePath exsited path
+	 * @param localFile exsited file
+	 * @return boolean
+	 */
+	private boolean storeFile0(FTPClient client, String remotePath, File localFile)
+	{
+		boolean rtnBoolean = true;
+
+		BufferedInputStream bis = null;
+		InputStream is = null;
+		try
+		{
+			if(isDirectory(client, remotePath) && localFile.isDirectory())
 			{
-				Closeables.closeQuietly(input);
+				String prefix = remotePath + (remotePath.endsWith("/") ? "" : "/");
+				for(File newFile : localFile.listFiles())
+				{
+					String newPath = prefix + newFile.getName();
+					rtnBoolean = rtnBoolean && newFile.isDirectory() ? client.makeDirectory(newPath) : true;
+					rtnBoolean = rtnBoolean && storeFile0(client, newPath, newFile);
+				}
 			}
+			else
+			{
+				is = new FileInputStream(localFile);
+				bis = new BufferedInputStream(is);
+				rtnBoolean = rtnBoolean && client.storeFile(remotePath, bis);
+			}
+
+		}
+		catch(Exception e)
+		{
+			rtnBoolean = false;
+			LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_RETRIEVE_FILE_ERROR, KV.ins("remotePath", remotePath).put("localFile", localFile), e);
+		}
+		finally
+		{
+			Closeables.closeQuietly(is);
+			Closeables.closeQuietly(bis);
 		}
 
 		return rtnBoolean;

@@ -59,7 +59,7 @@ public final class File0
 	public static final String	BAK_FILETYPE_WITH_POINT	= POINT + BAK_FILETYPE;
 
 	/**
-	 * new File
+	 * New file
 	 * 
 	 * @param strings
 	 * @return File
@@ -70,7 +70,7 @@ public final class File0
 	}
 
 	/**
-	 * new File
+	 * New file
 	 * 
 	 * @param parent
 	 * @param strings
@@ -82,7 +82,7 @@ public final class File0
 	}
 
 	/**
-	 * delete File
+	 * Delete file(contain sub file)
 	 * 
 	 * @param file	documnet or directory
 	 * @return boolean
@@ -100,7 +100,7 @@ public final class File0
 	}
 
 	/**
-	 * delete File
+	 * Delete file(contain sub file)
 	 * 
 	 * @param file existed
 	 * @return boolean
@@ -188,12 +188,12 @@ public final class File0
 	}
 
 	/**
-	 * list of file contain sub file
+	 * all of file contain sub file
 	 * 
 	 * @param file
 	 * @return List<File>	
 	 */
-	public static List<File> listFile(File file)
+	public static List<File> allFile(File file)
 	{
 		List<File> rtnList = Lists.newArrayList();
 
@@ -204,7 +204,7 @@ public final class File0
 				rtnList.add(subFile);
 				if(subFile.isDirectory())
 				{
-					rtnList.addAll(listFile0(subFile));
+					rtnList.addAll(allFile0(subFile));
 				}
 			}
 		}
@@ -213,12 +213,12 @@ public final class File0
 	}
 
 	/**
-	 * list of file contain sub file
+	 * all of file contain sub file
 	 * 
 	 * @param file existed folder
 	 * @return List<File>
 	 */
-	private static List<File> listFile0(File file)
+	private static List<File> allFile0(File file)
 	{
 		List<File> rtnList = Lists.newArrayList();
 
@@ -227,7 +227,7 @@ public final class File0
 			rtnList.add(subFile);
 			if(subFile.isDirectory())
 			{
-				rtnList.addAll(listFile(subFile));
+				rtnList.addAll(allFile(subFile));
 			}
 		}
 
