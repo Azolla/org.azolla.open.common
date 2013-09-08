@@ -87,7 +87,7 @@ public class ZipsTest
 		{
 			e.printStackTrace();
 		}
-		assertTrue(Zip0.zip(testDir.getAbsolutePath()));
+		assertTrue(Zip0.zip(testDir));
 
 		assertTrue(Zip0.unzip(File0.newFile(testDir.getParentFile(), testDir.getName() + File0.ZIP_FILETYPE_WITH_POINT), testDir.getAbsolutePath()));
 		System.out.println("END-org.azolla.open.common.zip.ZipsTest.testZipString()");

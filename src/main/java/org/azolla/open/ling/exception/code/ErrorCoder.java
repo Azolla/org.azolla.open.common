@@ -13,7 +13,7 @@ package org.azolla.open.ling.exception.code;
  * 
  * <p>[10,99]				:For Azoll Core
  * <p>[10000,99999]			:For Azolla Component
- * <p>	[10000,10099]		:For Azolla Component FTP
+ * <p>[10000,10099]			:For Azolla Component FTP
  * <p>[10000000,99999999]	:For Azolla Application
  * 
  * <p>[100,999]				:Third Core Code

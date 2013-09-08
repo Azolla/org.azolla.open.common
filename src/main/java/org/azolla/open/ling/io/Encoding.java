@@ -12,31 +12,9 @@ package org.azolla.open.ling.io;
  * @author 	sk@azolla.org
  * @since 	ADK1.0
  */
-public enum Encoding
+public final class Encoding
 {
-	UTF8("UTF-8"),
-	ASCII("ASCII"),
-	GBK("GBK");
-
-	private String	encoding;
-
-	private Encoding(String encoding)
-	{
-		this.encoding = encoding;
-	}
-
-	public String getEncoding()
-	{
-		return encoding;
-	}
-
-	/**
-	 * @see java.lang.Enum#toString()
-	 * @return
-	 */
-	@Override
-	public String toString()
-	{
-		return encoding;
-	}
+	public static final String	UTF8	= "UTF-8";
+	public static final String	ASCII	= "ASCII";
+	public static final String	GBK		= "GBK";
 }

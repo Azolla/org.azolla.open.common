@@ -36,21 +36,21 @@ public final class KV
 
 	public static KV ins(String key, String value)
 	{
-		return new KV().set(key, value);
+		return new KV().put(key, value);
 	}
 
 	public static KV ins(String key, Object o)
 	{
-		return new KV().set(key, o);
+		return new KV().put(key, o);
 	}
 
-	public KV set(String key, String value)
+	public KV put(String key, String value)
 	{
 		map.put(key, value);
 		return this;
 	}
 
-	public KV set(String key, Object o)
+	public KV put(String key, Object o)
 	{
 		map.put(key, o2String(o));
 		return this;

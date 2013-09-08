@@ -9,6 +9,7 @@ package org.azolla.open.ling.cfg;
 import java.io.File;
 import java.util.concurrent.ExecutionException;
 
+import javax.annotation.Nullable;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 
@@ -80,7 +81,7 @@ public final class Cfg0
 		}
 		catch(Exception e)
 		{
-			LOG.error(Fmt0.LOG_P_M, KV.ins("clazz", clazz).set("filePath", file), e.toString(), e);
+			LOG.error(Fmt0.LOG_P_M, KV.ins("clazz", clazz).put("filePath", file), e.toString(), e);
 			rtnT = null;
 		}
 
@@ -92,25 +93,27 @@ public final class Cfg0
 	 */
 	public static <T> boolean marshal(T t, File file)
 	{
-		return marshal(t, file, Encoding.UTF8);
+		return marshal(t, file, null);
 	}
 
 	/**
 	 * Marshal Ojbect to File with Encoding
 	 */
-	public static <T> boolean marshal(T t, File file, Encoding encoding)
+	public static <T> boolean marshal(T t, File file, @Nullable String encoding)
 	{
 		boolean rtnBoolean = true;
+		encoding = encoding == null ? Encoding.UTF8 : encoding;
+
 		try
 		{
 			Marshaller m = getJAXBContext(t.getClass()).createMarshaller();
 			m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-			m.setProperty(Marshaller.JAXB_ENCODING, encoding.getEncoding());
+			m.setProperty(Marshaller.JAXB_ENCODING, encoding);
 			m.marshal(t, file);
 		}
 		catch(Exception e)
 		{
-			LOG.error(Fmt0.LOG_P_M, KV.ins("t", t).set("file", file).set("encoding", encoding), e.toString(), e);	//既然已记录日志不应再抛出
+			LOG.error(Fmt0.LOG_P_M, KV.ins("t", t).put("file", file).put("encoding", encoding), e.toString(), e);	//既然已记录日志不应再抛出
 			//			throw new AzollaException(AzollaCode.MODELHELPER_MARSHAL, e).set("t", t).set("filePath", filePath);
 			rtnBoolean = false;
 		}

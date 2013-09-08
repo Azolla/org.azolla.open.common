@@ -35,7 +35,7 @@ public final class Date0
 	public static final String	MI				= "mm";
 	public static final String	S				= "ss";
 
-	public static final String	Y__M__D_H_MI_S	= "yyyy_MM_dd_HH_mm_ss";
+	public static final String	Y_M_D_H_MI_S	= "yyyy_MM_dd_HH_mm_ss";
 
 	public static final String	DATE			= Y_M_D;
 	public static final String	TIME			= "HH:mm:ss";

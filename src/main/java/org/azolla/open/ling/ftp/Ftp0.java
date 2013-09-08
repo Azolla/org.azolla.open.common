@@ -63,38 +63,38 @@ public final class Ftp0
 	private int					timeout				= DEFAULT_TIMEOUT;
 	private int					bufferSize			= DEFAULT_BUFFER_SIZE;
 
-	private Encoding			encoding			= Encoding.UTF8;
+	private String				encoding			= Encoding.UTF8;
 
 	private FTPClient			client;
 
-	public static synchronized Ftp0 ins(String host, String username, String password)
+	public static synchronized Ftp0 single(String host, String username, String password)
 	{
-		return ins(host, username, password, DEFAULT_PORT);
+		return single(host, username, password, DEFAULT_PORT);
 	}
 
-	public static synchronized Ftp0 ins(@Nullable String host, String username, String password, int port)
+	public static synchronized Ftp0 single(String host, String username, String password, int port)
 	{
-		return ins(host, username, password, port, DEFAULT_FILE_TYPE);
+		return single(host, username, password, port, DEFAULT_FILE_TYPE);
 	}
 
-	public static synchronized Ftp0 ins(String host, String username, String password, int port, int fileType)
+	public static synchronized Ftp0 single(String host, String username, String password, int port, int fileType)
 	{
-		return ins(host, username, password, port, fileType, DEFAULT_MODE);
+		return single(host, username, password, port, fileType, DEFAULT_MODE);
 	}
 
-	public static synchronized Ftp0 ins(String host, String username, String password, int port, int fileType, int mode)
+	public static synchronized Ftp0 single(String host, String username, String password, int port, int fileType, int mode)
 	{
-		return ins(host, username, password, port, fileType, mode, DEFAULT_TIMEOUT);
+		return single(host, username, password, port, fileType, mode, DEFAULT_TIMEOUT);
 	}
 
-	public static synchronized Ftp0 ins(String host, String username, String password, int port, int fileType, int mode, int timeout)
+	public static synchronized Ftp0 single(String host, String username, String password, int port, int fileType, int mode, int timeout)
 	{
-		return ins(host, username, password, port, fileType, mode, timeout, Encoding.UTF8);
+		return single(host, username, password, port, fileType, mode, timeout, null);
 	}
 
-	public static synchronized Ftp0 ins(String host, String username, String password, int port, int fileType, int mode, int timeout, Encoding encoding)
+	public static synchronized Ftp0 single(String host, String username, String password, int port, int fileType, int mode, int timeout, @Nullable String encoding)
 	{
-		return null == instance ? new Ftp0(host, username, password, port, fileType, mode, timeout, encoding) : instance;
+		return instance == null ? new Ftp0(host, username, password, port, fileType, mode, timeout, encoding) : instance;
 	}
 
 	public Ftp0(String host, String username, String password)
@@ -119,21 +119,22 @@ public final class Ftp0
 
 	public Ftp0(String host, String username, String password, int port, int fileType, int mode, int timeout)
 	{
-		this(host, username, password, port, fileType, mode, timeout, Encoding.UTF8);
+		this(host, username, password, port, fileType, mode, timeout, null);
 	}
 
-	public Ftp0(String host, String username, String password, int port, int fileType, int mode, int timeout, Encoding encoding)
+	public Ftp0(String host, String username, String password, int port, int fileType, int mode, int timeout, @Nullable String encoding)
 	{
 		connect(host, username, password, port, fileType, mode, timeout, encoding);
 	}
 
-	private void activeClient()
+	private FTPClient activeClient()
 	{
 		disconnect();
 		connect(host, username, password, port, fileType, mode, timeout, encoding);
+		return client;
 	}
 
-	private void connect(String host, String username, String password, int port, int fileType, int mode, int timeout, Encoding encoding)
+	private void connect(String host, String username, String password, int port, int fileType, int mode, int timeout, @Nullable String encoding)
 	{
 		client = new FTPClient();
 
@@ -150,7 +151,7 @@ public final class Ftp0
 		}
 		catch(Exception e)
 		{
-			LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_CONNECT_ERROR, KV.ins("host", host).set("port", port), e.toString(), e);
+			LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_CONNECT_ERROR, KV.ins("host", host).put("port", port), e.toString(), e);
 			throw AzollaException.wrap(e, AzollaCode.FTP_CONNECT_ERROR).set("host", host).set("port", port);
 		}
 
@@ -165,7 +166,7 @@ public final class Ftp0
 			}
 			catch(Exception e)
 			{
-				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_LOGIN_ERROR, KV.ins("username", username).set("password", password), e.toString(), e);
+				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_LOGIN_ERROR, KV.ins("username", username).put("password", password), e.toString(), e);
 				throw AzollaException.wrap(e, AzollaCode.FTP_LOGIN_ERROR).set("username", username).set("password", password);
 			}
 
@@ -179,7 +180,7 @@ public final class Ftp0
 			}
 			else
 			{
-				LOG.error(Fmt0.LOG_EC_P, AzollaCode.FTP_LOGIN_FAILED, KV.ins("username", username).set("password", password));
+				LOG.error(Fmt0.LOG_EC_P, AzollaCode.FTP_LOGIN_FAILED, KV.ins("username", username).put("password", password));
 				throw new AzollaException(AzollaCode.FTP_LOGIN_FAILED).set("username", username).set("password", password);
 			}
 		}
@@ -201,7 +202,7 @@ public final class Ftp0
 	public boolean disconnect()
 	{
 		boolean rtnBoolean = true;
-		if(null != client)
+		if(client != null)
 		{
 			try
 			{
@@ -234,20 +235,31 @@ public final class Ftp0
 	}
 
 	/**
-	 * delete file from ftp
-	 * 
-	 * @param remotePath
-	 * @return boolean
+	 * @see org.azolla.open.ling.ftp.Ftp0#deleteFile(FTPClient, String)
 	 */
 	public boolean deleteFile(String remotePath)
 	{
-		boolean rtnBoolean = true;
+		return deleteFile(null, remotePath);
+	}
 
+	/**
+	 * 
+	 * Delete file from ftp
+	 * 
+	 * @param client
+	 * @param remotePath
+	 * @return boolean
+	 */
+	public boolean deleteFile(FTPClient client, String remotePath)
+	{
+		boolean rtnBoolean = false;
+
+		//If remotePath is null or empty will be very dangerous
 		if(!Strings.isNullOrEmpty(remotePath))
 		{
 			try
 			{
-				activeClient();
+				client = client == null ? activeClient() : client;
 
 				rtnBoolean = client.deleteFile(remotePath);
 			}
@@ -256,64 +268,81 @@ public final class Ftp0
 				rtnBoolean = false;
 				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_DELETE_FILE_ERROR, KV.ins("remotePath", remotePath), e.toString(), e);
 			}
-			finally
-			{
-				disconnect();
-			}
 		}
+
 		return rtnBoolean;
 	}
 
 	/**
-	 * delete files from ftp
-	 * 
-	 * @param remotePathList
-	 * @return boolean
+	 * @see org.azolla.open.ling.ftp.Ftp0#deleteFile(FTPClient, List<String>)
 	 */
 	public boolean deleteFile(List<String> remotePathList)
 	{
-		boolean rtnBoolean = true;
+		return deleteFile(null, remotePathList);
+	}
 
-		if(null != remotePathList)
+	/**
+	 * 
+	 * Delete files from ftp
+	 * 
+	 * @param client
+	 * @param remotePathList
+	 * @return boolean
+	 */
+	public boolean deleteFile(FTPClient client, List<String> remotePathList)
+	{
+		boolean rtnBoolean = false;
+
+		if(remotePathList != null)
 		{
 			try
 			{
-				activeClient();
+				client = client == null ? activeClient() : client;
 
+				boolean temp = true;
 				for(String pathname : remotePathList)
 				{
-					rtnBoolean = rtnBoolean && client.deleteFile(pathname);
+					temp = temp && client.deleteFile(pathname);
 				}
+
+				rtnBoolean = temp;
 			}
 			catch(Exception e)
 			{
 				rtnBoolean = false;
 				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_DELETE_FILE_ERROR, KV.ins("remotePathList", Joiner.on("|").join(remotePathList)), e.toString(), e);
 			}
-			finally
-			{
-				disconnect();
-			}
 		}
+
 		return rtnBoolean;
 	}
 
 	/**
+	 * @see org.azolla.open.ling.ftp.Ftp0#retrieveFile(FTPClient, String, OutputStream)
+	 */
+	public boolean retrieveFile(String remotePath, OutputStream output)
+	{
+		return retrieveFile(null, remotePath, output);
+	}
+
+	/**
+	 * 
 	 * download file to output stream
 	 * 
+	 * @param client
 	 * @param remotePath
 	 * @param output
 	 * @return boolean
 	 */
-	public boolean retrieveFile(String remotePath, OutputStream output)
+	public boolean retrieveFile(FTPClient client, String remotePath, OutputStream output)
 	{
-		boolean rtnBoolean = true;
+		boolean rtnBoolean = false;
 
-		if(!Strings.isNullOrEmpty(remotePath) && null != output)
+		if(!Strings.isNullOrEmpty(remotePath) && output != null)
 		{
 			try
 			{
-				activeClient();
+				client = client == null ? activeClient() : client;
 
 				rtnBoolean = client.retrieveFile(remotePath, output);
 			}
@@ -322,32 +351,38 @@ public final class Ftp0
 				rtnBoolean = false;
 				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_RETRIEVE_FILE_ERROR, KV.ins("remotePath", remotePath), e.toString(), e);
 			}
-			finally
-			{
-				disconnect();
-			}
 		}
-		return rtnBoolean;
 
+		return rtnBoolean;
 	}
 
 	/**
+	 * @see org.azolla.open.ling.ftp.Ftp0#retrieveFile(FTPClient, String, String)
+	 */
+	public boolean retrieveFile(String remotePath, String localPath)
+	{
+		return retrieveFile(null, remotePath, localPath);
+	}
+
+	/**
+	 * 
 	 * download file to local
 	 * 
+	 * @param client
 	 * @param remotePath
 	 * @param localPath
 	 * @return boolean
 	 */
-	public boolean retrieveFile(String remotePath, String localPath)
+	public boolean retrieveFile(FTPClient client, String remotePath, String localPath)
 	{
-		boolean rtnBoolean = true;
+		boolean rtnBoolean = false;
 
 		if(!Strings.isNullOrEmpty(remotePath) && !Strings.isNullOrEmpty(localPath))
 		{
 			OutputStream output = null;
 			try
 			{
-				activeClient();
+				client = client == null ? activeClient() : client;
 
 				output = new FileOutputStream(localPath);
 				rtnBoolean = client.retrieveFile(remotePath, output);
@@ -355,25 +390,32 @@ public final class Ftp0
 			catch(Exception e)
 			{
 				rtnBoolean = false;
-				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_RETRIEVE_FILE_ERROR, KV.ins("remotePath", remotePath).set("localPath", localPath), e.toString(), e);
+				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_RETRIEVE_FILE_ERROR, KV.ins("remotePath", remotePath).put("localPath", localPath), e.toString(), e);
 			}
 			finally
 			{
 				Closeables.closeQuietly(output);
-				disconnect();
 			}
 		}
 		return rtnBoolean;
+	}
 
+	/**
+	 * @see org.azolla.open.ling.ftp.Ftp0#exist(FTPClient, String)
+	 */
+	public boolean exist(String remotePath)
+	{
+		return exist(null, remotePath);
 	}
 
 	/**
 	 * file is exist
 	 * 
+	 * @param client
 	 * @param remotePath
 	 * @return boolean
 	 */
-	public boolean exist(String remotePath)
+	public boolean exist(FTPClient client, String remotePath)
 	{
 		boolean rtnBoolean = false;
 
@@ -381,65 +423,56 @@ public final class Ftp0
 		{
 			try
 			{
-				activeClient();
+				client = client == null ? activeClient() : client;
 
 				File file = new File(remotePath);
 				String remoteFolderPath = remotePath.substring(0, (remotePath.indexOf(file.getName()) - 1));
 				String[] pathArray = client.listNames(remoteFolderPath);
-				if(null != pathArray)
-				{
-					List<String> pathList = Lists.newArrayList(pathArray);
-					rtnBoolean = pathList.contains(remotePath);
-				}
+				rtnBoolean = pathArray == null ? rtnBoolean : Lists.newArrayList(pathArray).contains(remotePath);
 			}
 			catch(Exception e)
 			{
 				rtnBoolean = false;
 				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_LIST_FILE_ERROR, KV.ins("remotePath", remotePath), e.toString(), e);
 			}
-			finally
-			{
-				disconnect();
-			}
 		}
 		return rtnBoolean;
 	}
 
-	/**
-	 * @see org.azolla.open.ling.ftp.Ftp0#listNames(String)
-	 */
 	public List<String> listNames()
 	{
 		return listNames(null);
 	}
 
 	/**
+	 * @see org.azolla.open.ling.ftp.Ftp0#listNames(FTPClient, String)
+	 */
+	public List<String> listNames(@Nullable String remotePath)
+	{
+		return listNames(null, remotePath);
+	}
+
+	/**
 	 * list of remotePath
 	 * 
+	 * @param client
 	 * @param remotePath
 	 * @return List<String>
 	 */
-	public List<String> listNames(String remotePath)
+	public List<String> listNames(FTPClient client, @Nullable String remotePath)
 	{
 		List<String> rtnList = Lists.newArrayList();
 
 		try
 		{
-			activeClient();
+			client = client == null ? activeClient() : client;
 
 			String[] pathArray = client.listNames(remotePath);
-			if(null != pathArray)
-			{
-				rtnList = Lists.newArrayList(pathArray);
-			}
+			rtnList = pathArray == null ? rtnList : Lists.newArrayList(pathArray);
 		}
 		catch(Exception e)
 		{
 			LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_LIST_FILE_ERROR, KV.ins("remotePath", remotePath), e.toString(), e);
-		}
-		finally
-		{
-			disconnect();
 		}
 
 		return rtnList;
@@ -450,23 +483,33 @@ public final class Ftp0
 		return allNames(null);
 	}
 
-	public List<String> allNames(String remotePath)
+	public List<String> allNames(@Nullable String remotePath)
 	{
 		return allNames(remotePath, null);
 	}
 
-	public List<String> allNames(String remotePath, FTPFileFilter filter)
+	public List<String> allNames(FTPClient client, @Nullable String remotePath)
+	{
+		return allNames(client, remotePath, null);
+	}
+
+	public List<String> allNames(@Nullable String remotePath, @Nullable FTPFileFilter filter)
+	{
+		return allNames(null, remotePath, filter);
+	}
+
+	public List<String> allNames(FTPClient client, @Nullable String remotePath, @Nullable FTPFileFilter filter)
 	{
 		List<String> rtnList = Lists.newArrayList();
 
 		try
 		{
-			activeClient();
+			client = client == null ? activeClient() : client;
 
-			FTPFile[] pathArray = null == filter ? client.listFiles(remotePath) : client.listFiles(remotePath, filter);
-			if(null != pathArray)
+			FTPFile[] pathArray = filter == null ? client.listFiles(remotePath) : client.listFiles(remotePath, filter);
+			if(pathArray != null)
 			{
-				String filePrefix = (null == remotePath) ? "" : (remotePath.startsWith("/") ? remotePath : "/" + remotePath);
+				String filePrefix = Strings.isNullOrEmpty(remotePath) ? "" : (remotePath.startsWith("/") ? remotePath : "/" + remotePath);
 				String folderPrefix = filePrefix.endsWith("/") ? filePrefix : filePrefix + "/";
 				for(FTPFile f : pathArray)
 				{
@@ -494,57 +537,44 @@ public final class Ftp0
 		{
 			LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_LIST_FILE_ERROR, KV.ins("remotePath", remotePath), e.toString(), e);
 		}
-		finally
-		{
-			disconnect();
-		}
 
 		return rtnList;
 	}
 
-	/**
-	 * @see org.azolla.open.ling.ftp.Ftp0#listFiles(String)
-	 */
 	public List<FTPFile> listFiles()
 	{
 		return listFiles(null);
 	}
 
-	/**
-	 * @see org.azolla.open.ling.ftp.Ftp0#listFiles(String,FTPFileFilter)
-	 */
-	public List<FTPFile> listFiles(String remotePath)
+	public List<FTPFile> listFiles(@Nullable String remotePath)
 	{
 		return listFiles(remotePath, null);
 	}
 
-	/**
-	 * list of remotePath
-	 * 
-	 * @param remotePath
-	 * @return List<FTPFile>
-	 */
-	public List<FTPFile> listFiles(String remotePath, FTPFileFilter filter)
+	public List<FTPFile> listFiles(FTPClient client, @Nullable String remotePath)
+	{
+		return listFiles(client, remotePath, null);
+	}
+
+	public List<FTPFile> listFiles(@Nullable String remotePath, @Nullable FTPFileFilter filter)
+	{
+		return listFiles(null, remotePath, filter);
+	}
+
+	public List<FTPFile> listFiles(FTPClient client, @Nullable String remotePath, @Nullable FTPFileFilter filter)
 	{
 		List<FTPFile> rtnList = Lists.newArrayList();
 
 		try
 		{
-			activeClient();
+			client = client == null ? activeClient() : client;
 
-			FTPFile[] pathArray = null == filter ? client.listFiles(remotePath) : client.listFiles(remotePath, filter);
-			if(null != pathArray)
-			{
-				rtnList = Lists.newArrayList(pathArray);
-			}
+			FTPFile[] pathArray = filter == null ? client.listFiles(remotePath) : client.listFiles(remotePath, filter);
+			rtnList = pathArray == null ? rtnList : Lists.newArrayList(pathArray);
 		}
 		catch(Exception e)
 		{
 			LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_LIST_FILE_ERROR, KV.ins("remotePath", remotePath), e.toString(), e);
-		}
-		finally
-		{
-			disconnect();
 		}
 
 		return rtnList;
@@ -552,26 +582,32 @@ public final class Ftp0
 
 	public boolean storeFile(String remotePath, File localFile)
 	{
-		return null == localFile ? false : storeFile(remotePath, localFile.getAbsolutePath());
+		return localFile == null ? false : storeFile(null, remotePath, localFile.getAbsolutePath());
+	}
+
+	public boolean storeFile(String remotePath, String localPath)
+	{
+		return storeFile(null, remotePath, localPath);
 	}
 
 	/**
 	 * upload file to ftp
 	 * 
+	 * @param client
 	 * @param remotePath
 	 * @param localPath
 	 * @return boolean
 	 */
-	public boolean storeFile(String remotePath, String localPath)
+	public boolean storeFile(FTPClient client, String remotePath, String localPath)
 	{
-		boolean rtnBoolean = true;
+		boolean rtnBoolean = false;
 
 		if(!Strings.isNullOrEmpty(remotePath) && !Strings.isNullOrEmpty(localPath))
 		{
 			InputStream input = null;
 			try
 			{
-				activeClient();
+				client = client == null ? activeClient() : client;
 
 				input = new FileInputStream(localPath);
 				rtnBoolean = client.storeFile(remotePath, input);
@@ -579,12 +615,11 @@ public final class Ftp0
 			catch(Exception e)
 			{
 				rtnBoolean = false;
-				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_STORE_FILE_ERROR, KV.ins("remotePath", remotePath).set("localPath", localPath), e.toString(), e);
+				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_STORE_FILE_ERROR, KV.ins("remotePath", remotePath).put("localPath", localPath), e.toString(), e);
 			}
 			finally
 			{
 				Closeables.closeQuietly(input);
-				disconnect();
 			}
 		}
 
@@ -767,7 +802,7 @@ public final class Ftp0
 	 *
 	 * @return the encoding
 	 */
-	public Encoding getEncoding()
+	public String getEncoding()
 	{
 		return encoding;
 	}
@@ -777,10 +812,10 @@ public final class Ftp0
 	 *
 	 * @param encoding the encoding to set
 	 */
-	public Ftp0 setEncoding(Encoding encoding)
+	public Ftp0 setEncoding(@Nullable String encoding)
 	{
-		Encoding e = null == encoding ? Encoding.UTF8 : encoding;
-		client.setControlEncoding(e.getEncoding());
+		String e = Strings.isNullOrEmpty(encoding) ? Encoding.UTF8 : encoding;
+		client.setControlEncoding(e);
 		this.encoding = e;
 		return this;
 	}

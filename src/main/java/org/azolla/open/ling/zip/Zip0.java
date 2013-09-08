@@ -15,6 +15,8 @@ import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import org.apache.tools.zip.ZipEntry;
 import org.apache.tools.zip.ZipFile;
 import org.apache.tools.zip.ZipOutputStream;
@@ -46,52 +48,29 @@ public final class Zip0
 
 	private static int			bufSize	= 8096;								//size of bytes
 
-	public static boolean unzip(File zip)
+	public static boolean unzip(File zipFile)
 	{
-		return null == zip ? false : unzip(zip.getPath(), "");
+		return unzip(zipFile, null);
 	}
 
-	public static boolean unzip(File zip, Encoding encoding)
+	public static boolean unzip(File zipFile, @Nullable String dest)
 	{
-		return null == zip ? false : unzip(zip.getPath(), null, encoding);
+		return unzip(zipFile, dest, null);
 	}
 
-	public static boolean unzip(File zip, String dest)
-	{
-		return null == zip ? false : unzip(zip.getPath(), dest);
-	}
-
-	public static boolean unzip(String zip)
-	{
-		return unzip(zip, "");
-	}
-
-	public static boolean unzip(String zip, Encoding encoding)
-	{
-		return unzip(zip, null, Encoding.UTF8);
-	}
-
-	public static boolean unzip(String zip, String dest)
-	{
-		return unzip(zip, dest, Encoding.UTF8);
-	}
-
-	public static boolean unzip(String zip, String dest, Encoding encoding)
+	public static boolean unzip(File zipFile, @Nullable String dest, @Nullable String encoding)
 	{
 		boolean rtnBoolean = true;
-		if(!Strings.isNullOrEmpty(zip))
+		if(zipFile != null)
 		{
-			File zipFile = new File(zip);
-			if(Strings.isNullOrEmpty(dest))
-			{
-				dest = zipFile.getParent();
-			}
+			dest = Strings.isNullOrEmpty(dest) ? zipFile.getParent() : dest;
+			encoding = Strings.isNullOrEmpty(encoding) ? Encoding.UTF8 : encoding;
 
 			File destFile = null;
 			ZipFile zf = null;
 			try
 			{
-				zf = new ZipFile(zipFile, encoding.getEncoding());
+				zf = new ZipFile(zipFile, encoding);
 
 				for(Enumeration<ZipEntry> entries = zf.getEntries(); entries.hasMoreElements();)
 				{
@@ -104,7 +83,7 @@ public final class Zip0
 			catch(Exception e)
 			{
 				rtnBoolean = false;
-				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.ZIP_ZIP_ERROR, KV.ins("zip", zip).set("dest", dest).set("encoding", encoding), e.toString(), e);
+				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.ZIP_ZIP_ERROR, KV.ins("zipFile", zipFile).put("dest", dest).put("encoding", encoding), e.toString(), e);
 			}
 		}
 		return rtnBoolean;
@@ -151,25 +130,67 @@ public final class Zip0
 		return rtnBoolean;
 	}
 
+	public static boolean zip(File dirFile)
+	{
+		return zip(dirFile, false);
+	}
+
+	public static boolean zip(File dirFile, boolean self)
+	{
+		return dirFile == null ? false : zip(dirFile, dirFile.getPath(), self);
+	}
+
+	public static boolean zip(File dirFile, @Nullable String encoding)
+	{
+		return dirFile == null ? false : zip(dirFile, dirFile.getPath(), encoding);
+	}
+
+	public static boolean zip(File dirFile, String zip, boolean self)
+	{
+		return zip(dirFile, zip, null, self);
+	}
+
+	public static boolean zip(File dirFile, String zip, @Nullable String encoding)
+	{
+		return zip(dirFile, zip, encoding, false);
+	}
+
+	public static boolean zip(File dirFile, String zip, @Nullable String encoding, boolean self)
+	{
+		boolean rtnBoolean = false;
+		if(dirFile != null)
+		{
+			List<File> fileList = Lists.newArrayList();
+			if(self || dirFile.isFile())
+			{
+				fileList.add(dirFile);
+			}
+			else
+			{
+				fileList.addAll(Lists.newArrayList(dirFile.listFiles()));
+			}
+			rtnBoolean = zip(fileList, zip, encoding);
+		}
+		return rtnBoolean;
+	}
+
 	public static boolean zip(List<File> fileList)
 	{
 		return zip(fileList, null);
 	}
 
-	public static boolean zip(List<File> fileList, String zip)
+	public static boolean zip(List<File> fileList, @Nullable String zip)
 	{
-		return zip(fileList, zip, Encoding.UTF8);
+		return zip(fileList, zip, null);
 	}
 
-	public static boolean zip(List<File> fileList, String zip, Encoding encoding)
+	public static boolean zip(List<File> fileList, @Nullable String zip, @Nullable String encoding)
 	{
 		boolean rtnBoolean = false;
-		if(null != fileList && null != encoding)
+		if(null != fileList)
 		{
-			if(Strings.isNullOrEmpty(zip))
-			{
-				zip = Date0.toString(Date0.Y__M__D_H_MI_S);
-			}
+			encoding = Strings.isNullOrEmpty(encoding) ? Encoding.UTF8 : encoding;
+			zip = Strings.isNullOrEmpty(zip) ? Date0.toString(Date0.Y_M_D_H_MI_S) : zip;
 			if(!Lists.newArrayList(File0.ZIP_FILETYPE, File0.JAR_FILETYPE, File0.WAR_FILETYPE).contains(File0.fileType(zip).toLowerCase()))
 			{
 				zip += File0.ZIP_FILETYPE_WITH_POINT;
@@ -184,7 +205,7 @@ public final class Zip0
 				bos = new BufferedOutputStream(fos);
 				zos = new ZipOutputStream(bos);
 
-				zos.setEncoding(encoding.getEncoding());
+				zos.setEncoding(encoding);
 
 				for(File file : fileList)
 				{
@@ -196,7 +217,7 @@ public final class Zip0
 			catch(Exception e)
 			{
 				rtnBoolean = false;
-				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.ZIP_ZIP_ERROR, KV.ins("fileList", Joiner.on("|").join(fileList)).set("zip", zip).set("encoding", encoding), e.toString(), e);
+				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.ZIP_ZIP_ERROR, KV.ins("fileList", Joiner.on("|").join(fileList)).put("zip", zip).put("encoding", encoding), e.toString(), e);
 			}
 			finally
 			{
@@ -204,51 +225,6 @@ public final class Zip0
 				Closeables.closeQuietly(bos);
 				Closeables.closeQuietly(fos);
 			}
-		}
-		return rtnBoolean;
-	}
-
-	public static boolean zip(String dir)
-	{
-		return zip(dir, false);
-	}
-
-	public static boolean zip(String dir, boolean self)
-	{
-		return Strings.isNullOrEmpty(dir) ? false : zip(dir, new File(dir).getPath(), self);
-	}
-
-	public static boolean zip(String dir, Encoding encoding)
-	{
-		return Strings.isNullOrEmpty(dir) ? false : zip(dir, new File(dir).getPath(), encoding);
-	}
-
-	public static boolean zip(String dir, String zip, boolean self)
-	{
-		return zip(dir, zip, Encoding.UTF8, self);
-	}
-
-	public static boolean zip(String dir, String zip, Encoding encoding)
-	{
-		return zip(dir, zip, encoding, false);
-	}
-
-	public static boolean zip(String dir, String zip, Encoding encoding, boolean self)
-	{
-		boolean rtnBoolean = false;
-		if(!Strings.isNullOrEmpty(dir))
-		{
-			File dirFile = new File(dir);
-			List<File> fileList = Lists.newArrayList();
-			if(self || dirFile.isFile())
-			{
-				fileList.add(dirFile);
-			}
-			else
-			{
-				fileList.addAll(Lists.newArrayList(dirFile.listFiles()));
-			}
-			rtnBoolean = zip(fileList, zip, encoding);
 		}
 		return rtnBoolean;
 	}
@@ -296,7 +272,7 @@ public final class Zip0
 		catch(Exception e)
 		{
 			rtnBoolean = false;
-			LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.ZIP_ZIP_ERROR, KV.ins("file", file).set("pathName", pathName), e.toString(), e);
+			LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.ZIP_ZIP_ERROR, KV.ins("file", file).put("pathName", pathName), e.toString(), e);
 		}
 		finally
 		{
