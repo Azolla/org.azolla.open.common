@@ -197,16 +197,9 @@ public final class File0
 	{
 		List<File> rtnList = Lists.newArrayList();
 
-		if(null != file && file.exists() && file.isDirectory())
+		if(null != file && file.exists())
 		{
-			for(File subFile : file.listFiles())
-			{
-				rtnList.add(subFile);
-				if(subFile.isDirectory())
-				{
-					rtnList.addAll(allFile0(subFile));
-				}
-			}
+			rtnList.addAll(allFile0(file));
 		}
 
 		return rtnList;
@@ -215,19 +208,19 @@ public final class File0
 	/**
 	 * all of file contain sub file
 	 * 
-	 * @param file existed folder
+	 * @param file existed file
 	 * @return List<File>
 	 */
 	private static List<File> allFile0(File file)
 	{
 		List<File> rtnList = Lists.newArrayList();
 
-		for(File subFile : file.listFiles())
+		rtnList.add(file);
+		if(file.isDirectory())
 		{
-			rtnList.add(subFile);
-			if(subFile.isDirectory())
+			for(File subFile : file.listFiles())
 			{
-				rtnList.addAll(allFile(subFile));
+				rtnList.addAll(allFile0(subFile));
 			}
 		}
 
@@ -278,6 +271,44 @@ public final class File0
 		legalString = Strings.isNullOrEmpty(legalString) ? "_" : legalString;
 
 		return fileName.replaceAll(ILLEGAL_FILENAME_REGEX, legalString);
+	}
+
+	public static boolean copy(File from, File to)
+	{
+		if(from == null || to == null || !from.exists())
+		{
+			return false;
+		}
+
+		return copy0(from, to);
+	}
+
+	private static boolean copy0(File from, File to)
+	{
+		boolean rtnBoolean = true;
+
+		if(from.isDirectory())
+		{
+			to.mkdirs();
+			for(File f : from.listFiles())
+			{
+				rtnBoolean = rtnBoolean && copy0(f, File0.newFile(to, f.getName()));
+			}
+		}
+		else
+		{
+			try
+			{
+				com.google.common.io.Files.copy(from, to);
+			}
+			catch(Exception e)
+			{
+				rtnBoolean = false;
+				LOG.error(Fmt0.LOG_P, KV.ins("from", from).put("to", to), e);
+			}
+		}
+
+		return rtnBoolean;
 	}
 
 	public static String getUserDir()

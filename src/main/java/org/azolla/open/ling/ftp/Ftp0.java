@@ -219,7 +219,7 @@ public final class Ftp0
 			catch(Exception e)
 			{
 				rtnBoolean = false;
-				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_LOGOUT_ERROR, KV.ins("host", host), e);
+				LOG.warn(Fmt0.LOG_EC_P_M, AzollaCode.FTP_LOGOUT_ERROR, KV.ins("host", host), e);
 			}
 
 			if(client.isConnected())
@@ -231,7 +231,7 @@ public final class Ftp0
 				catch(Exception e)
 				{
 					rtnBoolean = false;
-					LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.FTP_DISCONNECT_ERROR, KV.ins("host", host), e);
+					LOG.warn(Fmt0.LOG_EC_P_M, AzollaCode.FTP_DISCONNECT_ERROR, KV.ins("host", host), e);
 				}
 			}
 		}
@@ -965,9 +965,9 @@ public final class Ftp0
 	 */
 	public Ftp0 setEncoding(@Nullable String encoding)
 	{
-		String e = Strings.isNullOrEmpty(encoding) ? Encoding.UTF8 : encoding;
-		client.setControlEncoding(e);
-		this.encoding = e;
+		encoding = Strings.isNullOrEmpty(encoding) ? Encoding.UTF8 : encoding;
+		client.setControlEncoding(encoding);
+		this.encoding = encoding;
 		return this;
 	}
 
