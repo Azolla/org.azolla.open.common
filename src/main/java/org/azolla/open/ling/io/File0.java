@@ -7,9 +7,12 @@
 package org.azolla.open.ling.io;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.security.MessageDigest;
 import java.util.List;
 
 import javax.annotation.Nullable;
@@ -22,6 +25,7 @@ import org.slf4j.LoggerFactory;
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
+import com.google.common.io.Closeables;
 
 /**
  * FileHelper
@@ -37,312 +41,346 @@ import com.google.common.collect.Lists;
  */
 public final class File0
 {
-	private static final Logger	LOG						= LoggerFactory.getLogger(File0.class);
+    private static final Logger LOG                     = LoggerFactory.getLogger(File0.class);
 
-	public static final String	ILLEGAL_FILENAME_REGEX	= "[{/\\\\:*?\"<>|}]";
+    public static final String  ILLEGAL_FILENAME_REGEX  = "[{/\\\\:*?\"<>|}]";
 
-	public static final String	POINT					= ".";
+    public static final String  POINT                   = ".";
 
-	public static final String	ZIP_FILETYPE			= "zip";
-	public static final String	ZIP_FILETYPE_WITH_POINT	= POINT + ZIP_FILETYPE;
+    public static final String  ZIP_FILETYPE            = "zip";
+    public static final String  ZIP_FILETYPE_WITH_POINT = POINT + ZIP_FILETYPE;
 
-	public static final String	JAR_FILETYPE			= "jar";
-	public static final String	JAR_FILETYPE_WITH_POINT	= POINT + JAR_FILETYPE;
+    public static final String  JAR_FILETYPE            = "jar";
+    public static final String  JAR_FILETYPE_WITH_POINT = POINT + JAR_FILETYPE;
 
-	public static final String	WAR_FILETYPE			= "war";
-	public static final String	WAR_FILETYPE_WITH_POINT	= POINT + WAR_FILETYPE;
+    public static final String  WAR_FILETYPE            = "war";
+    public static final String  WAR_FILETYPE_WITH_POINT = POINT + WAR_FILETYPE;
 
-	public static final String	TXT_FILETYPE			= "txt";
-	public static final String	TXT_FILETYPE_WITH_POINT	= POINT + TXT_FILETYPE;
+    public static final String  TXT_FILETYPE            = "txt";
+    public static final String  TXT_FILETYPE_WITH_POINT = POINT + TXT_FILETYPE;
 
-	public static final String	BAK_FILETYPE			= "bak";
-	public static final String	BAK_FILETYPE_WITH_POINT	= POINT + BAK_FILETYPE;
+    public static final String  BAK_FILETYPE            = "bak";
+    public static final String  BAK_FILETYPE_WITH_POINT = POINT + BAK_FILETYPE;
 
-	/**
-	 * New file
-	 * 
-	 * @param strings
-	 * @return File
-	 */
-	public static File newFile(String... strings)
-	{
-		return new File(Joiner.on(File.separator).join(strings));
-	}
+    /**
+     * New file
+     * 
+     * @param strings
+     * @return File
+     */
+    public static File newFile(String... strings)
+    {
+        return new File(Joiner.on(File.separator).join(strings));
+    }
 
-	/**
-	 * New file
-	 * 
-	 * @param parent
-	 * @param strings
-	 * @return File
-	 */
-	public static File newFile(File parent, String... strings)
-	{
-		return new File(parent, Joiner.on(File.separator).join(strings));
-	}
+    /**
+     * New file
+     * 
+     * @param parent
+     * @param strings
+     * @return File
+     */
+    public static File newFile(File parent, String... strings)
+    {
+        return new File(parent, Joiner.on(File.separator).join(strings));
+    }
 
-	/**
-	 * Delete file(contain sub file)
-	 * 
-	 * @param file	documnet or directory
-	 * @return boolean
-	 */
-	public static boolean delFile(File file)
-	{
-		boolean rtnBoolean = true;
+    /**
+     * Delete file(contain sub file)
+     * 
+     * @param file	documnet or directory
+     * @return boolean
+     */
+    public static boolean delFile(File file)
+    {
+        boolean rtnBoolean = true;
 
-		if(null != file && file.exists())
-		{
-			rtnBoolean = delFile0(file);
-		}
+        if(null != file && file.exists())
+        {
+            rtnBoolean = delFile0(file);
+        }
 
-		return rtnBoolean;
-	}
+        return rtnBoolean;
+    }
 
-	/**
-	 * Delete file(contain sub file)
-	 * 
-	 * @param file existed
-	 * @return boolean
-	 */
-	private static boolean delFile0(File file)
-	{
-		boolean rtnBoolean = true;
+    /**
+     * Delete file(contain sub file)
+     * 
+     * @param file existed
+     * @return boolean
+     */
+    private static boolean delFile0(File file)
+    {
+        boolean rtnBoolean = true;
 
-		if(file.isDirectory())
-		{
-			for(File subFile : file.listFiles())
-			{
-				rtnBoolean = rtnBoolean && delFile0(subFile);
-			}
-		}
-		rtnBoolean = rtnBoolean && file.delete();
+        if(file.isDirectory())
+        {
+            for(File subFile : file.listFiles())
+            {
+                rtnBoolean = rtnBoolean && delFile0(subFile);
+            }
+        }
+        rtnBoolean = rtnBoolean && file.delete();
 
-		return rtnBoolean;
-	}
+        return rtnBoolean;
+    }
 
-	/**
-	 * empty File
-	 * 
-	 * @param file	documnet or directory
-	 * @return boolean
-	 */
-	public static boolean emptyFile(File file)
-	{
-		boolean rtnBoolean = true;
+    /**
+     * empty File
+     * 
+     * @param file	documnet or directory
+     * @return boolean
+     */
+    public static boolean emptyFile(File file)
+    {
+        boolean rtnBoolean = true;
 
-		if(null != file && file.exists())
-		{
-			if(file.isDirectory())
-			{
-				for(File subFile : file.listFiles())
-				{
-					rtnBoolean = rtnBoolean && delFile0(subFile);
-				}
-			}
-			else
-			{
-				File bakFile = bakFileName(file);
-				rtnBoolean = rtnBoolean && file.renameTo(bakFile);
-				if(rtnBoolean)
-				{
-					try
-					{
-						rtnBoolean = rtnBoolean && file.createNewFile();
-						if(rtnBoolean)
-						{
-							bakFile.delete();	//ignore failed to delete
-						}
-					}
-					catch(Exception e)
-					{
-						LOG.error(Fmt0.LOG_P, KV.ins("file", file), e);
-						bakFile.renameTo(file);
-						rtnBoolean = false;
-					}
-				}
-			}
-		}
+        if(null != file && file.exists())
+        {
+            if(file.isDirectory())
+            {
+                for(File subFile : file.listFiles())
+                {
+                    rtnBoolean = rtnBoolean && delFile0(subFile);
+                }
+            }
+            else
+            {
+                File bakFile = bakFileName(file);
+                rtnBoolean = rtnBoolean && file.renameTo(bakFile);
+                if(rtnBoolean)
+                {
+                    try
+                    {
+                        rtnBoolean = rtnBoolean && file.createNewFile();
+                        if(rtnBoolean)
+                        {
+                            bakFile.delete();	//ignore failed to delete
+                        }
+                    }
+                    catch(Exception e)
+                    {
+                        LOG.error(Fmt0.LOG_P, KV.ins("file", file), e);
+                        bakFile.renameTo(file);
+                        rtnBoolean = false;
+                    }
+                }
+            }
+        }
 
-		return rtnBoolean;
-	}
+        return rtnBoolean;
+    }
 
-	/**
-	 * Return file's bakName
-	 * 
-	 * sample.txt -> sample.txt.bak
-	 * 
-	 * @param file
-	 * @return File
-	 */
-	public static File bakFileName(File file)
-	{
-		File rtnFile = null;
+    /**
+     * Return file's bakName
+     * 
+     * sample.txt -> sample.txt.bak
+     * 
+     * @param file
+     * @return File
+     */
+    public static File bakFileName(File file)
+    {
+        File rtnFile = null;
 
-		if(null != file)
-		{
-			rtnFile = newFile(file.getParentFile(), file.getName() + BAK_FILETYPE_WITH_POINT);
-		}
+        if(null != file)
+        {
+            rtnFile = newFile(file.getParentFile(), file.getName() + BAK_FILETYPE_WITH_POINT);
+        }
 
-		return rtnFile;
-	}
+        return rtnFile;
+    }
 
-	/**
-	 * all of file contain sub file
-	 * 
-	 * @param file
-	 * @return List<File>	
-	 */
-	public static List<File> allFile(File file)
-	{
-		List<File> rtnList = Lists.newArrayList();
+    /**
+     * all of file contain sub file
+     * 
+     * @param file
+     * @return List<File>	
+     */
+    public static List<File> allFile(File file)
+    {
+        List<File> rtnList = Lists.newArrayList();
 
-		if(null != file && file.exists())
-		{
-			rtnList.addAll(allFile0(file));
-		}
+        if(null != file && file.exists())
+        {
+            rtnList.addAll(allFile0(file));
+        }
 
-		return rtnList;
-	}
+        return rtnList;
+    }
 
-	/**
-	 * all of file contain sub file
-	 * 
-	 * @param file existed file
-	 * @return List<File>
-	 */
-	private static List<File> allFile0(File file)
-	{
-		List<File> rtnList = Lists.newArrayList();
+    /**
+     * all of file contain sub file
+     * 
+     * @param file existed file
+     * @return List<File>
+     */
+    private static List<File> allFile0(File file)
+    {
+        List<File> rtnList = Lists.newArrayList();
 
-		rtnList.add(file);
-		if(file.isDirectory())
-		{
-			for(File subFile : file.listFiles())
-			{
-				rtnList.addAll(allFile0(subFile));
-			}
-		}
+        rtnList.add(file);
+        if(file.isDirectory())
+        {
+            for(File subFile : file.listFiles())
+            {
+                rtnList.addAll(allFile0(subFile));
+            }
+        }
 
-		return rtnList;
-	}
+        return rtnList;
+    }
 
-	/**
-	 * @see org.azolla.open.ling.io.File0#fileType(String)
-	 */
-	public static String fileType(File file)
-	{
-		return fileType(file.getName());
-	}
+    /**
+     * @see org.azolla.open.ling.io.File0#fileType(String)
+     */
+    public static String fileType(File file)
+    {
+        return fileType(file.getName());
+    }
 
-	/**
-	 * return type of file by file name
-	 * example:test.txt -> txt
-	 * 
-	 * @param fileName file name
-	 * @return type of file
-	 */
-	public static String fileType(String fileName)
-	{
-		fileName = String.valueOf(fileName);
+    /**
+     * return type of file by file name
+     * example:test.txt -> txt
+     * 
+     * @param fileName file name
+     * @return type of file
+     */
+    public static String fileType(String fileName)
+    {
+        fileName = String.valueOf(fileName);
 
-		int lastPointIndex = fileName.lastIndexOf(".");
-		return -1 == lastPointIndex ? fileName : fileName.substring(lastPointIndex + 1);
-	}
+        int lastPointIndex = fileName.lastIndexOf(".");
+        return -1 == lastPointIndex ? fileName : fileName.substring(lastPointIndex + 1);
+    }
 
-	/**
-	 * @see org.azolla.open.ling.io.File0#toLegalFileName(String, String)
-	 */
-	public static String toLegalFileName(String fileName)
-	{
-		return toLegalFileName(fileName, null);
-	}
+    /**
+     * @see org.azolla.open.ling.io.File0#toLegalFileName(String, String)
+     */
+    public static String toLegalFileName(String fileName)
+    {
+        return toLegalFileName(fileName, null);
+    }
 
-	/**
-	 * transform legal file name
-	 * 
-	 * @param fileName file name
-	 * @param legalString legal string
-	 * @return legal file name
-	 */
-	public static String toLegalFileName(String fileName, @Nullable String legalString)
-	{
-		fileName = String.valueOf(fileName);
-		legalString = Strings.isNullOrEmpty(legalString) ? "_" : legalString;
+    /**
+     * transform legal file name
+     * 
+     * @param fileName file name
+     * @param legalString legal string
+     * @return legal file name
+     */
+    public static String toLegalFileName(String fileName, @Nullable String legalString)
+    {
+        fileName = String.valueOf(fileName);
+        legalString = Strings.isNullOrEmpty(legalString) ? "_" : legalString;
 
-		return fileName.replaceAll(ILLEGAL_FILENAME_REGEX, legalString);
-	}
+        return fileName.replaceAll(ILLEGAL_FILENAME_REGEX, legalString);
+    }
 
-	public static boolean copy(File from, File to)
-	{
-		if(from == null || to == null || !from.exists())
-		{
-			return false;
-		}
+    public static boolean copy(File from, File to)
+    {
+        if(from == null || to == null || !from.exists())
+        {
+            return false;
+        }
 
-		return copy0(from, to);
-	}
+        return copy0(from, to);
+    }
 
-	private static boolean copy0(File from, File to)
-	{
-		boolean rtnBoolean = true;
+    private static boolean copy0(File from, File to)
+    {
+        boolean rtnBoolean = true;
 
-		if(from.isDirectory())
-		{
-			to.mkdirs();
-			for(File f : from.listFiles())
-			{
-				rtnBoolean = rtnBoolean && copy0(f, File0.newFile(to, f.getName()));
-			}
-		}
-		else
-		{
-			try
-			{
-				com.google.common.io.Files.copy(from, to);
-			}
-			catch(Exception e)
-			{
-				rtnBoolean = false;
-				LOG.error(Fmt0.LOG_P, KV.ins("from", from).put("to", to), e);
-			}
-		}
+        if(from.isDirectory())
+        {
+            to.mkdirs();
+            for(File f : from.listFiles())
+            {
+                rtnBoolean = rtnBoolean && copy0(f, File0.newFile(to, f.getName()));
+            }
+        }
+        else
+        {
+            try
+            {
+                com.google.common.io.Files.copy(from, to);
+            }
+            catch(Exception e)
+            {
+                rtnBoolean = false;
+                LOG.error(Fmt0.LOG_P, KV.ins("from", from).put("to", to), e);
+            }
+        }
 
-		return rtnBoolean;
-	}
+        return rtnBoolean;
+    }
 
-	public static String getUserDir()
-	{
-		return System.getProperty("user.dir");
-	}
+    public static String getUserDir()
+    {
+        return System.getProperty("user.dir");
+    }
 
-	public static String getUserHome()
-	{
-		return System.getProperty("user.home");
-	}
+    public static String getUserHome()
+    {
+        return System.getProperty("user.home");
+    }
 
-	public static String getEncoding(String filePath)
-	{
-		try
-		{
-			return Files.probeContentType(Paths.get(filePath));
-		}
-		catch(IOException e)
-		{
-			return Encode0.SINGLETON.getFileEncoding(filePath);
-		}
-	}
+    public static String getEncoding(String filePath)
+    {
+        try
+        {
+            return Files.probeContentType(Paths.get(filePath));
+        }
+        catch(IOException e)
+        {
+            return Encode0.SINGLETON.getFileEncoding(filePath);
+        }
+    }
 
-	@SuppressWarnings("null")
-	public static void main(String[] args)
-	{
-		String s1 = "";
-		System.out.println(new File(s1).getAbsolutePath());
-		// NullPointerException
-		List<String> stringList = null;
-		for(String s : stringList)
-		{
-			System.out.println(s);
-		}
-	}
+    public static String getMD5(File file)
+    {
+        String rtnString = null;
+        if(file != null && file.isFile())
+        {
+            int bufferSize = 256 * 1024;
+            MessageDigest digest = null;
+            FileInputStream in = null;
+            byte buffer[] = new byte[bufferSize];
+            int len;
+            try
+            {
+                digest = MessageDigest.getInstance("MD5");
+                in = new FileInputStream(file);
+                while((len = in.read(buffer, 0, bufferSize)) != -1)
+                {
+                    digest.update(buffer, 0, len);
+                }
+                in.close();
+            }
+            catch(Exception e)
+            {
+                LOG.error(Fmt0.LOG_P, KV.ins("file", file), e);
+            }
+            finally
+            {
+                Closeables.closeQuietly(in);
+            }
+            rtnString = new BigInteger(1, digest.digest()).toString(16);
+        }
+
+        return rtnString;
+    }
+
+    @SuppressWarnings("null")
+    public static void main(String[] args)
+    {
+        String s1 = "";
+        System.out.println(new File(s1).getAbsolutePath());
+        // NullPointerException
+        List<String> stringList = null;
+        for(String s : stringList)
+        {
+            System.out.println(s);
+        }
+    }
 }
