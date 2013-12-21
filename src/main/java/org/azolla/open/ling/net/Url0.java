@@ -16,16 +16,14 @@ import java.net.URL;
  */
 public class Url0
 {
-	/**
-	 * 根据资源路径获得URL,特别适合于jar里面的资源
-	 * 
-	 * 例:[project或jar]/img/test.gif => path=/img/test.gif 
-	 * 
-	 * @param path
-	 * @return URL
-	 */
-	public static URL getURL(String path)
-	{
-		return Url0.class.getClass().getResource(path);
-	}
+    /**
+    * Example:[project or jar]/img/test.gif => path=/img/test.gif 
+    * 
+    * @param path
+    * @return URL
+    */
+    public static URL getURL(String path)
+    {
+        return Url0.class.getClass().getResource(path);
+    }
 }

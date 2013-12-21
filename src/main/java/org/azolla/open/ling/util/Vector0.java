@@ -17,25 +17,25 @@ import java.util.Vector;
  */
 public final class Vector0
 {
-	public static <T> Vector<T> emptyVector()
-	{
-		return new Vector<T>(0, 0);
-	}
+    public static <T> Vector<T> emptyVector()
+    {
+        return new Vector<T>(0, 0);
+    }
 
-	public static <T> Vector<Vector<T>> transform(List<List<T>> from)
-	{
-		if(null == from)
-		{
-			return emptyVector();
-		}
+    public static <T> Vector<Vector<T>> transform(List<List<T>> from)
+    {
+        if(null == from)
+        {
+            return emptyVector();
+        }
 
-		Vector<Vector<T>> to = new Vector<Vector<T>>(from.size());
-		for(List<T> fromEntry : from)
-		{
-			to.add(new Vector<T>(fromEntry));
-		}
-		to.trimToSize();
+        Vector<Vector<T>> to = new Vector<Vector<T>>(from.size());
+        for(List<T> fromEntry : from)
+        {
+            to.add(new Vector<T>(fromEntry));
+        }
+        to.trimToSize();
 
-		return to;
-	}
+        return to;
+    }
 }

@@ -14,11 +14,11 @@ package org.azolla.open.ling.text;
  */
 public final class Fmt0
 {
-	public static final String	LOG_EC_P_M	= "[ErrorCode={}][{}]\n{}";	//EC=ErrorCode;P=Properties;M=Message
+    public static final String LOG_EC_P_M = "[ErrorCode={}][{}]\n{}";	//EC=ErrorCode;P=Properties;M=Message
 
-	public static final String	LOG_EC_P	= "[ErrorCode={}][{}]";	//EC=ErrorCode;P=Properties
+    public static final String LOG_EC_P   = "[ErrorCode={}][{}]";    //EC=ErrorCode;P=Properties
 
-	public static final String	LOG_P_M		= "[{}]\n{}";				//P=Properties;M=Message
+    public static final String LOG_P_M    = "[{}]\n{}";              //P=Properties;M=Message
 
-	public static final String	LOG_P		= "[{}]";					//P=Properties
+    public static final String LOG_P      = "[{}]";                  //P=Properties
 }

@@ -19,23 +19,23 @@ import com.google.common.base.Strings;
  */
 public final class Integer0
 {
-	private static final Logger	LOG	= LoggerFactory.getLogger(Integer0.class);
+    private static final Logger LOG = LoggerFactory.getLogger(Integer0.class);
 
-	public static boolean isInt(String s)
-	{
-		boolean rtnBoolean = false;
-		if(!Strings.isNullOrEmpty(s))
-		{
-			try
-			{
-				Integer.parseInt(s);
-				rtnBoolean = true;
-			}
-			catch(NumberFormatException e)
-			{
-				LOG.warn(e.toString(), e);
-			}
-		}
-		return rtnBoolean;
-	}
+    public static boolean isInt(String s)
+    {
+        boolean rtnBoolean = false;
+        if(!Strings.isNullOrEmpty(s))
+        {
+            try
+            {
+                Integer.parseInt(s);
+                rtnBoolean = true;
+            }
+            catch(NumberFormatException e)
+            {
+                LOG.warn(e.toString(), e);
+            }
+        }
+        return rtnBoolean;
+    }
 }

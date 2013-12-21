@@ -17,18 +17,18 @@ import java.util.List;
 public final class List0
 {
 
-	public static <T> String list2String(List<T> list)
-	{
-		if(null == list)
-		{
-			return "null";
-		}
-		StringBuffer rtn = new StringBuffer();
-		for(T t : list)
-		{
-			rtn.append(";").append(String.valueOf(t));
-		}
-		return "[" + (rtn.length() > 0 ? rtn.substring(1) : "") + "]";
-	}
+    public static <T> String list2String(List<T> list)
+    {
+        if(null == list)
+        {
+            return "null";
+        }
+        StringBuffer rtn = new StringBuffer();
+        for(T t : list)
+        {
+            rtn.append(";").append(String.valueOf(t));
+        }
+        return "[" + (rtn.length() > 0 ? rtn.substring(1) : "") + "]";
+    }
 
 }

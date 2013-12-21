@@ -17,13 +17,13 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import org.azolla.open.ling.exception.code.AzollaCode;
+import org.azolla.open.ling.io.Close0;
 import org.azolla.open.ling.text.Fmt0;
 import org.azolla.open.ling.util.KV;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Strings;
-import com.google.common.io.Closeables;
 
 /**
  * The coder is very lazy, nothing to write for this Command0 class
@@ -195,8 +195,8 @@ public final class Command0
 			}
 			finally
 			{
-				Closeables.closeQuietly(lineNumberReader);
-				Closeables.closeQuietly(inputStreamReader);
+                Close0.close(lineNumberReader);
+                Close0.close(inputStreamReader);
 			}
 
 			return rtnBoolean;

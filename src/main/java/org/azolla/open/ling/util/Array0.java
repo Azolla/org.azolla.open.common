@@ -18,22 +18,22 @@ import com.google.common.collect.Lists;
  */
 public final class Array0
 {
-	public static <T> List<T> array2List(T[] array)
-	{
-		List<T> rtn = Lists.newArrayList();
+    public static <T> List<T> array2List(T[] array)
+    {
+        List<T> rtn = Lists.newArrayList();
 
-		if(null != array)
-		{
-			for(T t : array)
-			{
-				rtn.add(t);
-			}
-		}
-		return rtn;
-	}
+        if(null != array)
+        {
+            for(T t : array)
+            {
+                rtn.add(t);
+            }
+        }
+        return rtn;
+    }
 
-	public static <T> String array2String(T[] array)
-	{
-		return List0.list2String(array2List(array));
-	}
+    public static <T> String array2String(T[] array)
+    {
+        return List0.list2String(array2List(array));
+    }
 }

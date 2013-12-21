@@ -10,12 +10,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.math.BigInteger;
-import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.util.List;
-
-import javax.annotation.Nullable;
 
 import org.azolla.open.ling.text.Fmt0;
 import org.azolla.open.ling.util.KV;
@@ -25,7 +22,8 @@ import org.slf4j.LoggerFactory;
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
-import com.google.common.io.Closeables;
+import com.google.common.io.Files;
+import com.sun.istack.internal.Nullable;
 
 /**
  * FileHelper
@@ -46,6 +44,10 @@ public final class File0
     public static final String  ILLEGAL_FILENAME_REGEX  = "[{/\\\\:*?\"<>|}]";
 
     public static final String  POINT                   = ".";
+    public static final String  UNDERLINE               = "_";
+    public static final String  MD5                     = "MD5";
+    public static final String  USER_DIR                = "user.dir";
+    public static final String  USER_HOME               = "user.home";
 
     public static final String  ZIP_FILETYPE            = "zip";
     public static final String  ZIP_FILETYPE_WITH_POINT = POINT + ZIP_FILETYPE;
@@ -62,24 +64,11 @@ public final class File0
     public static final String  BAK_FILETYPE            = "bak";
     public static final String  BAK_FILETYPE_WITH_POINT = POINT + BAK_FILETYPE;
 
-    /**
-     * New file
-     * 
-     * @param strings
-     * @return File
-     */
     public static File newFile(String... strings)
     {
         return new File(Joiner.on(File.separator).join(strings));
     }
 
-    /**
-     * New file
-     * 
-     * @param parent
-     * @param strings
-     * @return File
-     */
     public static File newFile(File parent, String... strings)
     {
         return new File(parent, Joiner.on(File.separator).join(strings));
@@ -103,12 +92,6 @@ public final class File0
         return rtnBoolean;
     }
 
-    /**
-     * Delete file(contain sub file)
-     * 
-     * @param file existed
-     * @return boolean
-     */
     private static boolean delFile0(File file)
     {
         boolean rtnBoolean = true;
@@ -236,12 +219,19 @@ public final class File0
      */
     public static String fileType(File file)
     {
-        return fileType(file.getName());
+        if(null == file)
+        {
+            return String.valueOf(file);
+        }
+        else
+        {
+            return fileType(file.getName());
+        }
     }
 
     /**
      * return type of file by file name
-     * example:test.txt -> txt
+     * Example:test.txt -> txt
      * 
      * @param fileName file name
      * @return type of file
@@ -250,7 +240,7 @@ public final class File0
     {
         fileName = String.valueOf(fileName);
 
-        int lastPointIndex = fileName.lastIndexOf(".");
+        int lastPointIndex = fileName.lastIndexOf(POINT);
         return -1 == lastPointIndex ? fileName : fileName.substring(lastPointIndex + 1);
     }
 
@@ -259,7 +249,7 @@ public final class File0
      */
     public static String toLegalFileName(String fileName)
     {
-        return toLegalFileName(fileName, null);
+        return toLegalFileName(fileName, UNDERLINE);
     }
 
     /**
@@ -272,7 +262,7 @@ public final class File0
     public static String toLegalFileName(String fileName, @Nullable String legalString)
     {
         fileName = String.valueOf(fileName);
-        legalString = Strings.isNullOrEmpty(legalString) ? "_" : legalString;
+        legalString = Strings.isNullOrEmpty(legalString) ? UNDERLINE : legalString;
 
         return fileName.replaceAll(ILLEGAL_FILENAME_REGEX, legalString);
     }
@@ -303,12 +293,12 @@ public final class File0
         {
             try
             {
-                com.google.common.io.Files.copy(from, to);
+                Files.copy(from, to);
             }
             catch(Exception e)
             {
-                rtnBoolean = false;
                 LOG.error(Fmt0.LOG_P, KV.ins("from", from).put("to", to), e);
+                rtnBoolean = false;
             }
         }
 
@@ -317,19 +307,19 @@ public final class File0
 
     public static String getUserDir()
     {
-        return System.getProperty("user.dir");
+        return System.getProperty(USER_DIR);
     }
 
     public static String getUserHome()
     {
-        return System.getProperty("user.home");
+        return System.getProperty(USER_HOME);
     }
 
     public static String getEncoding(String filePath)
     {
         try
         {
-            return Files.probeContentType(Paths.get(filePath));
+            return java.nio.file.Files.probeContentType(Paths.get(filePath));
         }
         catch(IOException e)
         {
@@ -349,7 +339,7 @@ public final class File0
             int len;
             try
             {
-                digest = MessageDigest.getInstance("MD5");
+                digest = MessageDigest.getInstance(MD5);
                 in = new FileInputStream(file);
                 while((len = in.read(buffer, 0, bufferSize)) != -1)
                 {
@@ -363,7 +353,7 @@ public final class File0
             }
             finally
             {
-                Closeables.closeQuietly(in);
+                Close0.close(in);
             }
             rtnString = new BigInteger(1, digest.digest()).toString(16);
         }

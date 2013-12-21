@@ -19,15 +19,15 @@ import com.google.common.collect.Iterators;
  */
 public final class Enumeration0
 {
-	public static <T> Iterable<T> toIterable(final Enumeration<T> enumerator)
-	{
-		return new Iterable<T>()
-		{
-			@Override
-			public Iterator<T> iterator()
-			{
-				return null == enumerator ? Iterators.<T> emptyIterator() : Iterators.forEnumeration(enumerator);
-			}
-		};
-	}
+    public static <T> Iterable<T> toIterable(final Enumeration<T> enumerator)
+    {
+        return new Iterable<T>()
+        {
+            @Override
+            public Iterator<T> iterator()
+            {
+                return null == enumerator ? Iterators.<T> emptyIterator() : Iterators.forEnumeration(enumerator);
+            }
+        };
+    }
 }
