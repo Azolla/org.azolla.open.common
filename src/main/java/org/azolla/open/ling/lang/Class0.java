@@ -50,8 +50,7 @@ public class Class0
                 @Override
                 public Class apply(Object input)
                 {
-                    //do nothing
-                    return null;
+                    return input.getClass();
                 }
             }).toArray(new Class[args.length])).newInstance(args);
         }
@@ -75,8 +74,7 @@ public class Class0
             m = clazz.getMethod(methodName, Lists.transform(Lists.newArrayList(args), new Function<Object, Class>()
             {
                 @Override
-                @Nullable
-                public Class apply(@Nullable Object input)
+                public Class apply(Object input)
                 {
                     return input.getClass();
                 }
