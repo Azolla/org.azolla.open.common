@@ -15,6 +15,8 @@ import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import org.apache.tools.zip.ZipEntry;
 import org.apache.tools.zip.ZipFile;
 import org.apache.tools.zip.ZipOutputStream;
@@ -31,7 +33,6 @@ import org.slf4j.LoggerFactory;
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
-import com.sun.istack.internal.Nullable;
 
 /**
  * Zip0

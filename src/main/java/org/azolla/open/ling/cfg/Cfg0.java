@@ -9,6 +9,7 @@ package org.azolla.open.ling.cfg;
 import java.io.File;
 import java.util.concurrent.ExecutionException;
 
+import javax.annotation.Nullable;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 
@@ -22,7 +23,6 @@ import com.google.common.base.Strings;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
-import com.sun.istack.internal.Nullable;
 
 /**
  * Cfg0

@@ -14,6 +14,8 @@ import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import org.azolla.open.ling.text.Fmt0;
 import org.azolla.open.ling.util.KV;
 import org.slf4j.Logger;
@@ -23,7 +25,6 @@ import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.common.io.Files;
-import com.sun.istack.internal.Nullable;
 
 /**
  * FileHelper

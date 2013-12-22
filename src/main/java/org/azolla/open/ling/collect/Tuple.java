@@ -9,12 +9,12 @@ package org.azolla.open.ling.collect;
 import java.io.IOException;
 import java.util.Iterator;
 
+import javax.annotation.Nullable;
+
 import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
-import com.sun.istack.internal.NotNull;
-import com.sun.istack.internal.Nullable;
 
 /**
  * Tuple
@@ -31,7 +31,7 @@ public class Tuple<First, Rest> implements Iterable<Object>
     protected First first;
     protected Rest  rest;
 
-    protected Tuple(@NotNull First first, @NotNull Rest rest)
+    protected Tuple(First first, Rest rest)
     {
         this.first = first;
         this.rest = rest;

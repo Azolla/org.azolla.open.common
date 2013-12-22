@@ -9,6 +9,8 @@ package org.azolla.open.ling.lang;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
+import javax.annotation.Nullable;
+
 import org.azolla.open.ling.exception.code.AzollaCode;
 import org.azolla.open.ling.text.Fmt0;
 import org.azolla.open.ling.util.KV;
@@ -17,7 +19,6 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
-import com.sun.istack.internal.Nullable;
 
 /**
  * The coder is very lazy, nothing to write for this Class0 class

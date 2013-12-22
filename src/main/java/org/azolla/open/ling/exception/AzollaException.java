@@ -10,11 +10,12 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.util.Map;
 
+import javax.annotation.Nullable;
+
 import org.azolla.open.ling.exception.code.AzollaCode;
 import org.azolla.open.ling.exception.code.ErrorCoder;
 
 import com.google.common.collect.Maps;
-import com.sun.istack.internal.Nullable;
 
 /**
  * The exception for Azolla

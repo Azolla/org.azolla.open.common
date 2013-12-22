@@ -9,13 +9,13 @@ package org.azolla.open.ling.io;
 import java.io.Closeable;
 import java.io.IOException;
 
+import javax.annotation.Nullable;
+
 import org.azolla.open.ling.exception.code.AzollaCode;
 import org.azolla.open.ling.text.Fmt0;
 import org.azolla.open.ling.util.KV;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.sun.istack.internal.Nullable;
 
 /**
  * The coder is very lazy for this Close0 class
