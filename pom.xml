@@ -53,4 +53,11 @@
 			<artifactId>jsr305</artifactId>
 		</dependency>
 	</dependencies>
+
+	<scm>
+		<connection>scm:git:git@github.com:Azolla/org.azolla.open.ling.git</connection>
+		<url>scm:git:git@github.com:Azolla/org.azolla.open.ling.git</url>
+		<developerConnection>scm:git:git@github.com:Azolla/org.azolla.open.ling.git</developerConnection>
+	</scm>
+
 </project>
