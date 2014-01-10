@@ -108,7 +108,7 @@ public final class KV
         {
             sb.append(separator).append(entry.getKey()).append(connector).append(entry.getValue());
         }
-        return "[" + sb.toString().substring(separator.length()) + "]";
+        return sb.toString().substring(separator.length());
     }
 
     @Override

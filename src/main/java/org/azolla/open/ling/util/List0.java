@@ -8,6 +8,10 @@ package org.azolla.open.ling.util;
 
 import java.util.List;
 
+import javax.annotation.Nullable;
+
+import com.google.common.base.Strings;
+
 /**
  * The coder is very lazy, nothing to write for this List0 class
  *
@@ -16,9 +20,14 @@ import java.util.List;
  */
 public final class List0
 {
-
     public static <T> String list2String(List<T> list)
     {
+        return list2String(list, null);
+    }
+
+    public static <T> String list2String(List<T> list, @Nullable String separator)
+    {
+        separator = Strings.isNullOrEmpty(separator) ? ";" : separator;
         if(null == list)
         {
             return "null";
@@ -26,9 +35,9 @@ public final class List0
         StringBuffer rtn = new StringBuffer();
         for(T t : list)
         {
-            rtn.append(";").append(String.valueOf(t));
+            rtn.append(separator).append(String.valueOf(t));
         }
-        return "[" + (rtn.length() > 0 ? rtn.substring(1) : "") + "]";
+        return rtn.length() > 0 ? rtn.substring(1) : "";
     }
 
 }

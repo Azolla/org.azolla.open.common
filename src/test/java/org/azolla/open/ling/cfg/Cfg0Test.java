@@ -12,9 +12,12 @@ import org.azolla.open.ling.cfg.test.TestRootNode;
 import org.azolla.open.ling.io.Encoding;
 import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import com.google.common.base.Stopwatch;
 
 /**
  * The coder is very lazy, nothing to write for this Cfg0Test class
@@ -24,90 +27,65 @@ import org.junit.Test;
  */
 public class Cfg0Test
 {
+    private Stopwatch    stopwatch       = Stopwatch.createStarted();
 
     private TestRootNode testRootNode;
 
     private File         testDataCfgFile = new File(System.getProperty("user.dir"), "src/test/resources/" + Cfg0Test.this.getClass().getPackage().getName().replace('.', '/') + "/testDataCfg.xml");
 
-    /**
-     * The coder is very lazy, nothing to write for this setUpBeforeClass method
-     * 
-     * @throws java.lang.Exception void
-     */
     @BeforeClass
     public static void setUpBeforeClass() throws Exception
     {
+        System.out.println("===org.azolla.open.ling.cfg.Cfg0Test.setUpBeforeClass()");
     }
 
-    /**
-     * The coder is very lazy, nothing to write for this tearDownAfterClass method
-     * 
-     * @throws java.lang.Exception void
-     */
     @AfterClass
     public static void tearDownAfterClass() throws Exception
     {
+        System.out.println("===org.azolla.open.ling.cfg.Cfg0Test.tearDownAfterClass()");
     }
 
-    /**
-     * The coder is very lazy, nothing to write for this setUp method
-     * 
-     * @throws java.lang.Exception void
-     */
     @Before
     public void setUp() throws Exception
     {
+        stopwatch = Stopwatch.createStarted();
         testRootNode = Cfg0.unmarshal(TestRootNode.class, testDataCfgFile);
     }
 
-    /**
-     * The coder is very lazy, nothing to write for this tearDown method
-     * 
-     * @throws java.lang.Exception void
-     */
     @After
     public void tearDown() throws Exception
     {
+        System.out.println("===" + stopwatch.stop());
     }
 
-    /**
-     * Test method for {@link org.azolla.open.ling.cfg.Cfg0#unmarshal(java.lang.Class, java.lang.String)}.
-     */
     @Test
     public void testUnmarshal()
     {
-        testRootNode = Cfg0.unmarshal(TestRootNode.class, testDataCfgFile);
-        testRootNode = Cfg0.unmarshal(null, testDataCfgFile);
-        testRootNode = Cfg0.unmarshal(TestRootNode.class, null);
-        testRootNode = Cfg0.unmarshal(null, null);
+        Assert.assertNotNull(Cfg0.unmarshal(TestRootNode.class, testDataCfgFile));
+        Assert.assertNull(Cfg0.unmarshal(null, testDataCfgFile));
+        Assert.assertNull(Cfg0.unmarshal(TestRootNode.class, null));
+        Assert.assertNull(Cfg0.unmarshal(null, null));
     }
 
-    /**
-     * Test method for {@link org.azolla.open.ling.cfg.Cfg0#marshal(java.lang.Object, java.lang.String)}.
-     */
     @Test
     public void testMarshalTString()
     {
-        Cfg0.marshal(testRootNode, testDataCfgFile);
-        Cfg0.marshal(testRootNode, null);
-        Cfg0.marshal(null, testDataCfgFile);
-        Cfg0.marshal(null, null);
+        Assert.assertTrue(Cfg0.marshal(testRootNode, testDataCfgFile));
+        Assert.assertFalse(Cfg0.marshal(testRootNode, null));
+        Assert.assertFalse(Cfg0.marshal(null, testDataCfgFile));
+        Assert.assertFalse(Cfg0.marshal(null, null));
     }
 
-    /**
-     * Test method for {@link org.azolla.open.ling.cfg.Cfg0#marshal(java.lang.Object, java.lang.String, org.azolla.open.ling.io.Encoding)}.
-     */
     @Test
     public void testMarshalTStringEncoding()
     {
-        Cfg0.marshal(testRootNode, testDataCfgFile, Encoding.UTF8);
-        Cfg0.marshal(testRootNode, testDataCfgFile, null);
-        Cfg0.marshal(testRootNode, null, Encoding.UTF8);
-        Cfg0.marshal(null, testDataCfgFile, Encoding.UTF8);
-        Cfg0.marshal(testRootNode, null, null);
-        Cfg0.marshal(null, null, Encoding.UTF8);
-        Cfg0.marshal(null, testDataCfgFile, Encoding.UTF8);
-        Cfg0.marshal(testRootNode, testDataCfgFile, null);
-        Cfg0.marshal(null, null, null);
+        Assert.assertTrue(Cfg0.marshal(testRootNode, testDataCfgFile, Encoding.UTF8));
+        Assert.assertTrue(Cfg0.marshal(testRootNode, testDataCfgFile, null));
+        Assert.assertFalse(Cfg0.marshal(testRootNode, null, Encoding.UTF8));
+        Assert.assertFalse(Cfg0.marshal(testRootNode, null, null));
+        Assert.assertFalse(Cfg0.marshal(null, testDataCfgFile, Encoding.UTF8));
+        Assert.assertFalse(Cfg0.marshal(null, testDataCfgFile, null));
+        Assert.assertFalse(Cfg0.marshal(null, null, Encoding.UTF8));
+        Assert.assertFalse(Cfg0.marshal(null, null, null));
     }
 }

@@ -17,11 +17,11 @@ import java.net.URL;
 public class Url0
 {
     /**
-    * Example:[project or jar]/img/test.gif => path=/img/test.gif 
-    * 
-    * @param path
-    * @return URL
-    */
+     * Example:[project or jar]/img/test.gif => path=/img/test.gif 
+     * 
+     * @param path
+     * @return URL
+     */
     public static URL getURL(String path)
     {
         return Url0.class.getClass().getResource(path);
