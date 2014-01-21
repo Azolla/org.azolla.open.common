@@ -28,8 +28,12 @@ import com.google.common.collect.Lists;
  */
 public class Tuple<First, Rest> implements Iterable<Object>
 {
-    protected First first;
-    protected Rest  rest;
+    public static final String BEGIN = "(";
+    public static final String SEP   = ",";
+    public static final String END   = ")";
+
+    protected First            first;
+    protected Rest             rest;
 
     protected Tuple(First first, Rest rest)
     {
@@ -62,17 +66,32 @@ public class Tuple<First, Rest> implements Iterable<Object>
     @Override
     public String toString()
     {
-        return joinWith("(", ", ", ")").join(this);
+        return joinWith(BEGIN, SEP, END).join(this);
     }
 
-    public static TupleJoiner joinWith(String open, String separator, String close)
+    public String toString(String sep)
     {
-        return new TupleJoiner(open, separator, close);
+        return toString(joinWith(sep));
     }
 
-    public static TupleJoiner joinWith(String separator)
+    public String toString(String begin, String sep, String end)
     {
-        return new TupleJoiner("", separator, "");
+        return toString(joinWith(begin, sep, end));
+    }
+
+    public String toString(TupleJoiner joiner)
+    {
+        return joiner.join(this);
+    }
+
+    public static TupleJoiner joinWith(String begin, String sep, String end)
+    {
+        return new TupleJoiner(begin, sep, end);
+    }
+
+    public static TupleJoiner joinWith(String sep)
+    {
+        return new TupleJoiner(BEGIN, sep, END);
     }
 
     @Override

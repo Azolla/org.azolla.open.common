@@ -15,7 +15,9 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestName;
 
 import com.google.common.base.Stopwatch;
 
@@ -27,6 +29,9 @@ import com.google.common.base.Stopwatch;
  */
 public class Cfg0Test
 {
+    @Rule
+    public TestName      testName        = new TestName();
+
     private Stopwatch    stopwatch       = Stopwatch.createStarted();
 
     private TestRootNode testRootNode;
@@ -36,13 +41,11 @@ public class Cfg0Test
     @BeforeClass
     public static void setUpBeforeClass() throws Exception
     {
-        System.out.println("===org.azolla.open.ling.cfg.Cfg0Test.setUpBeforeClass()");
     }
 
     @AfterClass
     public static void tearDownAfterClass() throws Exception
     {
-        System.out.println("===org.azolla.open.ling.cfg.Cfg0Test.tearDownAfterClass()");
     }
 
     @Before
@@ -55,7 +58,7 @@ public class Cfg0Test
     @After
     public void tearDown() throws Exception
     {
-        System.out.println("===" + stopwatch.stop());
+        System.out.println(testName.getMethodName() + "=" + stopwatch.stop());
     }
 
     @Test
