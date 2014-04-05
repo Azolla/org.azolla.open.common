@@ -1,5 +1,6 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
 	<parent>
 		<groupId>org.azolla.open</groupId>
 		<artifactId>org.azolla.open</artifactId>
@@ -7,12 +8,11 @@
 		<version>1.0.0</version>
 	</parent>
 
-	<modelVersion>4.0.0</modelVersion>
+
 	<artifactId>org.azolla.open.ling</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
-	<name>Azolla - Ling</name>
-	<description>Azolla - Ling</description>
+	<name>Azolla.org - Ling</name>
 
 	<dependencies>
 		<dependency>
@@ -53,12 +53,4 @@
 			<artifactId>jsr305</artifactId>
 		</dependency>
 	</dependencies>
-
-	<scm>
-		<connection>scm:git:git@github.com:Azolla/org.azolla.open.ling.git</connection>
-		<url>scm:git:git@github.com:Azolla/org.azolla.open.ling.git</url>
-		<developerConnection>scm:git:git@github.com:Azolla/org.azolla.open.ling.git</developerConnection>
-		<tag>org.azolla.open.ling-0.0.1</tag>
-	</scm>
-
 </project>
