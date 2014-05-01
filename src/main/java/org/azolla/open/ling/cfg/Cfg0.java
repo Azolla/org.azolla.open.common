@@ -13,7 +13,7 @@ import javax.annotation.Nullable;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 
-import org.azolla.open.ling.io.Encoding;
+import org.azolla.open.ling.io.Encoding0;
 import org.azolla.open.ling.text.Fmt0;
 import org.azolla.open.ling.util.KV;
 import org.slf4j.Logger;
@@ -82,7 +82,7 @@ public final class Cfg0
 
     public static <T> boolean marshal(T t, File file)
     {
-        return marshal(t, file, Encoding.UTF8);
+        return marshal(t, file, Encoding0.UTF_8);
     }
 
     /**
@@ -96,7 +96,7 @@ public final class Cfg0
     public static <T> boolean marshal(T t, File file, @Nullable String encoding)
     {
         boolean rtnBoolean = true;
-        encoding = Strings.isNullOrEmpty(encoding) ? Encoding.UTF8 : encoding;
+        encoding = Strings.isNullOrEmpty(encoding) ? Encoding0.UTF_8 : encoding;
         try
         {
             Marshaller m = getJAXBContext(t.getClass()).createMarshaller();

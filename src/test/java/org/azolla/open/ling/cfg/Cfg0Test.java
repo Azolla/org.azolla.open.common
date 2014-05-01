@@ -9,7 +9,7 @@ package org.azolla.open.ling.cfg;
 import java.io.File;
 
 import org.azolla.open.ling.cfg.test.TestRootNode;
-import org.azolla.open.ling.io.Encoding;
+import org.azolla.open.ling.io.Encoding0;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -82,13 +82,13 @@ public class Cfg0Test
     @Test
     public void testMarshalTStringEncoding()
     {
-        Assert.assertTrue(Cfg0.marshal(testRootNode, testDataCfgFile, Encoding.UTF8));
+        Assert.assertTrue(Cfg0.marshal(testRootNode, testDataCfgFile, Encoding0.UTF_8));
         Assert.assertTrue(Cfg0.marshal(testRootNode, testDataCfgFile, null));
-        Assert.assertFalse(Cfg0.marshal(testRootNode, null, Encoding.UTF8));
+        Assert.assertFalse(Cfg0.marshal(testRootNode, null, Encoding0.UTF_8));
         Assert.assertFalse(Cfg0.marshal(testRootNode, null, null));
-        Assert.assertFalse(Cfg0.marshal(null, testDataCfgFile, Encoding.UTF8));
+        Assert.assertFalse(Cfg0.marshal(null, testDataCfgFile, Encoding0.UTF_8));
         Assert.assertFalse(Cfg0.marshal(null, testDataCfgFile, null));
-        Assert.assertFalse(Cfg0.marshal(null, null, Encoding.UTF8));
+        Assert.assertFalse(Cfg0.marshal(null, null, Encoding0.UTF_8));
         Assert.assertFalse(Cfg0.marshal(null, null, null));
     }
 }

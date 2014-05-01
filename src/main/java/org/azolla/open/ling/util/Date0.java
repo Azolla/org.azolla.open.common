@@ -15,6 +15,8 @@ import org.azolla.open.ling.text.Fmt0;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.sun.istack.internal.NotNull;
+
 /**
  * DateHelper
  *
@@ -178,7 +180,7 @@ public final class Date0
      * @param date
      * @return int
      */
-    public static int compareWithNow(Date date)
+    public static int compareWithNow(@NotNull Date date)
     {
         return date.compareTo(now());
     }

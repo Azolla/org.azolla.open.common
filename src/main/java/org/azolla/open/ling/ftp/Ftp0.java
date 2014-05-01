@@ -27,7 +27,7 @@ import org.apache.commons.net.ftp.FTPReply;
 import org.azolla.open.ling.exception.AzollaException;
 import org.azolla.open.ling.exception.code.AzollaCode;
 import org.azolla.open.ling.io.Close0;
-import org.azolla.open.ling.io.Encoding;
+import org.azolla.open.ling.io.Encoding0;
 import org.azolla.open.ling.io.File0;
 import org.azolla.open.ling.text.Fmt0;
 import org.azolla.open.ling.util.KV;
@@ -69,7 +69,7 @@ public final class Ftp0
     private int                 timeout             = DEFAULT_TIMEOUT;
     private int                 bufferSize          = DEFAULT_BUFFER_SIZE;
 
-    private String              encoding            = Encoding.UTF8;
+    private String              encoding            = Encoding0.UTF_8;
 
     private FTPClient           client;
 
@@ -95,7 +95,7 @@ public final class Ftp0
 
     public static synchronized Ftp0 single(String host, String username, String password, int port, int fileType, int mode, int timeout)
     {
-        return single(host, username, password, port, fileType, mode, timeout, Encoding.UTF8);
+        return single(host, username, password, port, fileType, mode, timeout, Encoding0.UTF_8);
     }
 
     public static synchronized Ftp0 single(String host, String username, String password, int port, int fileType, int mode, int timeout, String encoding)
@@ -125,7 +125,7 @@ public final class Ftp0
 
     public Ftp0(String host, String username, String password, int port, int fileType, int mode, int timeout)
     {
-        this(host, username, password, port, fileType, mode, timeout, Encoding.UTF8);
+        this(host, username, password, port, fileType, mode, timeout, Encoding0.UTF_8);
     }
 
     public Ftp0(String host, String username, String password, int port, int fileType, int mode, int timeout, String encoding)
@@ -757,7 +757,7 @@ public final class Ftp0
 
     public Ftp0 setEncoding(@Nullable String encoding)
     {
-        encoding = Strings.isNullOrEmpty(encoding) ? Encoding.UTF8 : encoding;
+        encoding = Strings.isNullOrEmpty(encoding) ? Encoding0.UTF_8 : encoding;
 
         client.setControlEncoding(encoding);
         this.encoding = encoding;

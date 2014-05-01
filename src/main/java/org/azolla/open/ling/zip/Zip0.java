@@ -22,7 +22,7 @@ import org.apache.tools.zip.ZipFile;
 import org.apache.tools.zip.ZipOutputStream;
 import org.azolla.open.ling.exception.code.AzollaCode;
 import org.azolla.open.ling.io.Close0;
-import org.azolla.open.ling.io.Encoding;
+import org.azolla.open.ling.io.Encoding0;
 import org.azolla.open.ling.io.File0;
 import org.azolla.open.ling.text.Fmt0;
 import org.azolla.open.ling.util.Date0;
@@ -64,7 +64,7 @@ public final class Zip0
         if(zipFile != null)
         {
             dest = Strings.isNullOrEmpty(dest) ? zipFile.getParent() : dest;
-            encoding = Strings.isNullOrEmpty(encoding) ? Encoding.UTF8 : encoding;
+            encoding = Strings.isNullOrEmpty(encoding) ? Encoding0.UTF_8 : encoding;
 
             File destFile = null;
             ZipFile zf = null;
@@ -189,7 +189,7 @@ public final class Zip0
         boolean rtnBoolean = false;
         if(null != fileList)
         {
-            encoding = Strings.isNullOrEmpty(encoding) ? Encoding.UTF8 : encoding;
+            encoding = Strings.isNullOrEmpty(encoding) ? Encoding0.UTF_8 : encoding;
             zip = Strings.isNullOrEmpty(zip) ? Date0.toString(Date0.Y_M_D_H_MI_S) : zip;
             if(!Lists.newArrayList(File0.ZIP_FILETYPE, File0.JAR_FILETYPE, File0.WAR_FILETYPE).contains(File0.fileType(zip).toLowerCase()))
             {
