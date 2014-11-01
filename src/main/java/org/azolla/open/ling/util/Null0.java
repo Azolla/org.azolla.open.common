@@ -15,5 +15,6 @@ package org.azolla.open.ling.util;
 public final class Null0
 {
     public static final String STRING = "NULL";
+
     public static final String string = "null";
 }
