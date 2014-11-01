@@ -25,6 +25,11 @@ public final class List0
         return list2String(list, null);
     }
 
+    public static <T> String list2StringWithoutNull(List<T> list)
+    {
+        return list2StringWithoutNull(list, null);
+    }
+
     public static <T> String list2String(List<T> list, @Nullable String separator)
     {
         separator = Strings.isNullOrEmpty(separator) ? ";" : separator;
@@ -36,6 +41,24 @@ public final class List0
         for(T t : list)
         {
             rtn.append(separator).append(String.valueOf(t));
+        }
+        return rtn.length() > 0 ? rtn.substring(1) : "";
+    }
+
+    public static <T> String list2StringWithoutNull(List<T> list, @Nullable String separator)
+    {
+        separator = Strings.isNullOrEmpty(separator) ? ";" : separator;
+        if(null == list)
+        {
+            return "null";
+        }
+        StringBuffer rtn = new StringBuffer();
+        for(T t : list)
+        {
+            if(t != null)
+            {
+                rtn.append(separator).append(String.valueOf(t));
+            }
         }
         return rtn.length() > 0 ? rtn.substring(1) : "";
     }
