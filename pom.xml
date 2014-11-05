@@ -14,6 +14,83 @@
 	<name>Ling: Azolla.org Core Libraries for Java</name>
 	<description>Ling is a suite of core and expanded libraries that include utility classes, io classes, and much much more.</description>
 
+	<licenses>
+		<license>
+			<name>Apache License</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0</url>
+			<distribution>repo</distribution>
+			<comments>The Azolla.org Projects is released under version 2.0 of the Apache License.</comments>
+		</license>
+	</licenses>
+	<developers>
+		<developer>
+			<id>Azolla</id>
+			<name>ShaneKing</name>
+			<email>github@azolla.org</email>
+			<url>https://github.com/Azolla</url>
+			<organization>Azollas</organization>
+			<organizationUrl>https://github.com/Azollas</organizationUrl>
+			<roles>
+				<role>Project Manager</role>
+				<role>Architect</role>
+			</roles>
+			<timezone>+8</timezone>
+			<properties>
+				<dept>No</dept>
+			</properties>
+		</developer>
+		<developer>
+			<id>iShaneKing</id>
+			<name>iShaneKing</name>
+			<email>git@azolla.org</email>
+			<url>https://github.com/iShaneKing</url>
+			<organization>Azollas</organization>
+			<organizationUrl>https://github.com/Azollas</organizationUrl>
+			<roles>
+				<role>Team Leader</role>
+			</roles>
+			<timezone>+8</timezone>
+			<properties>
+				<dept>No</dept>
+			</properties>
+		</developer>
+	</developers>
+	<contributors>
+		<contributor>
+			<name>Azolla</name>
+			<email>github@azolla.org</email>
+			<url>https://github.com/Azolla</url>
+			<organization>Azollas</organization>
+			<organizationUrl>https://github.com/Azollas</organizationUrl>
+			<roles>
+				<role>Project Manager</role>
+				<role>Architect</role>
+			</roles>
+			<timezone>+8</timezone>
+			<properties>
+				<dept>No</dept>
+			</properties>
+		</contributor>
+	</contributors>
+	<prerequisites>
+		<maven>3.2.1</maven>
+	</prerequisites>
+	<scm>
+		<connection>scm:git:git@github.com:Azollas/org.azolla.open.ling.git</connection>
+		<developerConnection>scm:git:git@github.com:Azollas/org.azolla.open.ling.git</developerConnection>
+		<url>git@github.com:Azollas/org.azolla.open.ling.git</url>
+	</scm>
+	<issueManagement>
+		<system>Github</system>
+		<url>https://github.com/Azollas/org.azolla.open.ling/issues</url>
+	</issueManagement>
+	<distributionManagement>
+		<repository>
+			<id>oss</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+		</repository>
+	</distributionManagement>
+
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
@@ -53,4 +130,56 @@
 			<artifactId>jsr305</artifactId>
 		</dependency>
 	</dependencies>
+
+	<profiles>
+		<profile>
+			<id>release</id>
+			<build>
+				<plugins>
+					<!-- Source -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-source-plugin</artifactId>
+						<version>${maven-source-plugin.version}</version>
+						<executions>
+							<execution>
+								<phase>package</phase>
+								<goals>
+									<goal>jar-no-fork</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<!-- Javadoc -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<version>${maven-javadoc-plugin.version}</version>
+						<executions>
+							<execution>
+								<phase>package</phase>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<!-- GPG -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<version>${maven-gpg-plugin.version}</version>
+						<executions>
+							<execution>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>

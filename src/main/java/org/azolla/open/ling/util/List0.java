@@ -35,14 +35,14 @@ public final class List0
         separator = Strings.isNullOrEmpty(separator) ? ";" : separator;
         if(null == list)
         {
-            return "null";
+            return Null0.string;
         }
         StringBuffer rtn = new StringBuffer();
         for(T t : list)
         {
             rtn.append(separator).append(String.valueOf(t));
         }
-        return rtn.length() > 0 ? rtn.substring(1) : "";
+        return rtn.length() > 0 ? rtn.substring(separator.length()) : "";
     }
 
     public static <T> String list2StringWithoutNull(List<T> list, @Nullable String separator)
@@ -50,7 +50,7 @@ public final class List0
         separator = Strings.isNullOrEmpty(separator) ? ";" : separator;
         if(null == list)
         {
-            return "null";
+            return Null0.string;
         }
         StringBuffer rtn = new StringBuffer();
         for(T t : list)
@@ -60,7 +60,7 @@ public final class List0
                 rtn.append(separator).append(String.valueOf(t));
             }
         }
-        return rtn.length() > 0 ? rtn.substring(1) : "";
+        return rtn.length() > 0 ? rtn.substring(separator.length()) : "";
     }
 
 }
