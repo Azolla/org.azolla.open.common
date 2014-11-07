@@ -85,14 +85,7 @@ public final class Cfg0
         return marshal(t, file, Encoding0.UTF_8);
     }
 
-    /**
-     * The coder is very lazy for this marshal method
-     * 
-     * @param t
-     * @param file
-     * @param encoding [null to {@code Encoding#UTF8}]
-     * @return boolean
-     */
+    //encoding [null to {@code Encoding#UTF8}]
     public static <T> boolean marshal(T t, File file, @Nullable String encoding)
     {
         boolean rtnBoolean = true;

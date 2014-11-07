@@ -34,7 +34,7 @@ public class Random0
      * range代表的是一个可以测量的范围，在这个范围内包括一系列可变化的数量。range还特指视力、听力所能达到的距离和枪炮的射程。
      * scope指人们所处理、研究的事物的“范围”以及所掌握、控制的“面积”。scope的比喻含义指的是所掌握的知识的宽度，即“眼界，见识”。
      * 
-     * @param max 
+     * @param max max
      * @return int
      */
     public static int nextRangeInt(int max)

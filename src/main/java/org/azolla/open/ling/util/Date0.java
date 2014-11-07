@@ -71,90 +71,41 @@ public final class Date0
         return new Date();
     }
 
-    /**
-     * Date -> String
-     * 
-     * @param date
-     * @return String
-     */
     public static String toString(Date date)
     {
         return toString(date, DATA_TIME);
     }
 
-    /**
-     * Date -> String
-     * 
-     * @param pattern
-     * @return String
-     */
     public static String toString(String pattern)
     {
         return toString(now(), pattern);
     }
 
-    /**
-     * Date -> String
-     * 
-     * @param date
-     * @param pattern
-     * @return String
-     */
     public static String toString(Date date, String pattern)
     {
         return new SimpleDateFormat(pattern).format(date);
     }
 
-    /**
-     * Date -> long
-     * 
-     * @return long
-     */
     public static long toUnixTimestamp()
     {
         return toUnixTimestamp(now());
     }
 
-    /**
-     * Date -> long
-     * 
-     * @param date
-     * @return long
-     */
     public static long toUnixTimestamp(Date date)
     {
         return date.getTime();
     }
 
-    /**
-     * long -> Date
-     * 
-     * @param timestamp
-     * @return Date
-     */
     public static Date valueOf(long timestamp)
     {
         return new Date(timestamp);
     }
 
-    /**
-     * String -> Date
-     * 
-     * @param date
-     * @return Date
-     */
     public static Date valueOf(String date)
     {
         return valueOf(date, DATA_TIME);
     }
 
-    /**
-     * String -> Date
-     * 
-     * @param date
-     * @param pattern
-     * @return Date
-     */
     public static Date valueOf(String date, String pattern)
     {
         Date rtnDate = null;
@@ -172,14 +123,6 @@ public final class Date0
         return rtnDate;
     }
 
-    /**
-     * date > now = 1
-     * date = now = 0
-     * date < now = -1
-     * 
-     * @param date
-     * @return int
-     */
     public static int compareWithNow(@Nonnull Date date)
     {
         return date.compareTo(now());

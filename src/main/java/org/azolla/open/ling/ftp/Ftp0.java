@@ -42,7 +42,7 @@ import com.google.common.collect.Lists;
 /**
  * Ftp0
  * 
- * @see http://blog.csdn.net/cuiran/article/details/7186621
+ * via http://blog.csdn.net/cuiran/article/details/7186621
  *
  * @author 	sk@azolla.org
  * @since 	ADK1.0
@@ -238,9 +238,7 @@ public final class Ftp0
         return rtnBoolean;
     }
 
-    /**
-     * Delete file(document or directory) from ftp
-     */
+    //Delete file(document or directory) from ftp
     public boolean deleteFile(@Nullable FTPClient client, String remotePath)
     {
         boolean rtnBoolean = true;
@@ -296,9 +294,7 @@ public final class Ftp0
         return rtnBoolean;
     }
 
-    /**
-     * download file(document or directory) to local
-     */
+    //download file(document or directory) to local
     public boolean retrieveFile(@Nullable FTPClient client, String remotePath, File localFile)
     {
         boolean rtnBoolean = true;
@@ -337,9 +333,7 @@ public final class Ftp0
         return rtnBoolean;
     }
 
-    /**
-     * both directory or both document
-     */
+    //both directory or both document
     private boolean retrieveFile0(FTPClient client, String remotePath, File localFile)
     {
         boolean rtnBoolean = true;
@@ -381,9 +375,7 @@ public final class Ftp0
         return rtnBoolean;
     }
 
-    /**
-     * file(document or directory) existed
-     */
+    //file(document or directory) existed
     public boolean isExist(@Nullable FTPClient client, @Nullable String remotePath)
     {
         boolean rtnBoolean = false;
@@ -412,9 +404,7 @@ public final class Ftp0
         return rtnBoolean;
     }
 
-    /**
-     * file(directory) existed
-     */
+    //file(directory) existed
     public boolean isDirectory(@Nullable FTPClient client, @Nullable String remotePath)
     {
         boolean rtnBoolean = false;
@@ -477,11 +467,7 @@ public final class Ftp0
         return rtnBoolean;
     }
 
-    /**
-     * List of fullpath under this folder, if remotePath is document return it
-     * 
-     * @return List<String>	like "/test/ftp.test.txt"
-     */
+    //List of fullpath under this folder, if remotePath is document return it
     public List<String> listNames(@Nullable FTPClient client, @Nullable String remotePath)
     {
         List<String> rtnList = Lists.newArrayList();
@@ -501,9 +487,7 @@ public final class Ftp0
         return rtnList;
     }
 
-    /**
-     * All of fullpath under this folder, if remotePath is document return it
-     */
+    //All of fullpath under this folder, if remotePath is document return it
     public List<String> allNames(@Nullable FTPClient client, @Nullable String remotePath, @Nullable FTPFileFilter filter)
     {
         List<String> rtnList = Lists.newArrayList();
@@ -543,9 +527,7 @@ public final class Ftp0
         return rtnList;
     }
 
-    /**
-     * List of FTPFile under this folder, if remotePath is document return it
-     */
+    //List of FTPFile under this folder, if remotePath is document return it
     public List<FTPFile> listFiles(@Nullable FTPClient client, @Nullable String remotePath, @Nullable FTPFileFilter filter)
     {
         List<FTPFile> rtnList = Lists.newArrayList();
@@ -565,9 +547,7 @@ public final class Ftp0
         return rtnList;
     }
 
-    /**
-     * upload file to ftp
-     */
+    //upload file to ftp
     public boolean storeFile(@Nullable FTPClient client, String remotePath, File localFile)
     {
         boolean rtnBoolean = false;

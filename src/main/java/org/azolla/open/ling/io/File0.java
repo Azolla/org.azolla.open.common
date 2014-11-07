@@ -159,9 +159,9 @@ public final class File0
     /**
      * Return file's bakName
      * 
-     * sample.txt -> sample.txt.bak
+     * sample.txt -&gt; sample.txt.bak
      * 
-     * @param file
+     * @param file documnet
      * @return File
      */
     public static File bakFileName(File file)
@@ -179,8 +179,8 @@ public final class File0
     /**
      * all of file contain sub file
      * 
-     * @param file
-     * @return List<File>	
+     * @param file documnet or directory
+     * @return List&lt;java.io.File&gt;	
      */
     public static List<File> allFile(File file)
     {
@@ -216,9 +216,6 @@ public final class File0
         return rtnList;
     }
 
-    /**
-     * @see org.azolla.open.ling.io.File0#fileType(String)
-     */
     public static String fileType(File file)
     {
         if(null == file)
@@ -233,7 +230,7 @@ public final class File0
 
     /**
      * return type of file by file name
-     * Example:test.txt -> txt
+     * Example:test.txt -&gt; txt
      * 
      * @param fileName file name
      * @return type of file
@@ -246,9 +243,6 @@ public final class File0
         return -1 == lastPointIndex ? fileName : fileName.substring(lastPointIndex + 1);
     }
 
-    /**
-     * @see org.azolla.open.ling.io.File0#toLegalFileName(String, String)
-     */
     public static String toLegalFileName(String fileName)
     {
         return toLegalFileName(fileName, UNDERLINE);
@@ -363,9 +357,7 @@ public final class File0
         return rtnString;
     }
 
-    /**
-     * Windows(1.0.0.0)
-     */
+    //Windows(1.0.0.0)
     public static String getVer(File file)
     {
         String rtnString = "";

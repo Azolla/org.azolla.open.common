@@ -19,8 +19,7 @@ import com.google.common.collect.Lists;
 /**
  * Tuple
  * 
- * @Example
- * Quadruple<Integer, Integer, Integer, Integer> ip = Tuple.of(127, 0, 0, 1);
+ * Quadruple&lt;Integer, Integer, Integer, Integer&gt; ip = Tuple.of(127, 0, 0, 1);
  * System.out.println(Tuple.joinWith(".").join(ip));	//127.0.0.1 
  *
  * @author 	sk@azolla.org

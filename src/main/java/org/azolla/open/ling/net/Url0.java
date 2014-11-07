@@ -17,9 +17,9 @@ import java.net.URL;
 public class Url0
 {
     /**
-     * Example:[project or jar]/img/test.gif => path=/img/test.gif 
+     * Example:[project or jar]/img/test.gif -&gt; path=/img/test.gif 
      * 
-     * @param path
+     * @param path file path
      * @return URL
      */
     public static URL getURL(String path)

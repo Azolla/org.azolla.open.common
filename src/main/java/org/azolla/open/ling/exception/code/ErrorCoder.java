@@ -30,8 +30,6 @@ package org.azolla.open.ling.exception.code;
  */
 public interface ErrorCoder
 {
-    /**
-     * Get Error Code
-     */
+    //Get Error Code
     int getCode();
 }

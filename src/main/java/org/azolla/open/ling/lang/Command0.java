@@ -43,30 +43,19 @@ public final class Command0
 
 	public static final String	SH_PAUSE_FLAG			= ">read -n 1 -p";
 
-	/**
-	 * 33 Minutes
-	 */
+	//33 Minutes
 	public static final long	DEFAULT_TIMEOUT_MINUTES	= 33;
 
-	/**
-	 * @see org.azolla.open.ling.lang.Command0#exec(String, long)
-	 */
 	public static boolean exec(String command)
 	{
 		return exec(command, DEFAULT_TIMEOUT_MINUTES);
 	}
 
-	/**
-	 * @see org.azolla.open.ling.lang.Command0#exec(String, long, boolean, String)
-	 */
 	public static boolean exec(String command, long timeout)
 	{
 		return exec(command, timeout, false, null);
 	}
 
-	/**
-	 * @see org.azolla.open.ling.lang.Command0#exec(String, long, boolean, String)
-	 */
 	public static boolean exec(String command, boolean value4pause, String pauseFlag)
 	{
 		return exec(command, DEFAULT_TIMEOUT_MINUTES, value4pause, pauseFlag);
@@ -76,9 +65,9 @@ public final class Command0
 	 * The coder is very lazy, nothing to write for this exec method
 	 * 
 	 * @param command	command or bat or shell
-	 * @param timeout
+	 * @param timeout timeout
 	 * @param value4pause	the value for meet pause
-	 * @param pauseFlag
+	 * @param pauseFlag pause flag
 	 * @return boolean
 	 */
 	public static boolean exec(String command, long timeout, boolean value4pause, String pauseFlag)
@@ -149,11 +138,6 @@ public final class Command0
 			this.pauseFlag = pauseFlag;
 		}
 
-		/**
-		 * @see java.util.concurrent.Callable#call()
-		 * @return
-		 * @throws Exception
-		 */
 		@Override
 		public Boolean call()
 		{
