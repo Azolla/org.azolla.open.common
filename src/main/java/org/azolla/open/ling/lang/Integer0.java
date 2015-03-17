@@ -31,7 +31,7 @@ public final class Integer0
                 Integer.parseInt(s);
                 rtnBoolean = true;
             }
-            catch(NumberFormatException e)
+            catch(Exception e)
             {
                 LOG.warn(e.toString(), e);
             }
