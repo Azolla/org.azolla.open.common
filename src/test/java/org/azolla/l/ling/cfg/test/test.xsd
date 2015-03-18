@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!-- xjc -p org.azolla.open.common.cfg.test org/azolla/open/common/cfg/test/test.xsd -->
+<!-- xjc -p org.azolla.l.common.cfg.test org/azolla/l/common/cfg/test/test.xsd -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:element name="testRootNode">
 		<xs:complexType>
