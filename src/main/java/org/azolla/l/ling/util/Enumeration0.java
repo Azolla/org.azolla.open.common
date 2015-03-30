@@ -6,6 +6,7 @@
  */
 package org.azolla.l.ling.util;
 
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Iterator;
 
@@ -26,7 +27,7 @@ public final class Enumeration0
             @Override
             public Iterator<T> iterator()
             {
-                return null == enumerator ? Iterators.<T> emptyIterator() : Iterators.forEnumeration(enumerator);
+                return null == enumerator ? Collections.emptyIterator() : Iterators.forEnumeration(enumerator);
             }
         };
     }

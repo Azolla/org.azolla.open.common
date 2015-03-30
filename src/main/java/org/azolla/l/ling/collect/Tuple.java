@@ -7,6 +7,7 @@
 package org.azolla.l.ling.collect;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Iterator;
 
 import javax.annotation.Nullable;
@@ -389,7 +390,7 @@ public class Tuple<First, Rest> implements Iterable<Object>
         @Override
         public Iterator<Object> iterator()
         {
-            return Iterators.emptyIterator();
+            return Collections.emptyIterator();
         }
     }
 
