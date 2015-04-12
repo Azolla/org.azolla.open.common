@@ -27,12 +27,12 @@ import com.google.common.cache.LoadingCache;
 /**
  * Cfg0
  *
- * @author 	sk@azolla.org
- * @since 	ADK1.0
+ * @author sk@azolla.org
+ * @since ADK1.0
  */
 public final class Cfg0
 {
-    private static final Logger                              LOG   = LoggerFactory.getLogger(Cfg0.class);
+    private static final Logger LOG = LoggerFactory.getLogger(Cfg0.class);
 
     private static final LoadingCache<Class<?>, JAXBContext> CACHE = CacheBuilder.newBuilder().softValues().build(ConfigLoader.single());
 
@@ -71,7 +71,7 @@ public final class Cfg0
         {
             rtnT = (T) getJAXBContext(clazz).createUnmarshaller().unmarshal(file);
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             LOG.error(Fmt0.LOG_P, KV.ins("clazz", clazz).put("filePath", file), e);
             rtnT = null;
@@ -97,7 +97,7 @@ public final class Cfg0
             m.setProperty(Marshaller.JAXB_ENCODING, encoding);
             m.marshal(t, file);
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             LOG.error(Fmt0.LOG_P, KV.ins("t", t).put("file", file).put("encoding", encoding), e);
             rtnBoolean = false;
