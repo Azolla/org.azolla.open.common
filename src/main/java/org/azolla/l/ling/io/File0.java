@@ -29,42 +29,38 @@ import com.google.common.io.Files;
 
 /**
  * FileHelper
- * 
+ * <p/>
  * The concept about some object:
  * 1.file/path		:<code>File</code>/<code>String</code> object, maybe document,maybe directory and maybe null.
  * 2.document		:<code>File</code>/<code>String</code> object, but it does not contain directory
  * 3.directory		:<code>File</code>/<code>String</code> object, just directory
- * 
  *
- * @author 	sk@azolla.org
- * @since 	ADK1.0
+ * @author sk@azolla.org
+ * @since ADK1.0
  */
 public final class File0
 {
-    private static final Logger LOG                     = LoggerFactory.getLogger(File0.class);
+    private static final Logger LOG = LoggerFactory.getLogger(File0.class);
 
-    public static final String  ILLEGAL_FILENAME_REGEX  = "[{/\\\\:*?\"<>|}]";
+    public static final String ILLEGAL_FILENAME_REGEX = "[{/\\\\:*?\"<>|}]";
 
-    public static final String  POINT                   = ".";
-    public static final String  UNDERLINE               = "_";
-    public static final String  MD5                     = "MD5";
-    public static final String  USER_DIR                = "user.dir";
-    public static final String  USER_HOME               = "user.home";
+    public static final String POINT     = ".";
+    public static final String UNDERLINE = "_";
+    public static final String MD5       = "MD5";
+    public static final String USER_DIR  = "user.dir";
+    public static final String USER_HOME = "user.home";
 
-    public static final String  ZIP_FILETYPE            = "zip";
-    public static final String  ZIP_FILETYPE_WITH_POINT = POINT + ZIP_FILETYPE;
+    public static final String ZIP_FILETYPE = "zip";
 
-    public static final String  JAR_FILETYPE            = "jar";
-    public static final String  JAR_FILETYPE_WITH_POINT = POINT + JAR_FILETYPE;
+    public static final String JAR_FILETYPE = "jar";
 
-    public static final String  WAR_FILETYPE            = "war";
-    public static final String  WAR_FILETYPE_WITH_POINT = POINT + WAR_FILETYPE;
+    public static final String WAR_FILETYPE = "war";
 
-    public static final String  TXT_FILETYPE            = "txt";
-    public static final String  TXT_FILETYPE_WITH_POINT = POINT + TXT_FILETYPE;
+    public static final String TXT_FILETYPE = "txt";
 
-    public static final String  BAK_FILETYPE            = "bak";
-    public static final String  BAK_FILETYPE_WITH_POINT = POINT + BAK_FILETYPE;
+    public static final String BAK_FILETYPE = "bak";
+
+    public static final String PNG_FILETYPE = "png";
 
     public static File newFile(String... strings)
     {
@@ -78,15 +74,15 @@ public final class File0
 
     /**
      * Delete file(contain sub file)
-     * 
-     * @param file	documnet or directory
+     *
+     * @param file documnet or directory
      * @return boolean
      */
     public static boolean delFile(File file)
     {
         boolean rtnBoolean = true;
 
-        if(null != file && file.exists())
+        if (null != file && file.exists())
         {
             rtnBoolean = delFile0(file);
         }
@@ -98,9 +94,9 @@ public final class File0
     {
         boolean rtnBoolean = true;
 
-        if(file.isDirectory())
+        if (file.isDirectory())
         {
-            for(File subFile : file.listFiles())
+            for (File subFile : file.listFiles())
             {
                 rtnBoolean = rtnBoolean && delFile0(subFile);
             }
@@ -112,19 +108,19 @@ public final class File0
 
     /**
      * empty File
-     * 
-     * @param file	documnet or directory
+     *
+     * @param file documnet or directory
      * @return boolean
      */
     public static boolean emptyFile(File file)
     {
         boolean rtnBoolean = true;
 
-        if(null != file && file.exists())
+        if (null != file && file.exists())
         {
-            if(file.isDirectory())
+            if (file.isDirectory())
             {
-                for(File subFile : file.listFiles())
+                for (File subFile : file.listFiles())
                 {
                     rtnBoolean = rtnBoolean && delFile0(subFile);
                 }
@@ -133,17 +129,17 @@ public final class File0
             {
                 File bakFile = bakFileName(file);
                 rtnBoolean = rtnBoolean && file.renameTo(bakFile);
-                if(rtnBoolean)
+                if (rtnBoolean)
                 {
                     try
                     {
                         rtnBoolean = rtnBoolean && file.createNewFile();
-                        if(rtnBoolean)
+                        if (rtnBoolean)
                         {
-                            bakFile.delete();	//ignore failed to delete
+                            bakFile.delete();    //ignore failed to delete
                         }
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
                         LOG.error(Fmt0.LOG_P, KV.ins("file", file), e);
                         bakFile.renameTo(file);
@@ -158,9 +154,9 @@ public final class File0
 
     /**
      * Return file's bakName
-     * 
+     * <p/>
      * sample.txt -&gt; sample.txt.bak
-     * 
+     *
      * @param file documnet
      * @return File
      */
@@ -168,9 +164,9 @@ public final class File0
     {
         File rtnFile = null;
 
-        if(null != file)
+        if (null != file)
         {
-            rtnFile = newFile(file.getParentFile(), file.getName() + BAK_FILETYPE_WITH_POINT);
+            rtnFile = newFile(file.getParentFile(), file.getName() + POINT + BAK_FILETYPE);
         }
 
         return rtnFile;
@@ -178,15 +174,15 @@ public final class File0
 
     /**
      * all of file contain sub file
-     * 
+     *
      * @param file documnet or directory
-     * @return List&lt;java.io.File&gt;	
+     * @return List&lt;java.io.File&gt;
      */
     public static List<File> allFile(File file)
     {
         List<File> rtnList = Lists.newArrayList();
 
-        if(null != file && file.exists())
+        if (null != file && file.exists())
         {
             rtnList.addAll(allFile0(file));
         }
@@ -196,7 +192,7 @@ public final class File0
 
     /**
      * all of file contain sub file
-     * 
+     *
      * @param file existed file
      * @return List<File>
      */
@@ -205,9 +201,9 @@ public final class File0
         List<File> rtnList = Lists.newArrayList();
 
         rtnList.add(file);
-        if(file.isDirectory())
+        if (file.isDirectory())
         {
-            for(File subFile : file.listFiles())
+            for (File subFile : file.listFiles())
             {
                 rtnList.addAll(allFile0(subFile));
             }
@@ -218,7 +214,7 @@ public final class File0
 
     public static String fileType(File file)
     {
-        if(null == file)
+        if (null == file)
         {
             return String.valueOf(file);
         }
@@ -231,7 +227,7 @@ public final class File0
     /**
      * return type of file by file name
      * Example:test.txt -&gt; txt
-     * 
+     *
      * @param fileName file name
      * @return type of file
      */
@@ -250,8 +246,8 @@ public final class File0
 
     /**
      * transform legal file name
-     * 
-     * @param fileName file name
+     *
+     * @param fileName    file name
      * @param legalString legal string
      * @return legal file name
      */
@@ -265,7 +261,7 @@ public final class File0
 
     public static boolean copy(File from, File to)
     {
-        if(from == null || to == null || !from.exists())
+        if (from == null || to == null || !from.exists())
         {
             return false;
         }
@@ -277,10 +273,10 @@ public final class File0
     {
         boolean rtnBoolean = true;
 
-        if(from.isDirectory())
+        if (from.isDirectory())
         {
             to.mkdirs();
-            for(File f : from.listFiles())
+            for (File f : from.listFiles())
             {
                 rtnBoolean = rtnBoolean && copy0(f, File0.newFile(to, f.getName()));
             }
@@ -291,7 +287,7 @@ public final class File0
             {
                 Files.copy(from, to);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 LOG.error(Fmt0.LOG_P, KV.ins("from", from).put("to", to), e);
                 rtnBoolean = false;
@@ -317,7 +313,7 @@ public final class File0
         {
             return java.nio.file.Files.probeContentType(Paths.get(filePath));
         }
-        catch(IOException e)
+        catch (IOException e)
         {
             return Encode0.SINGLETON.getFileEncoding(filePath);
         }
@@ -326,7 +322,7 @@ public final class File0
     public static String getMD5(File file)
     {
         String rtnString = null;
-        if(file != null && file.isFile())
+        if (file != null && file.isFile())
         {
             int len;
             int bufferSize = 256 * 1024;
@@ -337,13 +333,13 @@ public final class File0
             {
                 digest = MessageDigest.getInstance(MD5);
                 in = new FileInputStream(file);
-                while((len = in.read(buffer, 0, bufferSize)) != -1)
+                while ((len = in.read(buffer, 0, bufferSize)) != -1)
                 {
                     digest.update(buffer, 0, len);
                 }
                 in.close();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 LOG.error(Fmt0.LOG_P, KV.ins("file", file), e);
             }
@@ -370,13 +366,13 @@ public final class File0
             buffer = new byte[64];
             raf.read(buffer);
             str = "" + (char) buffer[0] + (char) buffer[1];
-            if(!"MZ".equals(str))
+            if (!"MZ".equals(str))
             {
                 return rtnString;
             }
 
-            int peOffset = unpack(new byte[] {buffer[60], buffer[61], buffer[62], buffer[63]});
-            if(peOffset < 64)
+            int peOffset = unpack(new byte[]{buffer[60], buffer[61], buffer[62], buffer[63]});
+            if (peOffset < 64)
             {
                 return rtnString;
             }
@@ -385,75 +381,75 @@ public final class File0
             buffer = new byte[24];
             raf.read(buffer);
             str = "" + (char) buffer[0] + (char) buffer[1];
-            if(!"PE".equals(str))
+            if (!"PE".equals(str))
             {
                 return rtnString;
             }
-            int machine = unpack(new byte[] {buffer[4], buffer[5]});
-            if(machine != 332)
+            int machine = unpack(new byte[]{buffer[4], buffer[5]});
+            if (machine != 332)
             {
                 return rtnString;
             }
 
-            int noSections = unpack(new byte[] {buffer[6], buffer[7]});
-            int optHdrSize = unpack(new byte[] {buffer[20], buffer[21]});
+            int noSections = unpack(new byte[]{buffer[6], buffer[7]});
+            int optHdrSize = unpack(new byte[]{buffer[20], buffer[21]});
             raf.seek(raf.getFilePointer() + optHdrSize);
             boolean resFound = false;
-            for(int i = 0; i < noSections; i++)
+            for (int i = 0; i < noSections; i++)
             {
                 buffer = new byte[40];
                 raf.read(buffer);
                 str = "" + (char) buffer[0] + (char) buffer[1] + (char) buffer[2] + (char) buffer[3] + (char) buffer[4];
-                if(".rsrc".equals(str))
+                if (".rsrc".equals(str))
                 {
                     resFound = true;
                     break;
                 }
             }
-            if(!resFound)
+            if (!resFound)
             {
                 return rtnString;
             }
 
-            int infoVirt = unpack(new byte[] {buffer[12], buffer[13], buffer[14], buffer[15]});
-            int infoSize = unpack(new byte[] {buffer[16], buffer[17], buffer[18], buffer[19]});
-            int infoOff = unpack(new byte[] {buffer[20], buffer[21], buffer[22], buffer[23]});
+            int infoVirt = unpack(new byte[]{buffer[12], buffer[13], buffer[14], buffer[15]});
+            int infoSize = unpack(new byte[]{buffer[16], buffer[17], buffer[18], buffer[19]});
+            int infoOff = unpack(new byte[]{buffer[20], buffer[21], buffer[22], buffer[23]});
             raf.seek(infoOff);
             buffer = new byte[infoSize];
             raf.read(buffer);
-            int nameEntries = unpack(new byte[] {buffer[12], buffer[13]});
-            int idEntries = unpack(new byte[] {buffer[14], buffer[15]});
+            int nameEntries = unpack(new byte[]{buffer[12], buffer[13]});
+            int idEntries = unpack(new byte[]{buffer[14], buffer[15]});
             boolean infoFound = false;
             int subOff = 0;
-            for(int i = 0; i < (nameEntries + idEntries); i++)
+            for (int i = 0; i < (nameEntries + idEntries); i++)
             {
-                int type = unpack(new byte[] {buffer[i * 8 + 16], buffer[i * 8 + 17], buffer[i * 8 + 18], buffer[i * 8 + 19]});
-                if(type == 16)
+                int type = unpack(new byte[]{buffer[i * 8 + 16], buffer[i * 8 + 17], buffer[i * 8 + 18], buffer[i * 8 + 19]});
+                if (type == 16)
                 {                          //FILEINFO resource  
                     infoFound = true;
-                    subOff = unpack(new byte[] {buffer[i * 8 + 20], buffer[i * 8 + 21], buffer[i * 8 + 22], buffer[i * 8 + 23]});
+                    subOff = unpack(new byte[]{buffer[i * 8 + 20], buffer[i * 8 + 21], buffer[i * 8 + 22], buffer[i * 8 + 23]});
                     break;
                 }
             }
-            if(!infoFound)
+            if (!infoFound)
             {
                 return rtnString;
             }
 
             subOff = subOff & 0x7fffffff;
-            infoOff = unpack(new byte[] {buffer[subOff + 20], buffer[subOff + 21], buffer[subOff + 22], buffer[subOff + 23]}); //offset of first FILEINFO  
+            infoOff = unpack(new byte[]{buffer[subOff + 20], buffer[subOff + 21], buffer[subOff + 22], buffer[subOff + 23]}); //offset of first FILEINFO
             infoOff = infoOff & 0x7fffffff;
-            infoOff = unpack(new byte[] {buffer[infoOff + 20], buffer[infoOff + 21], buffer[infoOff + 22], buffer[infoOff + 23]});    //offset to data  
-            int dataOff = unpack(new byte[] {buffer[infoOff], buffer[infoOff + 1], buffer[infoOff + 2], buffer[infoOff + 3]});
+            infoOff = unpack(new byte[]{buffer[infoOff + 20], buffer[infoOff + 21], buffer[infoOff + 22], buffer[infoOff + 23]});    //offset to data
+            int dataOff = unpack(new byte[]{buffer[infoOff], buffer[infoOff + 1], buffer[infoOff + 2], buffer[infoOff + 3]});
             dataOff = dataOff - infoVirt;
 
-            int version1 = unpack(new byte[] {buffer[dataOff + 48], buffer[dataOff + 48 + 1]});
-            int version2 = unpack(new byte[] {buffer[dataOff + 48 + 2], buffer[dataOff + 48 + 3]});
-            int version3 = unpack(new byte[] {buffer[dataOff + 48 + 4], buffer[dataOff + 48 + 5]});
-            int version4 = unpack(new byte[] {buffer[dataOff + 48 + 6], buffer[dataOff + 48 + 7]});
+            int version1 = unpack(new byte[]{buffer[dataOff + 48], buffer[dataOff + 48 + 1]});
+            int version2 = unpack(new byte[]{buffer[dataOff + 48 + 2], buffer[dataOff + 48 + 3]});
+            int version3 = unpack(new byte[]{buffer[dataOff + 48 + 4], buffer[dataOff + 48 + 5]});
+            int version4 = unpack(new byte[]{buffer[dataOff + 48 + 6], buffer[dataOff + 48 + 7]});
             rtnString = version2 + "." + version1 + "." + version4 + "." + version3;
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             LOG.error(Fmt0.LOG_P, KV.ins("file", file), e);
         }
@@ -467,7 +463,7 @@ public final class File0
     private static int unpack(byte[] b)
     {
         int num = 0;
-        for(int i = 0; i < b.length; i++)
+        for (int i = 0; i < b.length; i++)
         {
             num = 256 * num + (b[b.length - 1 - i] & 0xff);
         }
@@ -481,7 +477,7 @@ public final class File0
         System.out.println(new File(s1).getAbsolutePath());
         // NullPointerException
         List<String> stringList = null;
-        for(String s : stringList)
+        for (String s : stringList)
         {
             System.out.println(s);
         }
