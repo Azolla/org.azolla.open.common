@@ -6,6 +6,7 @@
  */
 package org.azolla.l.ling.lang;
 
+import com.google.common.base.Strings;
 import net.sourceforge.pinyin4j.PinyinHelper;
 import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;
 import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
@@ -23,6 +24,9 @@ import org.slf4j.LoggerFactory;
 public class String0
 {
     private static final Logger LOG = LoggerFactory.getLogger(String0.class);
+
+    public static final String SUCCEED = "Succeed";
+    public static final String FAILED = "Failed";
 
     public static final  String                  MIDDLELINE              = "-";
     public static final  String                  UNDERLINE               = "_";
@@ -76,5 +80,30 @@ public class String0
         }
 
         return rtnStringBuffer.toString().toLowerCase();
+    }
+
+    public static String nullOrEmptyTo(String string, String to)
+    {
+        return Strings.isNullOrEmpty(string) ? to : string;
+    }
+
+    public static String amp(String string)
+    {
+        return string.replaceAll("&","&amp;");
+    }
+
+    public static String lt(String string)
+    {
+        return string.replaceAll("<","&lt;");
+    }
+
+    public static String gt(String string)
+    {
+        return string.replaceAll(">","&gt;");
+    }
+
+    public static String quot(String string)
+    {
+        return string.replaceAll("\"","&quot;");
     }
 }
