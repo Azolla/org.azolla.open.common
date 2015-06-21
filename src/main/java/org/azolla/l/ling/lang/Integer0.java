@@ -38,4 +38,9 @@ public final class Integer0
         }
         return rtnBoolean;
     }
+
+    public static int nullToZero(Integer i)
+    {
+        return i == null ? 0 : i;
+    }
 }

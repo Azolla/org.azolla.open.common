@@ -11,6 +11,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.google.common.base.Strings;
+import com.google.common.collect.Lists;
 
 /**
  * The coder is very lazy, nothing to write for this List0 class
@@ -63,4 +64,29 @@ public final class List0
         return rtn.length() > 0 ? rtn.substring(separator.length()) : "";
     }
 
+    public static <T> List<T> listNotExistInOther(List<T> list, List<T> other)
+    {
+        List<T> rtnList = Lists.newArrayList();
+        for(T t : list)
+        {
+            if(!other.contains(t))
+            {
+                rtnList.add(t);
+            }
+        }
+        return rtnList;
+    }
+
+    public static <T> List<T> listExistInOther(List<T> list, List<T> other)
+    {
+        List<T> rtnList = Lists.newArrayList();
+        for(T t : list)
+        {
+            if(other.contains(t))
+            {
+                rtnList.add(t);
+            }
+        }
+        return rtnList;
+    }
 }
