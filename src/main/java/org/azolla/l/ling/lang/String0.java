@@ -106,4 +106,9 @@ public class String0
     {
         return string.replaceAll("\"","&quot;");
     }
+
+    public static String html(String string)
+    {
+        return String0.quot(String0.gt(String0.lt(String0.amp(string))));
+    }
 }
