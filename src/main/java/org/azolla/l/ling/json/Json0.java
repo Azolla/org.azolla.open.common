@@ -20,7 +20,7 @@ import java.io.StringWriter;
  * @author sk@azolla.org
  * @since ADK1.0
  */
-public class Json
+public class Json0
 {
     private static ObjectMapper objectMapper = new ObjectMapper();
 
@@ -37,7 +37,7 @@ public class Json
         }
         catch(Exception e)
         {
-            Log0.error(Json.class, e.toString(), e);
+            Log0.error(Json0.class, e.toString(), e);
         }
         finally
         {
