@@ -16,6 +16,7 @@ import javax.xml.bind.Marshaller;
 import org.azolla.l.ling.io.Encoding0;
 import org.azolla.l.ling.text.Fmt0;
 import org.azolla.l.ling.util.KV;
+import org.azolla.l.ling.util.Log0;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,8 +33,6 @@ import com.google.common.cache.LoadingCache;
  */
 public final class Cfg0
 {
-    private static final Logger LOG = LoggerFactory.getLogger(Cfg0.class);
-
     private static final LoadingCache<Class<?>, JAXBContext> CACHE = CacheBuilder.newBuilder().softValues().build(ConfigLoader.single());
 
     private static class ConfigLoader extends CacheLoader<Class<?>, JAXBContext>
@@ -73,7 +72,7 @@ public final class Cfg0
         }
         catch (Exception e)
         {
-            LOG.error(Fmt0.LOG_P, KV.ins("clazz", clazz).put("filePath", file), e);
+            Log0.error(Cfg0.class, Fmt0.LOG_P, KV.ins("clazz", clazz).put("filePath", file), e);
             rtnT = null;
         }
 
@@ -99,7 +98,7 @@ public final class Cfg0
         }
         catch (Exception e)
         {
-            LOG.error(Fmt0.LOG_P, KV.ins("t", t).put("file", file).put("encoding", encoding), e);
+            Log0.error(Cfg0.class, Fmt0.LOG_P, KV.ins("t", t).put("file", file).put("encoding", encoding), e);
             rtnBoolean = false;
         }
 

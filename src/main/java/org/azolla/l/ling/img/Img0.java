@@ -14,6 +14,7 @@ import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import org.azolla.l.ling.io.Encoding0;
 import org.azolla.l.ling.io.File0;
+import org.azolla.l.ling.util.Log0;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,7 +30,6 @@ import java.util.Hashtable;
  */
 public class Img0
 {
-    private static final Logger                            LOG   = LoggerFactory.getLogger(Img0.class);
     private static final      Hashtable<EncodeHintType, Object> hints = new Hashtable<EncodeHintType, Object>();
 
     static
@@ -49,7 +49,7 @@ public class Img0
         }
         catch (Exception e)
         {
-            LOG.error(e.toString(), e);
+            Log0.error(Img0.class, e.toString(), e);
             rtn = false;
         }
 

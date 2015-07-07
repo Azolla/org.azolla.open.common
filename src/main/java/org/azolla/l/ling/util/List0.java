@@ -12,6 +12,8 @@ import javax.annotation.Nullable;
 
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
+import org.azolla.l.ling.lang.Char0;
+import org.azolla.l.ling.lang.String0;
 
 /**
  * The coder is very lazy, nothing to write for this List0 class
@@ -31,9 +33,13 @@ public final class List0
         return list2StringWithoutNull(list, null);
     }
 
+    /**
+     * @see org.azolla.l.ling.json.JSON0#object2String(Object)
+     */
+    @Deprecated
     public static <T> String list2String(List<T> list, @Nullable String separator)
     {
-        separator = Strings.isNullOrEmpty(separator) ? ";" : separator;
+        separator = Strings.isNullOrEmpty(separator) ? String.valueOf(Char0.SEMICOLON) : separator;
         if(null == list)
         {
             return Null0.string;
@@ -43,12 +49,16 @@ public final class List0
         {
             rtn.append(separator).append(String.valueOf(t));
         }
-        return rtn.length() > 0 ? rtn.substring(separator.length()) : "";
+        return rtn.length() > 0 ? rtn.substring(separator.length()) : String0.EMPTY;
     }
 
+    /**
+     * @see org.azolla.l.ling.json.JSON0#object2String(Object)
+     */
+    @Deprecated
     public static <T> String list2StringWithoutNull(List<T> list, @Nullable String separator)
     {
-        separator = Strings.isNullOrEmpty(separator) ? ";" : separator;
+        separator = Strings.isNullOrEmpty(separator) ? String.valueOf(Char0.SEMICOLON) : separator;
         if(null == list)
         {
             return Null0.string;
@@ -61,7 +71,7 @@ public final class List0
                 rtn.append(separator).append(String.valueOf(t));
             }
         }
-        return rtn.length() > 0 ? rtn.substring(separator.length()) : "";
+        return rtn.length() > 0 ? rtn.substring(separator.length()) : String0.EMPTY;
     }
 
     public static <T> List<T> listNotExistInOther(List<T> list, List<T> other)

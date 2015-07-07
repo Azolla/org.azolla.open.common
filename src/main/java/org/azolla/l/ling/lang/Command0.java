@@ -20,6 +20,7 @@ import org.azolla.l.ling.exception.code.AzollaCode;
 import org.azolla.l.ling.io.Close0;
 import org.azolla.l.ling.text.Fmt0;
 import org.azolla.l.ling.util.KV;
+import org.azolla.l.ling.util.Log0;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,8 +34,6 @@ import com.google.common.base.Strings;
  */
 public final class Command0
 {
-	private static final Logger	LOG						= LoggerFactory.getLogger(Command0.class);
-
 	private static final String	INPUT					= "INPUT";
 
 	private static final String	ERROR					= "ERROR";
@@ -72,7 +71,7 @@ public final class Command0
 	 */
 	public static boolean exec(String command, long timeout, boolean value4pause, String pauseFlag)
 	{
-		LOG.info(command);
+		Log0.info(Command0.class, command);
 
 		boolean rtnBoolean = true;
 
@@ -93,7 +92,7 @@ public final class Command0
 			}
 			catch(Exception e)
 			{
-				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.COMMAND_ERROR, KV.ins("command", command).put("timeout", timeout).put("value4pause", value4pause).put("pauseFlag", pauseFlag), e);
+                Log0.error(Command0.class, Fmt0.LOG_EC_P_M, AzollaCode.COMMAND_ERROR, KV.ins("command", command).put("timeout", timeout).put("value4pause", value4pause).put("pauseFlag", pauseFlag), e);
 				rtnBoolean = false;
 			}
 			finally
@@ -118,7 +117,6 @@ public final class Command0
 
 	private static class CommandTask implements Callable<Boolean>
 	{
-		private static final Logger	LOG	= LoggerFactory.getLogger(CommandTask.class);
 		private InputStream			inputStream;
 		private String				type;
 		private boolean				value4pause;
@@ -156,14 +154,14 @@ public final class Command0
 				{
 					while((line = lineNumberReader.readLine()) != null)
 					{
-						LOG.info(type + "=" + line);
+						Log0.info(CommandTask.class, type + String0.EQUAL + line);
 					}
 				}
 				else
 				{
 					while((line = lineNumberReader.readLine()) != null)
 					{
-						LOG.info(type + "=" + line);
+                        Log0.info(CommandTask.class, type + String0.EQUAL + line);
 						if(line.toLowerCase(Locale.ENGLISH).indexOf(pauseFlag) > -1)
 						{
 							rtnBoolean = value4pause;
@@ -174,7 +172,7 @@ public final class Command0
 			}
 			catch(Exception e)
 			{
-				LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.COMMAND_ERROR, KV.ins("type", type).put("value4pause", value4pause).put("pauseFlag", pauseFlag), e);
+                Log0.error(CommandTask.class, Fmt0.LOG_EC_P_M, AzollaCode.COMMAND_ERROR, KV.ins("type", type).put("value4pause", value4pause).put("pauseFlag", pauseFlag), e);
 				rtnBoolean = false;
 			}
 			finally

@@ -6,6 +6,7 @@
  */
 package org.azolla.l.ling.lang;
 
+import org.azolla.l.ling.util.Log0;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,8 +20,6 @@ import com.google.common.base.Strings;
  */
 public final class Integer0
 {
-    private static final Logger LOG = LoggerFactory.getLogger(Integer0.class);
-
     public static boolean isInt(String s)
     {
         boolean rtnBoolean = false;
@@ -33,7 +32,7 @@ public final class Integer0
             }
             catch(Exception e)
             {
-                LOG.warn(e.toString(), e);
+                Log0.warn(Integer0.class, e.toString(), e);
             }
         }
         return rtnBoolean;

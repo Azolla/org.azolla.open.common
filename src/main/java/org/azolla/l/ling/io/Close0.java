@@ -14,6 +14,7 @@ import javax.annotation.Nullable;
 import org.azolla.l.ling.exception.code.AzollaCode;
 import org.azolla.l.ling.text.Fmt0;
 import org.azolla.l.ling.util.KV;
+import org.azolla.l.ling.util.Log0;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,8 +26,6 @@ import org.slf4j.LoggerFactory;
  */
 public final class Close0
 {
-    private static final Logger LOG = LoggerFactory.getLogger(Close0.class);
-
     public static void close(@Nullable Closeable closeable)
     {
         if(closeable == null)
@@ -39,7 +38,7 @@ public final class Close0
         }
         catch(IOException e)
         {
-            LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.IOEXCEPTION, KV.ins("closeable", closeable), e);
+            Log0.error(Close0.class, Fmt0.LOG_EC_P_M, AzollaCode.IOEXCEPTION, KV.ins("closeable", closeable), e);
         }
     }
 }

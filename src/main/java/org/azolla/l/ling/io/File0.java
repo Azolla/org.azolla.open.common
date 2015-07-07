@@ -17,8 +17,10 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import org.azolla.l.ling.lang.String0;
 import org.azolla.l.ling.text.Fmt0;
 import org.azolla.l.ling.util.KV;
+import org.azolla.l.ling.util.Log0;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,12 +42,8 @@ import com.google.common.io.Files;
  */
 public final class File0
 {
-    private static final Logger LOG = LoggerFactory.getLogger(File0.class);
-
     public static final String ILLEGAL_FILENAME_REGEX = "[{/\\\\:*?\"<>|}]";
 
-    public static final String POINT     = ".";
-    public static final String UNDERLINE = "_";
     public static final String MD5       = "MD5";
     public static final String USER_DIR  = "user.dir";
     public static final String USER_HOME = "user.home";
@@ -141,7 +139,7 @@ public final class File0
                     }
                     catch (Exception e)
                     {
-                        LOG.error(Fmt0.LOG_P, KV.ins("file", file), e);
+                        Log0.error(File0.class, Fmt0.LOG_P, KV.ins("file", file), e);
                         bakFile.renameTo(file);
                         rtnBoolean = false;
                     }
@@ -166,7 +164,7 @@ public final class File0
 
         if (null != file)
         {
-            rtnFile = newFile(file.getParentFile(), file.getName() + POINT + BAK_FILETYPE);
+            rtnFile = newFile(file.getParentFile(), file.getName() + String0.POINT + BAK_FILETYPE);
         }
 
         return rtnFile;
@@ -235,13 +233,13 @@ public final class File0
     {
         fileName = String.valueOf(fileName);
 
-        int lastPointIndex = fileName.lastIndexOf(POINT);
+        int lastPointIndex = fileName.lastIndexOf(String0.POINT);
         return -1 == lastPointIndex ? fileName : fileName.substring(lastPointIndex + 1);
     }
 
     public static String toLegalFileName(String fileName)
     {
-        return toLegalFileName(fileName, UNDERLINE);
+        return toLegalFileName(fileName, String0.UNDERLINE);
     }
 
     /**
@@ -254,7 +252,7 @@ public final class File0
     public static String toLegalFileName(String fileName, @Nullable String legalString)
     {
         fileName = String.valueOf(fileName);
-        legalString = Strings.isNullOrEmpty(legalString) ? UNDERLINE : legalString;
+        legalString = Strings.isNullOrEmpty(legalString) ? String0.UNDERLINE : legalString;
 
         return fileName.replaceAll(ILLEGAL_FILENAME_REGEX, legalString);
     }
@@ -289,7 +287,7 @@ public final class File0
             }
             catch (Exception e)
             {
-                LOG.error(Fmt0.LOG_P, KV.ins("from", from).put("to", to), e);
+                Log0.error(File0.class, Fmt0.LOG_P, KV.ins("from", from).put("to", to), e);
                 rtnBoolean = false;
             }
         }
@@ -341,7 +339,7 @@ public final class File0
             }
             catch (Exception e)
             {
-                LOG.error(Fmt0.LOG_P, KV.ins("file", file), e);
+                Log0.error(File0.class, Fmt0.LOG_P, KV.ins("file", file), e);
             }
             finally
             {
@@ -356,7 +354,7 @@ public final class File0
     //Windows(1.0.0.0)
     public static String getVer(File file)
     {
-        String rtnString = "";
+        String rtnString = String0.EMPTY;
         RandomAccessFile raf = null;
         byte[] buffer;
         String str;
@@ -365,7 +363,7 @@ public final class File0
             raf = new RandomAccessFile(file, "r");
             buffer = new byte[64];
             raf.read(buffer);
-            str = "" + (char) buffer[0] + (char) buffer[1];
+            str = String0.EMPTY + (char) buffer[0] + (char) buffer[1];
             if (!"MZ".equals(str))
             {
                 return rtnString;
@@ -380,7 +378,7 @@ public final class File0
             raf.seek(peOffset);
             buffer = new byte[24];
             raf.read(buffer);
-            str = "" + (char) buffer[0] + (char) buffer[1];
+            str = String0.EMPTY + (char) buffer[0] + (char) buffer[1];
             if (!"PE".equals(str))
             {
                 return rtnString;
@@ -399,7 +397,7 @@ public final class File0
             {
                 buffer = new byte[40];
                 raf.read(buffer);
-                str = "" + (char) buffer[0] + (char) buffer[1] + (char) buffer[2] + (char) buffer[3] + (char) buffer[4];
+                str = String0.EMPTY + (char) buffer[0] + (char) buffer[1] + (char) buffer[2] + (char) buffer[3] + (char) buffer[4];
                 if (".rsrc".equals(str))
                 {
                     resFound = true;
@@ -447,11 +445,11 @@ public final class File0
             int version2 = unpack(new byte[]{buffer[dataOff + 48 + 2], buffer[dataOff + 48 + 3]});
             int version3 = unpack(new byte[]{buffer[dataOff + 48 + 4], buffer[dataOff + 48 + 5]});
             int version4 = unpack(new byte[]{buffer[dataOff + 48 + 6], buffer[dataOff + 48 + 7]});
-            rtnString = version2 + "." + version1 + "." + version4 + "." + version3;
+            rtnString = version2 + String0.POINT + version1 + String0.POINT + version4 + String0.POINT + version3;
         }
         catch (Exception e)
         {
-            LOG.error(Fmt0.LOG_P, KV.ins("file", file), e);
+            Log0.error(File0.class, Fmt0.LOG_P, KV.ins("file", file), e);
         }
         finally
         {

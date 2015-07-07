@@ -12,6 +12,7 @@ import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;
 import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
 import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;
 import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
+import org.azolla.l.ling.util.Log0;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,16 +24,19 @@ import org.slf4j.LoggerFactory;
  */
 public class String0
 {
-    private static final Logger LOG = LoggerFactory.getLogger(String0.class);
+    public static final String SLASH = String.valueOf(Char0.SLASH);
+    public static final String POINT = String.valueOf(Char0.DOT);
+    public static final String UNDERLINE = String.valueOf(Char0.UNDER_LINE);
+    public static final String EQUAL = String.valueOf(Char0.EQUAL);
+
+    public static final String EMPTY = "";
 
     public static final String SUCCEED = "Succeed";
     public static final String FAILED = "Failed";
 
-    public static final  String                  MIDDLELINE              = "-";
-    public static final  String                  UNDERLINE               = "_";
     public static final  String                  ALPHABET                = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    private static final HanyuPinyinOutputFormat hanyuPinyinOutputFormat = new HanyuPinyinOutputFormat();
 
+    private static final HanyuPinyinOutputFormat hanyuPinyinOutputFormat = new HanyuPinyinOutputFormat();
 
     static
     {
@@ -44,7 +48,7 @@ public class String0
     {
         StringBuffer rtnStringBuffer = new StringBuffer();
         String[] pinyinStringArray = null;
-        char pinyinChar = '-';
+        char pinyinChar = Char0.MINUS;
 
         for (int i = 0; i < chineseString.length(); i++)
         {
@@ -52,7 +56,7 @@ public class String0
 
             if (' ' == pinyinChar)
             {
-                rtnStringBuffer.append(MIDDLELINE);
+                rtnStringBuffer.append(Char0.MINUS);
             }
             else if (Char0.isAlphabet(pinyinChar))
             {
@@ -69,12 +73,12 @@ public class String0
                     }
                     else
                     {
-                        rtnStringBuffer.append(UNDERLINE);
+                        rtnStringBuffer.append(Char0.UNDER_LINE);
                     }
                 }
                 catch (BadHanyuPinyinOutputFormatCombination e)
                 {
-                    LOG.warn(e.toString(), e);
+                    Log0.warn(String0.class, e.toString(), e);
                 }
             }
         }

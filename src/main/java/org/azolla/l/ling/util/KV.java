@@ -9,6 +9,7 @@ package org.azolla.l.ling.util;
 import java.util.Map;
 
 import com.google.common.collect.Maps;
+import org.azolla.l.ling.json.JSON0;
 
 /**
  * The coder is very lazy for this KV class
@@ -100,6 +101,10 @@ public final class KV
         return rtn;
     }
 
+    /**
+     * @see JSON0#object2String(Object)
+     */
+    @Deprecated
     public String toString(String separator, String connector)
     {
         separator = String.valueOf(separator);
@@ -114,7 +119,7 @@ public final class KV
     @Override
     public String toString()
     {
-        return toString(";", "=");
+        return JSON0.object2String(map);
     }
 
     public static void main(String[] args)

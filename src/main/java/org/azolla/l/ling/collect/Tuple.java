@@ -16,6 +16,7 @@ import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
+import org.azolla.l.ling.lang.Char0;
 
 /**
  * Tuple
@@ -28,12 +29,12 @@ import com.google.common.collect.Lists;
  */
 public class Tuple<First, Rest> implements Iterable<Object>
 {
-    public static final String BEGIN = "(";
-    public static final String SEP   = ",";
-    public static final String END   = ")";
+    public static final String BEGIN = String.valueOf(Char0.OPEN_PARENTHESIS);
+    public static final String SEP   = String.valueOf(Char0.COMMA);
+    public static final String END   = String.valueOf(Char0.CLOSE_PARENTHESIS);
 
-    protected First            first;
-    protected Rest             rest;
+    protected First first;
+    protected Rest  rest;
 
     protected Tuple(First first, Rest rest)
     {
@@ -50,12 +51,12 @@ public class Tuple<First, Rest> implements Iterable<Object>
     @Override
     public boolean equals(@Nullable Object obj)
     {
-        if(this == obj)
+        if (this == obj)
         {
             return true;
         }
 
-        if((null != obj) && (Tuple.class.isAssignableFrom(obj.getClass())))
+        if ((null != obj) && (Tuple.class.isAssignableFrom(obj.getClass())))
         {
             return Iterables.elementsEqual(this, (Tuple<?, ?>) obj);
         }

@@ -24,9 +24,11 @@ import org.azolla.l.ling.exception.code.AzollaCode;
 import org.azolla.l.ling.io.Close0;
 import org.azolla.l.ling.io.Encoding0;
 import org.azolla.l.ling.io.File0;
+import org.azolla.l.ling.lang.String0;
 import org.azolla.l.ling.text.Fmt0;
 import org.azolla.l.ling.util.Date0;
 import org.azolla.l.ling.util.KV;
+import org.azolla.l.ling.util.Log0;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,8 +46,6 @@ import com.google.common.collect.Lists;
  */
 public final class Zip0
 {
-    private static final Logger LOG     = LoggerFactory.getLogger(Zip0.class);
-
     private static int          bufSize = 8096;                               //size of bytes
 
     public static boolean unzip(File zipFile)
@@ -83,7 +83,7 @@ public final class Zip0
             catch(Exception e)
             {
                 rtnBoolean = false;
-                LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.ZIP_ZIP_ERROR, KV.ins("zipFile", zipFile).put("dest", dest).put("encoding", encoding), e);
+                Log0.error(Zip0.class, Fmt0.LOG_EC_P_M, AzollaCode.ZIP_ZIP_ERROR, KV.ins("zipFile", zipFile).put("dest", dest).put("encoding", encoding), e);
             }
         }
         return rtnBoolean;
@@ -119,7 +119,7 @@ public final class Zip0
             catch(Exception e)
             {
                 rtnBoolean = false;
-                LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.ZIP_ZIP_ERROR, KV.ins("destFile", destFile), e);
+                Log0.error(Zip0.class, Fmt0.LOG_EC_P_M, AzollaCode.ZIP_ZIP_ERROR, KV.ins("destFile", destFile), e);
             }
             finally
             {
@@ -193,7 +193,7 @@ public final class Zip0
             zip = Strings.isNullOrEmpty(zip) ? Date0.toString(Date0.Y_M_D_H_MI_S) : zip;
             if(!Lists.newArrayList(File0.ZIP_FILETYPE, File0.JAR_FILETYPE, File0.WAR_FILETYPE).contains(File0.fileType(zip).toLowerCase()))
             {
-                zip += File0.POINT + File0.ZIP_FILETYPE;
+                zip += String0.POINT + File0.ZIP_FILETYPE;
             }
 
             FileOutputStream fos = null;
@@ -209,7 +209,7 @@ public final class Zip0
 
                 for(File file : fileList)
                 {
-                    zipFiles(file, zos, "");
+                    zipFiles(file, zos, String0.EMPTY);
                 }
 
                 rtnBoolean = true;
@@ -217,7 +217,7 @@ public final class Zip0
             catch(Exception e)
             {
                 rtnBoolean = false;
-                LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.ZIP_ZIP_ERROR, KV.ins("fileList", Joiner.on("|").join(fileList)).put("zip", zip).put("encoding", encoding), e);
+                Log0.error(Zip0.class, Fmt0.LOG_EC_P_M, AzollaCode.ZIP_ZIP_ERROR, KV.ins("fileList", Joiner.on("|").join(fileList)).put("zip", zip).put("encoding", encoding), e);
             }
             finally
             {
@@ -240,7 +240,7 @@ public final class Zip0
             String fileName = pathName + file.getName();
             if(file.isDirectory())
             {
-                fileName = fileName + "/";
+                fileName = fileName + String0.SLASH;
                 zipOutput.putNextEntry(new ZipEntry(fileName));
                 String fileNames[] = file.list();
                 if(fileNames != null)
@@ -272,7 +272,7 @@ public final class Zip0
         catch(Exception e)
         {
             rtnBoolean = false;
-            LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.ZIP_ZIP_ERROR, KV.ins("file", file).put("pathName", pathName), e);
+            Log0.error(Zip0.class, Fmt0.LOG_EC_P_M, AzollaCode.ZIP_ZIP_ERROR, KV.ins("file", file).put("pathName", pathName), e);
         }
         finally
         {

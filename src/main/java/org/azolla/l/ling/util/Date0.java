@@ -25,8 +25,6 @@ import org.slf4j.LoggerFactory;
  */
 public final class Date0
 {
-    private static final Logger LOG          = LoggerFactory.getLogger(Date0.class);
-
     public static final String  Y            = "yyyy";
     public static final String  M            = "MM";
     public static final String  D            = "dd";
@@ -116,7 +114,7 @@ public final class Date0
         }
         catch(ParseException e)
         {
-            LOG.error(Fmt0.LOG_EC_P_M, AzollaCode.PARSEEXCEPTION, KV.ins("date", date).put("pattern", pattern), e);
+            Log0.error(Date0.class, Fmt0.LOG_EC_P_M, AzollaCode.PARSEEXCEPTION, KV.ins("date", date).put("pattern", pattern), e);
             rtnDate = null;
         }
 

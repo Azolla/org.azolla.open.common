@@ -7,6 +7,7 @@
 package org.azolla.l.ling.lang;
 
 import org.azolla.l.ling.text.Fmt0;
+import org.azolla.l.ling.util.Log0;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,8 +22,6 @@ import java.security.MessageDigest;
  */
 public class Byte0
 {
-    private static final Logger LOG = LoggerFactory.getLogger(Byte0.class);
-
     public static final  String MD5 = "MD5";
 
     public static String md5(byte[] bytes)
@@ -34,7 +33,7 @@ public class Byte0
         }
         catch (Exception e)
         {
-            LOG.error(Fmt0.LOG_P, e);
+            Log0.error(Byte0.class, Fmt0.LOG_P, e);
         }
 
         return rtnString;

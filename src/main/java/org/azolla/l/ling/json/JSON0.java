@@ -10,6 +10,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.azolla.l.ling.io.Close0;
 import org.azolla.l.ling.lang.Class0;
+import org.azolla.l.ling.lang.String0;
 import org.azolla.l.ling.util.Log0;
 
 import java.io.IOException;
@@ -30,7 +31,7 @@ public class JSON0
     {
         StringWriter writer = new StringWriter();
         JsonGenerator jsonGenerator = null;
-        String rtnString = "";
+        String rtnString = String0.EMPTY;
         try
         {
             jsonGenerator = objectMapper.getFactory().createGenerator(writer);

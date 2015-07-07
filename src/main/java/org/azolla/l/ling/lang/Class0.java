@@ -14,6 +14,7 @@ import javax.annotation.Nullable;
 import org.azolla.l.ling.exception.code.AzollaCode;
 import org.azolla.l.ling.text.Fmt0;
 import org.azolla.l.ling.util.KV;
+import org.azolla.l.ling.util.Log0;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,8 +29,6 @@ import com.google.common.collect.Lists;
  */
 public class Class0
 {
-    private static final Logger LOG      = LoggerFactory.getLogger(Class0.class);
-
     private Class<?>            clazz    = null;
 
     private Object              instance = null;
@@ -103,7 +102,7 @@ public class Class0
         }
         catch(ClassNotFoundException e)
         {
-            LOG.warn(Fmt0.LOG_EC_P_M, AzollaCode.CLASSNOTFOUNDEXCEPTION, KV.ins("className", className), e);
+            Log0.warn(Class0.class, Fmt0.LOG_EC_P_M, AzollaCode.CLASSNOTFOUNDEXCEPTION, KV.ins("className", className), e);
             rtnBoolean = false;
         }
         return rtnBoolean;
