@@ -9,12 +9,9 @@ package org.azolla.l.ling.json;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.azolla.l.ling.io.Close0;
-import org.azolla.l.ling.lang.Class0;
 import org.azolla.l.ling.lang.String0;
 import org.azolla.l.ling.util.Log0;
 
-import java.io.IOException;
-import java.io.OutputStream;
 import java.io.StringWriter;
 
 /**
@@ -23,7 +20,7 @@ import java.io.StringWriter;
  * @author sk@azolla.org
  * @since ADK1.0
  */
-public class JSON0
+public class Json
 {
     private static ObjectMapper objectMapper = new ObjectMapper();
 
@@ -40,7 +37,7 @@ public class JSON0
         }
         catch(Exception e)
         {
-            Log0.error(JSON0.class, e.toString(), e);
+            Log0.error(Json.class, e.toString(), e);
         }
         finally
         {
