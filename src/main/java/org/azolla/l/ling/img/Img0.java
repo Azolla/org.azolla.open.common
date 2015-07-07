@@ -9,17 +9,13 @@ package org.azolla.l.ling.img;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
-import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import org.azolla.l.ling.io.Encoding0;
 import org.azolla.l.ling.io.File0;
 import org.azolla.l.ling.util.Log0;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Hashtable;
 
 /**

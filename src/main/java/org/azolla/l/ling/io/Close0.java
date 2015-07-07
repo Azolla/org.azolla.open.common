@@ -15,8 +15,6 @@ import org.azolla.l.ling.exception.code.AzollaCode;
 import org.azolla.l.ling.text.Fmt0;
 import org.azolla.l.ling.util.KV;
 import org.azolla.l.ling.util.Log0;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * The coder is very lazy for this Close0 class

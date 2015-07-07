@@ -8,8 +8,6 @@ package org.azolla.l.ling.lang;
 
 import org.azolla.l.ling.text.Fmt0;
 import org.azolla.l.ling.util.Log0;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
