@@ -82,6 +82,6 @@ public class Char0
 
     public static boolean isAlphabet(char c)
     {
-        return String0.ALPHABET.indexOf(c) > 0;
+        return String0.ALPHABET.indexOf(c) > -1;
     }
 }
