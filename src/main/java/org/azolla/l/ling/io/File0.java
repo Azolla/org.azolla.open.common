@@ -29,7 +29,7 @@ import com.google.common.io.Files;
 
 /**
  * FileHelper
- * <p/>
+ *
  * The concept about some object:
  * 1.file/path		:<code>File</code>/<code>String</code> object, maybe document,maybe directory and maybe null.
  * 2.document		:<code>File</code>/<code>String</code> object, but it does not contain directory
@@ -150,7 +150,7 @@ public final class File0
 
     /**
      * Return file's bakName
-     * <p/>
+     * 
      * sample.txt -&gt; sample.txt.bak
      *
      * @param file documnet

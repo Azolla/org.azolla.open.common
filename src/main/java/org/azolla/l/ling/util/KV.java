@@ -103,6 +103,9 @@ public final class KV
 
     /**
      * @see org.azolla.l.ling.json.Json0#object2String(Object)
+     * @param separator
+     * @param connector
+     * @return
      */
     @Deprecated
     public String toString(String separator, String connector)

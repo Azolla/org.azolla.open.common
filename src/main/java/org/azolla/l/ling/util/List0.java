@@ -35,6 +35,9 @@ public final class List0
 
     /**
      * @see org.azolla.l.ling.json.Json0#object2String(Object)
+     * @param list
+     * @param separator
+     * @return
      */
     @Deprecated
     public static <T> String list2String(List<T> list, @Nullable String separator)
@@ -54,6 +57,9 @@ public final class List0
 
     /**
      * @see org.azolla.l.ling.json.Json0#object2String(Object)
+     * @param list
+     * @param separator
+     * @return
      */
     @Deprecated
     public static <T> String list2StringWithoutNull(List<T> list, @Nullable String separator)
