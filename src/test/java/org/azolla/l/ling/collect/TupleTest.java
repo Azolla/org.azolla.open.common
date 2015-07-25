@@ -114,8 +114,8 @@ public class TupleTest
         System.out.println(testName.getMethodName() + "=" + stopwatch.stop());
     }
 
-    @Test(timeout = 33)
-    //    @Test
+//    @Test(timeout = 33)
+    @Test
     public void test()
     {
         String[] ipArray = ip.split("\\.");
