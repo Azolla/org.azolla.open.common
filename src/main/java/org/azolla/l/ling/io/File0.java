@@ -6,14 +6,13 @@
  */
 package org.azolla.l.ling.io;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.RandomAccessFile;
+import java.io.*;
 import java.math.BigInteger;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.util.List;
+import java.util.zip.CRC32;
+import java.util.zip.CheckedInputStream;
 
 import javax.annotation.Nullable;
 
@@ -43,20 +42,20 @@ public final class File0
     public static final String ILLEGAL_FILENAME_REGEX = "[{/\\\\:*?\"<>|}]";
 
     public static final String MD5       = "MD5";
+    public static final String CRC32       = "CRC32";
     public static final String USER_DIR  = "user.dir";
     public static final String USER_HOME = "user.home";
 
     public static final String ZIP_FILETYPE = "zip";
-
     public static final String JAR_FILETYPE = "jar";
-
     public static final String WAR_FILETYPE = "war";
-
     public static final String TXT_FILETYPE = "txt";
-
     public static final String BAK_FILETYPE = "bak";
-
     public static final String PNG_FILETYPE = "png";
+    public static final String PROP_FILETYPE = "properties";
+    public static final String XML_FILETYPE = "xml";
+
+    public static final int BUFFER_SIZE = 256 * 1024;
 
     public static File newFile(String... strings)
     {
@@ -176,11 +175,23 @@ public final class File0
      */
     public static List<File> allFile(File file)
     {
+        return allFile(file, new FileFilter()
+        {
+            @Override
+            public boolean accept(File pathname)
+            {
+                return true;
+            }
+        });
+    }
+
+    public static List<File> allFile(File file, FileFilter fileFilter)
+    {
         List<File> rtnList = Lists.newArrayList();
 
-        if (null != file && file.exists())
+        if (null != file && file.exists() && fileFilter != null)
         {
-            rtnList.addAll(allFile0(file));
+            rtnList.addAll(allFile0(file, fileFilter));
         }
 
         return rtnList;
@@ -192,16 +203,16 @@ public final class File0
      * @param file existed file
      * @return List<File>
      */
-    private static List<File> allFile0(File file)
+    private static List<File> allFile0(File file, FileFilter fileFilter)
     {
         List<File> rtnList = Lists.newArrayList();
 
         rtnList.add(file);
         if (file.isDirectory())
         {
-            for (File subFile : file.listFiles())
+            for (File subFile : file.listFiles(fileFilter))
             {
-                rtnList.addAll(allFile0(subFile));
+                rtnList.addAll(allFile0(subFile,fileFilter));
             }
         }
 
@@ -233,6 +244,33 @@ public final class File0
 
         int lastPointIndex = fileName.lastIndexOf(String0.POINT);
         return -1 == lastPointIndex ? fileName : fileName.substring(lastPointIndex + 1);
+    }
+
+    public static String fileNameWithoutFileType(File file)
+    {
+        if (null == file)
+        {
+            return String.valueOf(file);
+        }
+        else
+        {
+            return fileNameWithoutFileType(file.getName());
+        }
+    }
+
+    /**
+     * return name of file by file name
+     * Example:test.txt -&gt; test
+     *
+     * @param fileName file name
+     * @return type of file
+     */
+    public static String fileNameWithoutFileType(String fileName)
+    {
+        fileName = String.valueOf(fileName);
+
+        int lastPointIndex = fileName.lastIndexOf(String0.POINT);
+        return -1 == lastPointIndex ? fileName : fileName.substring(0,lastPointIndex);
     }
 
     public static String toLegalFileName(String fileName)
@@ -321,19 +359,22 @@ public final class File0
         if (file != null && file.isFile())
         {
             int len;
-            int bufferSize = 256 * 1024;
+
             MessageDigest digest = null;
-            FileInputStream in = null;
-            byte buffer[] = new byte[bufferSize];
+            FileInputStream fileInputStream = null;
+            BufferedInputStream bufferedInputStream = null;
+            byte buffer[] = new byte[BUFFER_SIZE];
             try
             {
                 digest = MessageDigest.getInstance(MD5);
-                in = new FileInputStream(file);
-                while ((len = in.read(buffer, 0, bufferSize)) != -1)
+                fileInputStream = new FileInputStream(file);
+                bufferedInputStream = new BufferedInputStream(fileInputStream);
+                while ((len = bufferedInputStream.read(buffer, 0, BUFFER_SIZE)) != -1)
                 {
                     digest.update(buffer, 0, len);
                 }
-                in.close();
+//                in.close();
+                rtnString = new BigInteger(1, digest.digest()).toString(16);
             }
             catch (Exception e)
             {
@@ -341,9 +382,44 @@ public final class File0
             }
             finally
             {
-                Close0.close(in);
+                Close0.close(bufferedInputStream);
+                Close0.close(fileInputStream);
             }
-            rtnString = new BigInteger(1, digest.digest()).toString(16);
+
+        }
+
+        return rtnString;
+    }
+
+    public static String getCRC32(File file)
+    {
+        String rtnString = null;
+        if (file != null && file.isFile())
+        {
+            int len;
+            CRC32 crc32 = null;
+            FileInputStream fileInputStream = null;
+            BufferedInputStream bufferedInputStream = null;
+            byte buffer[] = new byte[BUFFER_SIZE];
+            try
+            {
+                crc32 = new CRC32();
+                fileInputStream = new FileInputStream(file);
+                bufferedInputStream = new BufferedInputStream(fileInputStream);
+                while ((len = bufferedInputStream.read(buffer, 0, BUFFER_SIZE)) != -1)
+                {
+                    crc32.update(buffer, 0, len);
+                }
+                Long.toHexString(crc32.getValue()).toUpperCase();
+            }
+            catch (Exception e)
+            {
+                Log0.debug(File0.class, Fmt0.LOG_P, KV.ins("file", file), e);
+            }
+            finally
+            {
+            }
+            rtnString = String.valueOf(crc32.getValue());
         }
 
         return rtnString;
