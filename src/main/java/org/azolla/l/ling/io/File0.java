@@ -207,10 +207,13 @@ public final class File0
     {
         List<File> rtnList = Lists.newArrayList();
 
-        rtnList.add(file);
+        if(fileFilter != null && fileFilter.accept(file))
+        {
+            rtnList.add(file);
+        }
         if (file.isDirectory())
         {
-            for (File subFile : file.listFiles(fileFilter))
+            for (File subFile : file.listFiles())
             {
                 rtnList.addAll(allFile0(subFile,fileFilter));
             }
