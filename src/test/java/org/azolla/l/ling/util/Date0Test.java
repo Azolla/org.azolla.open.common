@@ -1,14 +1,12 @@
 /*
- * @(#)String0Test.java		Created at 15/4/13
+ * @(#)Date0Test.java		Created at 15/8/2
  * 
  * Copyright (c) azolla.org All rights reserved.
  * Azolla PROPRIETARY/CONFIDENTIAL. Use is subject to license terms. 
  */
-package org.azolla.l.ling.lang;
+package org.azolla.l.ling.util;
 
 import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
 
 /**
  * The coder is very lazy, nothing to write for this class
@@ -16,11 +14,11 @@ import static org.junit.Assert.assertEquals;
  * @author sk@azolla.org
  * @since ADK1.0
  */
-public class String0Test
+public class Date0Test
 {
     @Test
-    public void testPinyin()
+    public void test2String()
     {
-        assertEquals("woshi-zhongguoer_", String0.pinyin("我SHI 中国er！"));
+        System.out.println(Date0.toString(Date0.now(),"yyyyMMddHHm"));
     }
 }
