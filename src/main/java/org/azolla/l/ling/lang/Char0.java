@@ -84,4 +84,14 @@ public class Char0
     {
         return String0.ALPHABET.indexOf(c) > -1;
     }
+
+    public static boolean isDigital(char c)
+    {
+        return String0.DIGITAL.indexOf(c) > -1;
+    }
+
+    public static boolean isAlphabetOrDigital(char c)
+    {
+        return isAlphabet(c) || isDigital(c);
+    }
 }

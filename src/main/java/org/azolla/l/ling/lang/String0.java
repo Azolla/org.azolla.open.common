@@ -22,17 +22,19 @@ import org.azolla.l.ling.util.Log0;
  */
 public class String0
 {
-    public static final String SLASH = String.valueOf(Char0.SLASH);
-    public static final String POINT = String.valueOf(Char0.DOT);
+    public static final String SLASH     = String.valueOf(Char0.SLASH);
+    public static final String POINT     = String.valueOf(Char0.DOT);
     public static final String UNDERLINE = String.valueOf(Char0.UNDER_LINE);
-    public static final String EQUAL = String.valueOf(Char0.EQUAL);
+    public static final String EQUAL     = String.valueOf(Char0.EQUAL);
+    public static final String COMMA     = String.valueOf(Char0.COMMA);
 
     public static final String EMPTY = "";
 
     public static final String SUCCEED = "Succeed";
-    public static final String FAILED = "Failed";
+    public static final String FAILED  = "Failed";
 
-    public static final  String                  ALPHABET                = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    public static final String ALPHABET = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    public static final String DIGITAL  = "0123456789";
 
     private static final HanyuPinyinOutputFormat hanyuPinyinOutputFormat = new HanyuPinyinOutputFormat();
 
@@ -56,7 +58,7 @@ public class String0
             {
                 rtnStringBuffer.append(Char0.MINUS);
             }
-            else if (Char0.isAlphabet(pinyinChar))
+            else if (Char0.isAlphabetOrDigital(pinyinChar))
             {
                 rtnStringBuffer.append(pinyinChar);
             }
@@ -91,22 +93,22 @@ public class String0
 
     public static String amp(String string)
     {
-        return string.replaceAll("&","&amp;");
+        return string.replaceAll("&", "&amp;");
     }
 
     public static String lt(String string)
     {
-        return string.replaceAll("<","&lt;");
+        return string.replaceAll("<", "&lt;");
     }
 
     public static String gt(String string)
     {
-        return string.replaceAll(">","&gt;");
+        return string.replaceAll(">", "&gt;");
     }
 
     public static String quot(String string)
     {
-        return string.replaceAll("\"","&quot;");
+        return string.replaceAll("\"", "&quot;");
     }
 
     public static String html(String string)
