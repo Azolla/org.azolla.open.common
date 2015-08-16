@@ -24,7 +24,7 @@ public class String0
 {
     public static final String SLASH     = String.valueOf(Char0.SLASH);
     public static final String POINT     = String.valueOf(Char0.DOT);
-    public static final String UNDERLINE = String.valueOf(Char0.UNDER_LINE);
+    public static final String UNDERLINE = String.valueOf(Char0.UNDERLINE);
     public static final String EQUAL     = String.valueOf(Char0.EQUAL);
     public static final String COMMA     = String.valueOf(Char0.COMMA);
 
@@ -73,7 +73,7 @@ public class String0
                     }
                     else
                     {
-                        rtnStringBuffer.append(Char0.UNDER_LINE);
+                        rtnStringBuffer.append(Char0.UNDERLINE);
                     }
                 }
                 catch (BadHanyuPinyinOutputFormatCombination e)

@@ -16,6 +16,7 @@ public class Char0
 {
     public static final char PLUS                = '+';
     public static final char MINUS               = '-';
+    public static final char DASH                = '-';
     public static final char PLUS_MINUS          = '±';
     public static final char MULTIPLY            = '×';
     public static final char DIVIDE              = '÷';
@@ -77,7 +78,7 @@ public class Char0
     public static final char SECTION             = '§';
     public static final char ARROW               = '→';
 
-    public static final char UNDER_LINE = '_';
+    public static final char UNDERLINE = '_';
 
 
     public static boolean isAlphabet(char c)

@@ -188,7 +188,7 @@ public final class Zip0
         if(null != fileList)
         {
             encoding = Strings.isNullOrEmpty(encoding) ? Encoding0.UTF_8 : encoding;
-            zip = Strings.isNullOrEmpty(zip) ? Date0.toString(Date0.Y_M_D_H_MI_S) : zip;
+            zip = Strings.isNullOrEmpty(zip) ? Date0.toString(Date0.DATETIME_WITH_UNDERLINE) : zip;
             if(!Lists.newArrayList(File0.ZIP_FILETYPE, File0.JAR_FILETYPE, File0.WAR_FILETYPE).contains(File0.fileType(zip).toLowerCase()))
             {
                 zip += String0.POINT + File0.ZIP_FILETYPE;

@@ -57,6 +57,10 @@ public final class File0
 
     public static final int BUFFER_SIZE = 256 * 1024;
 
+    public static final String BR_WIN0S = "\r\n";
+    public static final String BR_MACOS = "\r";
+    public static final String BR_LINUX = "\n";
+
     public static File newFile(String... strings)
     {
         return new File(Joiner.on(File.separator).join(strings));
