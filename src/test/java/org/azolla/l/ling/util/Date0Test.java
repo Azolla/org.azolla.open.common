@@ -21,4 +21,10 @@ public class Date0Test
     {
         System.out.println(Date0.toString(Date0.now(),"yyyyMMddHHm"));
     }
+
+    @Test
+    public void test2TimeStamp()
+    {
+        System.out.println(Date0.now().getTime());
+    }
 }
