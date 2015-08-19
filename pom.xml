@@ -10,8 +10,8 @@
 
 	<artifactId>org.azolla.l.ling</artifactId>
 	<packaging>jar</packaging>
-	<name>Ling: Azolla.org Core Libraries for Java</name>
-	<description>Ling is a suite of core and expanded libraries that include utility classes, io classes, and much much more.</description>
+	<name>Azolla.org Core Library for Java</name>
+	<description>Azolla.org Core Library for Java</description>
 	<url>https://github.com/Azollas/org.azolla.l.ling</url>
 	<inceptionYear>2011</inceptionYear>
 	<organization>
