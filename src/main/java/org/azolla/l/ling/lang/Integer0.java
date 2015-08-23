@@ -40,4 +40,9 @@ public final class Integer0
     {
         return i == null ? 0 : i;
     }
+
+    public static boolean isNullOrZero(Integer i)
+    {
+        return i == null || i == 0;
+    }
 }
