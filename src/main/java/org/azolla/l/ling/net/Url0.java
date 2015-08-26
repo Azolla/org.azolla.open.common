@@ -17,13 +17,15 @@ import java.net.URL;
 public class Url0
 {
     /**
-     * Example:[project or jar]/img/test.gif -&gt; path=/img/test.gif 
+     * Example:[project or jar]/img/test.gif -&gt; path=/img/test.gif
+     *
+     * Must start /
      * 
      * @param path file path
      * @return URL
      */
     public static URL getURL(String path)
     {
-        return Url0.class.getClass().getResource(path);
+        return Thread.currentThread().getClass().getResource(path);
     }
 }
