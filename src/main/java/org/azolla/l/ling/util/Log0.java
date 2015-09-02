@@ -7,180 +7,139 @@
 package org.azolla.l.ling.util;
 
 import com.google.common.collect.Maps;
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.slf4j.Marker;
+import org.slf4j.helpers.FormattingTuple;
+import org.slf4j.helpers.MessageFormatter;
+import org.slf4j.spi.LocationAwareLogger;
 
+import javax.annotation.Nonnull;
 import java.util.Map;
 
 /**
- * The coder is very lazy, nothing to write for this class
+ * Just convenient for change log system.
  *
  * @author sk@azolla.org
  * @since ADK1.0
  */
 public class Log0
 {
-    private static Map<Class<?>, Logger> logMap = Maps.newHashMap();
+    public static final String                             FQCN        = Log0.class.getName();
+    private static      Map<Class<?>, LocationAwareLogger> log0Map     = Maps.newHashMap();
+    private static      Map<Class<?>, Boolean>             log0BoolMap = Maps.newHashMap();
 
-    public static Logger getLog(Class<?> clazz)
+    private static LocationAwareLogger getLog0(Class<?> clazz)
     {
-        Logger rtnLog = logMap.get(clazz);
-        if(rtnLog == null)
+        LocationAwareLogger rtnLog = log0Map.get(clazz);
+        if (rtnLog == null && log0BoolMap.get(clazz) == null)
         {
-            rtnLog = LoggerFactory.getLogger(clazz);
-            logMap.put(clazz,rtnLog);
+            try
+            {
+                rtnLog = (LocationAwareLogger) LoggerFactory.getLogger(clazz);
+            }
+            catch (Exception e)
+            {
+            }
+            finally
+            {
+                log0Map.put(clazz, rtnLog);
+                log0BoolMap.put(clazz, true);
+            }
         }
         return rtnLog;
     }
 
-    public static void trace(Class<?> clazz,String msg)
+    private static void msg(Class<?> clazz, int level, String msg, Throwable t)
     {
-        getLog(clazz).trace(msg);
+        LocationAwareLogger locationAwareLogger = log0Map.get(clazz);
+        if (locationAwareLogger != null)
+        {
+            locationAwareLogger.log(null, FQCN, level, msg, null, t);
+        }
+        else
+        {
+            LoggerFactory.getLogger(clazz).error(msg, t);
+        }
     }
 
-    public static void trace(Class<?> clazz,String format, Object... objects)
+    private static void fmt(Class<?> clazz, int level, String format, @Nonnull Object... objects)
     {
-        getLog(clazz).trace(format,objects);
+        FormattingTuple ft = MessageFormatter.arrayFormat(format, objects);
+        msg(clazz, level, ft.getMessage(), ft.getThrowable());
     }
 
-    public static void trace(Class<?> clazz,String format, Throwable throwable)
+    public static void trace(Class<?> clazz, String msg)
     {
-        getLog(clazz).trace(format,throwable);
+        msg(clazz, LocationAwareLogger.TRACE_INT, msg, null);
     }
 
-    public static void trace(Class<?> clazz,Marker marker, String msg)
+    public static void trace(Class<?> clazz, @Nonnull String format, @Nonnull Object... objects)
     {
-        getLog(clazz).trace(marker,msg);
-    }
-    
-    public static void trace(Class<?> clazz,Marker marker, String format, Object... objects)
-    {
-        getLog(clazz).trace(marker,format,objects);
+        fmt(clazz, LocationAwareLogger.TRACE_INT, format, objects);
     }
 
-    public static void trace(Class<?> clazz,Marker marker, String msg, Throwable throwable)
+    public static void trace(Class<?> clazz, String format, Throwable throwable)
     {
-        getLog(clazz).trace(marker,msg,throwable);
+        msg(clazz, LocationAwareLogger.TRACE_INT, format, throwable);
     }
 
-    public static void debug(Class<?> clazz,String msg)
+    public static void debug(Class<?> clazz, String msg)
     {
-        getLog(clazz).debug(msg);
+        msg(clazz, LocationAwareLogger.DEBUG_INT, msg, null);
     }
 
-    public static void debug(Class<?> clazz,String format, Object... objects)
+    public static void debug(Class<?> clazz, @Nonnull String format, @Nonnull Object... objects)
     {
-        getLog(clazz).debug(format,objects);
+        fmt(clazz, LocationAwareLogger.DEBUG_INT, format, objects);
     }
 
-    public static void debug(Class<?> clazz,String format, Throwable throwable)
+    public static void debug(Class<?> clazz, String format, Throwable throwable)
     {
-        getLog(clazz).debug(format,throwable);
+        msg(clazz, LocationAwareLogger.DEBUG_INT, format, throwable);
     }
 
-    public static void debug(Class<?> clazz,Marker marker, String msg)
+    public static void info(Class<?> clazz, String msg)
     {
-        getLog(clazz).debug(marker,msg);
+        msg(clazz, LocationAwareLogger.INFO_INT, msg, null);
     }
 
-    public static void debug(Class<?> clazz,Marker marker, String format, Object... objects)
+    public static void info(Class<?> clazz, @Nonnull String format, @Nonnull Object... objects)
     {
-        getLog(clazz).debug(marker,format,objects);
+        fmt(clazz, LocationAwareLogger.INFO_INT, format, objects);
     }
 
-    public static void debug(Class<?> clazz,Marker marker, String msg, Throwable throwable)
+    public static void info(Class<?> clazz, String format, Throwable throwable)
     {
-        getLog(clazz).debug(marker,msg,throwable);
+        msg(clazz, LocationAwareLogger.INFO_INT, format, throwable);
     }
 
-    public static void info(Class<?> clazz,String msg)
+    public static void warn(Class<?> clazz, String msg)
     {
-        getLog(clazz).info(msg);
+        msg(clazz, LocationAwareLogger.WARN_INT, msg, null);
     }
 
-    public static void info(Class<?> clazz,String format, Object... objects)
+    public static void warn(Class<?> clazz, @Nonnull String format, @Nonnull Object... objects)
     {
-        getLog(clazz).info(format, objects);
+        fmt(clazz, LocationAwareLogger.WARN_INT, format, objects);
     }
 
-    public static void info(Class<?> clazz,String format, Throwable throwable)
+    public static void warn(Class<?> clazz, String format, Throwable throwable)
     {
-        getLog(clazz).info(format, throwable);
+        msg(clazz, LocationAwareLogger.WARN_INT, format, throwable);
     }
 
-    public static void info(Class<?> clazz,Marker marker, String msg)
+    public static void error(Class<?> clazz, String msg)
     {
-        getLog(clazz).info(marker, msg);
+        msg(clazz, LocationAwareLogger.ERROR_INT, msg, null);
     }
 
-    public static void info(Class<?> clazz,Marker marker, String format, Object... objects)
+    public static void error(Class<?> clazz, @Nonnull String format, @Nonnull Object... objects)
     {
-        getLog(clazz).info(marker, format, objects);
+        fmt(clazz, LocationAwareLogger.ERROR_INT, format, objects);
     }
 
-    public static void info(Class<?> clazz,Marker marker, String msg, Throwable throwable)
+    public static void error(Class<?> clazz, String format, Throwable throwable)
     {
-        getLog(clazz).info(marker, msg, throwable);
+        msg(clazz, LocationAwareLogger.ERROR_INT, format, throwable);
     }
 
-    public static void warn(Class<?> clazz,String msg)
-    {
-        getLog(clazz).warn(msg);
-    }
-
-    public static void warn(Class<?> clazz,String format, Object... objects)
-    {
-        getLog(clazz).warn(format, objects);
-    }
-
-    public static void warn(Class<?> clazz,String format, Throwable throwable)
-    {
-        getLog(clazz).warn(format, throwable);
-    }
-
-    public static void warn(Class<?> clazz,Marker marker, String msg)
-    {
-        getLog(clazz).warn(marker, msg);
-    }
-
-    public static void warn(Class<?> clazz,Marker marker, String format, Object... objects)
-    {
-        getLog(clazz).warn(marker, format, objects);
-    }
-
-    public static void warn(Class<?> clazz,Marker marker, String msg, Throwable throwable)
-    {
-        getLog(clazz).warn(marker, msg, throwable);
-    }
-
-    public static void error(Class<?> clazz,String msg)
-    {
-        getLog(clazz).error(msg);
-    }
-
-    public static void error(Class<?> clazz,String format, Object... objects)
-    {
-        getLog(clazz).error(format,objects);
-    }
-
-    public static void error(Class<?> clazz,String format, Throwable throwable)
-    {
-        getLog(clazz).error(format,throwable);
-    }
-
-    public static void error(Class<?> clazz,Marker marker, String msg)
-    {
-        getLog(clazz).error(marker,msg);
-    }
-
-    public static void error(Class<?> clazz,Marker marker, String format, Object... objects)
-    {
-        getLog(clazz).error(marker,format,objects);
-    }
-
-    public static void error(Class<?> clazz,Marker marker, String msg, Throwable throwable)
-    {
-        getLog(clazz).error(marker,msg,throwable);
-    }
 }

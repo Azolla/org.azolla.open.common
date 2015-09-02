@@ -21,7 +21,6 @@ public class Url0
 {
     /**
      * Example:[project or jar]/img/test.gif -&gt; path=/img/test.gif
-     * <p/>
      *
      * full path:/img/test.gif
      * filename:i18n.properties
