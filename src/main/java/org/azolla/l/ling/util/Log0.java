@@ -50,7 +50,7 @@ public class Log0
 
     private static void msg(Class<?> clazz, int level, String msg, Throwable t)
     {
-        LocationAwareLogger locationAwareLogger = log0Map.get(clazz);
+        LocationAwareLogger locationAwareLogger = getLog0(clazz);
         if (locationAwareLogger != null)
         {
             locationAwareLogger.log(null, FQCN, level, msg, null, t);
