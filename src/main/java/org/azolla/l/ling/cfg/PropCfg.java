@@ -15,8 +15,6 @@ import org.azolla.l.ling.util.Log0;
 
 import javax.annotation.Nonnull;
 import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.InputStream;
 import java.util.Properties;
 
@@ -28,7 +26,7 @@ import java.util.Properties;
  */
 public class PropCfg implements LibCfg
 {
-    private String                       pathStartWithSlash        = null;
+    private String                       cfgFilename     = null;
     private Properties                   prop            = new Properties();
     private LoadingCache<String, String> cfgCacheBuilder = CacheBuilder.newBuilder().build(new CacheLoader<String, String>()
     {
@@ -39,15 +37,15 @@ public class PropCfg implements LibCfg
         }
     });
 
-    private PropCfg(@Nonnull String pathStartWithSlash)
+    private PropCfg(@Nonnull String cfgFilename)
     {
-        this.pathStartWithSlash = pathStartWithSlash;
+        this.cfgFilename = cfgFilename;
         refresh();
     }
 
-    public static PropCfg cfg(String pathStartWithSlash)
+    public static PropCfg cfg(String cfgFilename)
     {
-        return new PropCfg(pathStartWithSlash);
+        return new PropCfg(cfgFilename);
     }
 
     public String get(String key)
@@ -65,7 +63,7 @@ public class PropCfg implements LibCfg
 
     public void refresh()
     {
-        refresh(pathStartWithSlash);
+        refresh(cfgFilename);
         try
         {
             InputStream inputStream = null;
@@ -73,7 +71,7 @@ public class PropCfg implements LibCfg
             try
             {
                 prop = new Properties();
-                inputStream = cfgFileCacheBuilder.get(pathStartWithSlash).openStream();
+                inputStream = cfgFileCacheBuilder.get(cfgFilename).openStream();
                 bufferedInputStream = new BufferedInputStream(inputStream);
                 prop.load(bufferedInputStream);
             }
@@ -90,8 +88,8 @@ public class PropCfg implements LibCfg
         }
         catch (Exception e)
         {
-            Log0.error(PropCfg.class, KV.ins("pathStartWithSlash", pathStartWithSlash).toString(), e);
-            throw new RuntimeException("Can't find {" + pathStartWithSlash + "}.");
+            Log0.error(PropCfg.class, KV.ins("cfgFilename", cfgFilename).toString(), e);
+            throw new RuntimeException("Can't find {" + cfgFilename + "}.");
         }
         cfgCacheBuilder.cleanUp();
     }

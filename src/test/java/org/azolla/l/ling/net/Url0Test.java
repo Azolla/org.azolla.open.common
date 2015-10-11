@@ -41,14 +41,14 @@ public class Url0Test
             Method method = null;
             try
             {
-                method = Thread.class.getMethod("getContextClassLoader", null);
+                method = Thread.class.getMethod("getContextClassLoader");
             }
             catch (NoSuchMethodException e)
             {
                 // We are running on JDK 1.1
                 return null;
             }
-            return (ClassLoader) method.invoke(Thread.currentThread(), null);
+            return (ClassLoader) method.invoke(Thread.currentThread());
         }
         catch (InvocationTargetException e)
         {
@@ -90,14 +90,14 @@ class Url0TestThread extends Thread
             Method method = null;
             try
             {
-                method = Thread.class.getMethod("getContextClassLoader", null);
+                method = Thread.class.getMethod("getContextClassLoader");
             }
             catch (NoSuchMethodException e)
             {
                 // We are running on JDK 1.1
                 return null;
             }
-            return (ClassLoader) method.invoke(Thread.currentThread(), null);
+            return (ClassLoader) method.invoke(Thread.currentThread());
         }
         catch (InvocationTargetException e)
         {

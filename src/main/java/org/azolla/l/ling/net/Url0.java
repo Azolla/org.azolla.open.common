@@ -25,7 +25,7 @@ public class Url0
      * full path:/img/test.gif
      * filename:i18n.properties
      *
-     * @param path file path
+     * @param path file path or filename
      * @return URL
      */
     public static URL getURL(String path)
