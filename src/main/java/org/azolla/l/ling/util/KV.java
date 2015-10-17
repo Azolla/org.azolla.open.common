@@ -102,7 +102,7 @@ public final class KV
     }
 
     /**
-     * @see org.azolla.l.ling.json.Json0#object2String(Object)
+     * @see org.azolla.l.ling.json.Json0#toJSONString(Object)
      * @param separator
      * @param connector
      * @return
@@ -122,7 +122,7 @@ public final class KV
     @Override
     public String toString()
     {
-        return Json0.object2String(map);
+        return Json0.toJSONString(map);
     }
 
     public static void main(String[] args)

@@ -6,44 +6,20 @@
  */
 package org.azolla.l.ling.json;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.azolla.l.ling.io.Close0;
-import org.azolla.l.ling.lang.String0;
-import org.azolla.l.ling.util.Log0;
-
-import java.io.StringWriter;
+import com.alibaba.fastjson.JSON;
 
 /**
- * The coder is very lazy, nothing to write for this class
+ * Warp Json Function
  *
  * @author sk@azolla.org
  * @since ADK1.0
  */
 public class Json0
 {
-    private static ObjectMapper objectMapper = new ObjectMapper();
-
-    public static String object2String(Object object)
+    public static String toJSONString(Object object)
     {
-        StringWriter writer = new StringWriter();
-        JsonGenerator jsonGenerator = null;
-        String rtnString = String0.EMPTY;
-        try
-        {
-            jsonGenerator = objectMapper.getFactory().createGenerator(writer);
-            objectMapper.writeValue(jsonGenerator, object);
-            rtnString = writer.toString();
-        }
-        catch(Exception e)
-        {
-            Log0.error(Json0.class, e.toString(), e);
-        }
-        finally
-        {
-            Close0.close(jsonGenerator);
-            Close0.close(writer);
-        }
-        return rtnString;
+        return JSON.toJSONString(object);
     }
+
+
 }

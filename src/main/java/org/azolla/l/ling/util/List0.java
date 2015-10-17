@@ -34,7 +34,7 @@ public final class List0
     }
 
     /**
-     * @see org.azolla.l.ling.json.Json0#object2String(Object)
+     * @see org.azolla.l.ling.json.Json0#toJSONString(Object)
      * @param list
      * @param separator
      * @return
@@ -56,7 +56,7 @@ public final class List0
     }
 
     /**
-     * @see org.azolla.l.ling.json.Json0#object2String(Object)
+     * @see org.azolla.l.ling.json.Json0#toJSONString(Object)
      * @param list
      * @param separator
      * @return
