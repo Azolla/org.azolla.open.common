@@ -8,6 +8,8 @@ package org.azolla.l.ling.io;
 
 import java.io.Closeable;
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URLConnection;
 
 import javax.annotation.Nullable;
 
@@ -37,6 +39,22 @@ public final class Close0
         catch(IOException e)
         {
             Log0.error(Close0.class, Fmt0.LOG_EC_P_M, AzollaCode.IOEXCEPTION, KV.ins("closeable", closeable), e);
+        }
+    }
+
+    public static void disconnect(@Nullable HttpURLConnection httpURLConnection)
+    {
+        if(httpURLConnection == null)
+        {
+            return;
+        }
+        try
+        {
+            httpURLConnection.disconnect();
+        }
+        catch (Exception e)
+        {
+            Log0.error(Close0.class, KV.ins("httpURLConnection", httpURLConnection).toString(), e);
         }
     }
 }
