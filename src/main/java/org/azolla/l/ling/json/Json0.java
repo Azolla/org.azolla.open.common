@@ -33,6 +33,7 @@ public class Json0
         return JSON.toJSONString(object);
     }
 
+    //the url file content just can be one row
     public static <T> T fromUrl(String jsonUrl, Class<T> classOfT)
     {
         URL url = null;
@@ -63,6 +64,7 @@ public class Json0
         return null;
     }
 
+    //the url file content just can be one row
     public static <T> T fromUrl(String jsonUrl, Type typeOfT)
     {
         URL url = null;
