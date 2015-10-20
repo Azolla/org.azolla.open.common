@@ -22,6 +22,8 @@ import java.net.URL;
 
 /**
  * Warp Json Function
+ * fastjson is very fast
+ * gson is very integral
  *
  * @author sk@azolla.org
  * @since ADK1.0
